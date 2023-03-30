@@ -1,0 +1,113 @@
+/* Font styles */
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display&family=Quicksand:wght@300;400;500;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Main body */
+body {
+    background-color: #e9e7ff;
+}
+
+/* Main page header */
+.main-page-header {
+    padding: 10px 0px;
+    background-color: #29245b;
+}
+
+/* Company name */
+.company-name {
+    font-weight: bold;
+    color: #F2F2EE;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+/* Navigation */
+.navigation {
+    margin-left: 20px;
+}
+
+.navigation li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 5px 15px;
+}
+
+.navigation li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Display Name */
+.display-name {
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn {
+    font-family: 'Roboto', sans-serif;
+}
+
+/*Transaction button */
+.transaction-btn {
+    background-color: #635bbe;
+    border: 2px solid #191637;
+    box-shadow: 2px 3px 6px rgb(0, 0, 145);
+    color: white;
+}
+
+/* Account button */
+.account-btn {
+    background-color: #10abbc;
+    border: 2px solid #064046;
+    box-shadow: 2px 3px 6px #00535c;
+    color: white;
+}
+
+
+/* Card */
+.card .card-title, .card-text {
+    font-family: 'Quicksand', sans-serif;
+}
+
+
+/* Offcanvas */
+.offcanvas {
+    position: fixed;
+    top: 80px;
+    background-image: url('../images/offcanvas_bg.png');
+    background-repeat: none;
+    background-size: cover;
+    height: 87vh;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.offcanvas .offcanvas-title {
+    font-family: 'Oswald', sans-serif;
+}
+
+
+/* Payment Card */
+.payment-card {
+    display: none
+}
+
+
+/* Transfer Card */
+.transfer-card {
+    display: none;
+}
+
+/* Deposit Card */
+.deposit-card {
+    display: none;
+}
+
+/* Withdraw Card */
+.withdraw-card {
+    display: none;
+}

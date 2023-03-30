@@ -1,0 +1,570 @@
+/* fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@300;400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display:wght@400;500;600;700&family=Quicksand:wght@300;400;500&family=Roboto:wght@100;300;400;500;700&family=Trirong:wght@400;500;700;900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+/* INDEX.HTML STYLING */
+
+/* Navbar */
+/* Main page header */
+.main-page-header {
+    padding: 10px 0px;
+    background-color: #9FD9E0;
+    position: fixed;
+    z-index: 1;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+}
+
+/* Company Logo */
+.company-logo {
+    position: fixed;
+    top: 0px;
+    left: 100px;
+    z-index: 1;
+}
+
+/* Company name */
+.company-name {
+    font-weight: bold;
+    color: #00393F;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    margin-left: 83px;
+}
+
+/* Navigation */
+.navigation {
+    margin-left: 20px;
+}
+
+.navigation li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 5px 15px;
+}
+
+.navigation li a {
+    color: #00393F;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    margin-right: 10px;
+}
+
+.navbar-selected {
+    border: solid 2px #00393F;
+    border-radius: 15px;
+    background-color: #87BFDA;
+}
+
+/* Display Name */
+.display-name {
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Main body */
+body.home {
+    background-image: url("../images/home_pg_bg.png");
+    height: 90vh;
+    background-repeat: none;
+    background-size: cover;
+}
+
+/* Card Main */
+#main-card {
+    margin: 180px 370px 0px 370px;
+    font-family: 'Cormorant SC', serif;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* Card heading */
+#main-card h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 66px;
+    color: #29245b;
+}
+
+/* Card title */
+#main-card h2 {
+    font-family: 'Oswald', sans-serif;
+    color: #5249b6;
+}
+
+/* main card paragraph */
+#main-card p {
+    font-family: 'Trirong', serif;
+    font-size: 22px;   
+    font-weight: 600;
+}
+
+/* Button */
+.button-wrapper a {
+    width: 200px;
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+/* Register Button */
+.register {
+    margin-right: 20px;
+    background-color: #635bbe;
+    border: 2px solid #191637;
+    box-shadow: 2px 3px 6px rgb(0, 0, 145);
+}
+
+/* Login Button */
+.login {
+    background-color: #12c0d3;
+    border: 2px solid #064046;
+    box-shadow: 2px 3px 6px #00535c;
+}
+
+/* Admin Login Button */
+.admin-login {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    background-color: #CC91BE;
+    border: 2px solid #69305c;
+    width: 170px;
+}
+
+.perk-scroller {
+    box-shadow: 0 4px 8px 0 rgba(42, 14, 88, 0.6), 0 6px 20px 0 rgb(42, 14, 88, 0.4);
+    background-color: #EFD9FF;
+    margin-top: 357px;
+    padding: 100px 0px 20px 0px; 
+}
+
+.perk-scroller .scroller-content {
+    position: absolute;
+    bottom: 200px;
+    left: 1000px;
+}
+
+.perk-scroller .scroller-content .scroller-title {
+    font-size: 80px;
+    color: #590099;
+    font-family: 'Cormorant SC', serif;
+}
+
+.perk-scroller .scroller-content .scroller-subtitle {
+    font-size: 26px;
+    font-weight: 300;
+    color: #8600e6;
+    font-family: 'BioRhyme', serif;
+    margin-top: -20px;
+}
+
+
+/* REGISTER.HTML STYLING */
+
+/* sign in body */
+body.signup {
+    background-image: url("../images/register_pg_bg.png");
+    height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+}
+
+/* Form card */
+.card {
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Form control */
+.card .form-control {
+    margin: 10px 0px;
+    box-shadow: 0px 4px 10px rgb(0, 0, 145);
+}
+
+/* Form card title */
+.card .card-title {
+    color: #29245b;
+    font-family: 'Oswald', sans-serif;
+}
+
+/* Form card button */
+.register_button {
+    background-color: #635bbe;
+    border: 2px solid #191637;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    margin: 10px 0px;
+    width: 200px;
+    box-shadow: 0px 4px 10px rgb(0, 0, 145);
+}
+
+/* Form card text */
+.card-text {
+    color: #29245b;
+    font-size: 18px;
+}
+
+#login_link {
+    color: #12c0d3;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#back_button {
+    color: #29245b;
+    font-size: 18px;
+    font-weight: bold;
+    margin-left: -14px;
+}
+
+/* LOGIN.HTML STYLING */
+
+/* login body */
+body.login {
+    background-image: url("../images/login_pg_bg.png");
+    height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+}
+
+#signup_link {
+    color: #635bbe;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.login_button {
+    background-color: #12c0d3;
+    border: 2px solid #064046;
+    box-shadow: 2px 3px 6px #00535c;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    margin: 10px 0px;
+    width: 200px;
+}
+
+/* ADMINLOGIN.HTML STYLING */
+#admin-login {
+    background-image: url("../images/admin_login_pg_bg.png");
+    height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+}
+
+#admin-login-card {
+    margin: 188px auto;
+}
+
+.admin-login-btn {
+    background-color: #a24491;
+    border: 2px solid #69305c;
+    box-shadow: 2px 3px 6px #9d4889;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    margin: 10px 0px;
+    width: 200px;
+}
+
+
+/* ABOUTUS.HTML STYLING */
+/* Main body */
+body.aboutus {
+    background-image: url("../images/about_us_pg_bg.png");
+    height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+/* Header */
+.aboutus #about-us-header {
+    font-family: 'Oswald', sans-serif;
+    font-size: 35px;
+    font-weight: medium;
+    color: rgb(175, 175, 175);
+    text-align: center;
+    margin-top: 200px;
+}
+
+/* Quote body */
+.quote .card-body {
+    margin: 50px 400px;
+}
+
+/* Quote title */
+.quote .card-title {
+    font-family: 'Cormorant SC', serif;
+    font-size: 50px;
+    font-weight: 600;
+    color: #29245b;
+}
+
+/* Panel */
+.aboutus .panel .card-title {
+    font-family: 'Eczar', serif;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+}
+
+.aboutus .panel .card-text {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    text-align: center;
+}
+
+/* Who are we section */
+.aboutus .who {
+    background-color: #82A2CD;
+    padding: 100px 0px;
+}
+
+.aboutus .panel .who .card-body {
+    border: solid 2px #243c5b;
+    border-radius: 20px 50px;
+    background-color: #b6c9e2;
+    margin: 30px 0px;
+}
+
+/* History section */
+.aboutus .history {
+    background-color: #ffa852;
+    padding: 100px 380px;
+}
+
+.aboutus .panel .history .card-body {
+    border: solid 2px #804000;
+    border-radius: 20px 50px;
+    background-color: #ffcc99;
+    margin: 30px 0px;
+}
+
+/* Timeline */
+.timeline-steps {
+    display: flex;
+    justify-content: center;
+}
+
+.timeline-steps .timeline-step {
+    align-items: center;
+    display: flex;
+    position: relative;
+}
+
+.timeline-steps .timeline-content {
+    width: 160px;
+    text-align: center;
+}
+
+.timeline-steps .timeline-content .inner-circle {
+    border-radius: 24px;
+    height: 16px;
+    width: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ff8000;
+}
+
+.timeline-steps .timeline-content .inner-circle:before {
+    content: "";
+    background-color: #ff8000;
+    display: inline-block;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 100px;
+    opacity: .5;
+}
+
+.timeline-steps .timeline-content .timeline-period {
+    border: solid 2px #ff8000;
+    border-radius: 15px;
+}
+
+
+.timeline-steps .timeline-step:after {
+    content: "";
+    display: block;
+    border-top: 4px dotted #ff8000;
+    width: 55px;
+    position: absolute;
+    left: 120px;
+    top: 5px;
+}
+
+.timeline-steps .timeline-step:before {
+    content: "";
+    display: block;
+    border-top: 4px dotted #ff8000;
+    width: 61px;
+    position: absolute;
+    right: 120px;
+    top: 5px;
+}
+
+/* Awards section */
+.aboutus .award {
+    background-color: #A5BB85;
+    padding: 100px 300px;
+    justify-content: center;
+}
+
+.aboutus .panel .award #award-card {
+    border: solid 2px #42512f;
+    border-radius: 20px 50px;
+    background-color: #cfdabe;
+    margin: 30px 0px;
+}
+
+.aboutus .panel .award #award-card .card {
+    width: 355px;
+    color: #dbe3ce;
+    text-align: left;
+}
+
+.aboutus .panel .award #award-card .card-body {
+    border: solid 2px #42512f;
+    border-radius: 10px;
+    background-color: #6c824a;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+}
+
+/* Board of directors section */
+.aboutus .bod {
+    background-color: #FFDC74;
+    padding: 100px 200px;
+    justify-content: center;
+}
+
+.aboutus .panel .bod .card-body {
+    border: solid 2px #806000;
+    border-radius: 20px 50px;
+    background-color: #ffecb3;
+    margin: 30px 0px;
+}
+
+
+.aboutus .panel .bod .card-body .accordion-item {
+    background-color: #ffecb3;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    text-align: center;
+    
+}
+
+.aboutus .panel .bod .card-body .accordion-body {
+    border-left: solid 2px #806000;
+    border-right: solid 2px #806000;
+}
+
+.aboutus .panel .bod .card-body .accordion-button {
+    background-color: #ffdf80;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    border: solid 2px #806000;
+    font-size: 18px;
+}
+
+.aboutus .panel .bod .card-body .accordion-body #bod-card .card {
+    width: 350px;
+    color: #dbe3ce;
+    text-align: left;
+}
+
+.aboutus .panel .bod .card-body .accordion-body #bod-card .card-body {
+    border: solid 2px #806000;
+    border-radius: 10px;
+    background-color: #ffdf80;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+}
+
+.aboutus .panel .bod .card-body .accordion-body #bod-card .card-body img {
+    border-radius: 50%;
+    border: solid 2px #806000;
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+} 
+
+
+/* PERK PAGE STYLING */
+body.perk {
+    background-image: url("../images/about_us_pg_bg.png");
+    height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.perk .col-auto {
+    margin-bottom: -100px;
+}
+
+.perk .card-body {
+    background-color: #361270;
+}
+
+.perk .card {
+    width: 950px;
+    height: 640px;
+}
+
+.perk .card .card-body {
+    padding: 110px 200px 60px 100px;
+}
+
+.perk .card .panel-title {
+    font-size: 50px;
+    color: #d2bdf5;
+    font-family: 'Cormorant SC', serif;
+}
+
+.perk .card .panel-subtitle {
+    font-size: 26px;
+    font-weight: 300;
+    color: #c3a6f2;
+    font-family: 'BioRhyme', serif;
+    margin-top: -20px;
+}
+
+.perk .card .panel-content {
+    font-size: 25px;
+    color: #a67bea;
+    font-family: 'Eczar', serif;
+}
+
+.perk .panel-tnc {
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #6024c2;
+    position: relative;
+    top: 60px;
+    left: 180px;
+    text-align: right;
+}
+
+.perk .container img {
+    box-shadow: 0 4px 8px 0 rgba(42, 14, 88, 0.6), 0 6px 20px 0 rgb(42, 14, 88, 0.4);
+    background-color: #f0e9fc;
+    padding: 10px 5px;
+}
+
+.perk .card i {
+    position: relative;
+    left: 20px;
+    top: 85px;
+    color: #6b28d7;
+}
