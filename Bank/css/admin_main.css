@@ -18,6 +18,13 @@ body {
     background-color: #6c2d60;
 }
 
+/* Company Logo */
+.company-logo {
+    position: fixed;
+    top: 8px;
+    left: 60px;
+    z-index: 1;
+}
 
 /* Company name */
 .company-name {

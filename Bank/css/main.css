@@ -17,6 +17,14 @@ body {
     background-color: #29245b;
 }
 
+/* Company Logo */
+.company-logo {
+    position: fixed;
+    top: 0px;
+    left: 80px;
+    z-index: 1;
+}
+
 /* Company name */
 .company-name {
     font-weight: bold;
