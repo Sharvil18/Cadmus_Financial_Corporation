@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+    <script src="js/bootstrap.bundle.js"></script>
+</head>
+<body class=" align-items-center bg-image home">
+    <!--Main Page Header-->
+    <div class="main-page-header mb-3">
+        <!--Container-->
+        <div class="container d-flex align-items-center">
+            <!--Company name-->
+            <div class="company-name">
+                Cadmus Finance Corporation
+            </div>
+            <!--End of Company name-->
+
+            <!--Navigation-->
+            <nav class="navigation">
+                <li class="navbar-selected"><a href="/"><i class="fa-solid fa-house mx-2 my-2"></i>Home</a></li>
+                <li ><a href="/perk"><i class="fa-solid fa-hand-holding-heart fa-lg mx-2 my-3"></i>Perks</a></li>
+                <li ><a href="/aboutus"><i class="fa-solid fa-users fa-lg mx-2 my-3"></i>About Us</a></li>
+                <li ><a href="/adminlogin"><i class="fa-solid fa-briefcase fa-lg mx-2 my-3"></i>Admin Login</a></li>
+            </nav>
+            <!--End of Navigation-->
+
+        </div>
+        <!--End of Container-->
+    </div>
+    <!--End of Main Page Header-->
+
+    <!-- Company Logo -->
+    <a href="/"><img src="images/logos/3.png" height="66px" class="company-logo"></a>
+    <!--End of Company Logo -->
+
+    <!--Card Main-->
+    <div id="main-card" class="card col-6 bg-transparent border-0">
+        <!--Card main body-->
+        <div class="card-body">
+            <!--Card Header-->
+            <!--alternative names: priam, Parthenios, Perseus, Zephyr, Asteria-->
+            <h1 class="mb-3">Cadmus Financial Corporation</h1>
+            <!--End of Card Header-->
+
+            <!--Card Title-->
+            <div class="card-title">
+                <h2>Fluency in Finance</h2>
+            </div>
+            <!--End of Card Title-->
+
+            <!--Card Text-->
+            <p class="card-text">
+                Welcome to Cadmus Financial Corporation bank, where we strive to provide exceptional financial services to meet the needs of individuals and businesses alike. 
+                As a trusted institution, we pride ourselves on our commitment to excellence, integrity, and innovation. 
+                Whether you're looking to open a savings account, secure a loan, invest your money, or simply receive financial advice, our team of experienced professionals is here to help you every step 
+                of the way. We're confident that we can provide you with the resources you need to achieve financial success. Thank you for choosing our bank as your trusted financial partner.
+            </p>
+            <!--End of Card Text-->
+        </div>
+
+        <!--Button Wrapper-->
+        <div class="button-wrapper d-flex align-items-center mx-3">
+            <a href="/register" class="btn btn-md register" role="button">Sign Up</a>
+            <a href="/login" class="btn btn-md login" role="button">Login</a>
+        </div>
+        <!--End of Button Wrapper-->
+
+        <!--End of Card main body-->
+    </div>
+    <!--End of card main-->
+
+    
+
+    <!-- Perk carousel -->
+    <div class="card perk-scroller">
+        <!-- Carousel -->
+        <div id="carouselExampleCaptions" class="carousel slide carousel-dark" data-bs-interval="7000" data-bs-ride="carousel">
+            <!-- Carousel indicators -->
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7" aria-label="Slide 8"></button>
+              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="8" aria-label="Slide 9"></button>
+            </div>
+            <!--End of Carousel indicators -->
+            <!-- Carousel panels -->
+            <div class="carousel-inner">
+              <!-- Home loan carousel panel -->
+              <div class="carousel-item active">
+                <img src="images/perk_panel_icons/home.webp" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-house-chimney-user fa-2x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Home Loan</p>
+                    <p class="scroller-subtitle">Own the house you've always desired</p>
+                  </div>
+              </div>
+              <!--End of Home loan carousel panel -->
+
+              <!-- Personal carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/personal.webp" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-sack-dollar fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Personal Loan</p>
+                    <p class="scroller-subtitle">Make the most of your life</p>
+                  </div>
+              </div>
+              <!--End of Personal loan carousel panel -->
+
+              <!-- Rewarding Experience carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/reward.webp" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-money-check-dollar fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Rewarding Experience</p>
+                    <p class="scroller-subtitle">Enjoy the icing on the cake with your shopping</p>
+                  </div>
+              </div>
+              <!--End of Rewarding Experience carousel panel -->
+
+              <!-- Foreign Exchanges carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/foreign.png" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-plane-arrival fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Foreign Exchanges</p>
+                    <p class="scroller-subtitle">Keep the currencies of the world in your pocket</p>
+                  </div>
+              </div>
+              <!--End of Foreign Exchanges carousel panel -->
+
+              <!-- Offers & Deals carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/offer.webp" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-tags fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Offers & Deals</p>
+                    <p class="scroller-subtitle">Discover a plethora of discounts and benefits</p>
+                  </div>
+              </div>
+              <!--End of Offers & Deals carousel panel -->
+
+              <!-- Low Interest Rates carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/interest.png" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-money-bill-trend-up fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Low Interest Rates</p>
+                    <p class="scroller-subtitle">Interest rates like never before</p>
+                  </div>
+              </div>
+              <!--End of Low Interest Rates carousel panel -->
+
+              <!-- Fraud Detection carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/fraud.webp" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-user-secret fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Fraud Detection</p>
+                    <p class="scroller-subtitle">Safeguarding the credibility of customers</p>
+                  </div>
+              </div>
+              <!--End of Fraud Detection carousel panel -->
+
+              <!-- Gold Loan carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/gold.webp" height="340px" style="margin: 130px 0px 50px 300px;position: relative; bottom: 70px;"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-coins fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Gold Loan</p>
+                    <p class="scroller-subtitle">Get quick cash using your gold</p>
+                  </div>
+              </div>
+              <!--End of Gold Loan carousel panel -->
+
+              <!-- Onboarding carousel panel -->
+              <div class="carousel-item">
+                <img src="images/perk_panel_icons/onboarding.webp" height="470px" style="margin: 0px 0px 50px 300px"  alt="...">
+                <div class="scroller-content">
+                    <i class="fa-solid fa-list-check fa-3x" style="color: #590099; position: relative; top: 10px;left: 5px;"></i>
+                    <p class="scroller-title"> Onboarding</p>
+                    <p class="scroller-subtitle">No more spending hours onboarding</p>
+                  </div>
+              </div>
+              <!--End of Onboarding carousel panel -->
+
+              
+            </div>
+            <!--End of Carousel panels -->
+            
+            <!-- Carousel buttons -->
+            <!-- Previous button -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <!--End of Previous button -->
+            <!-- Next button -->
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            <!--End of Next button -->
+            <!--End of Carousel buttons -->
+        </div>
+        <!--End of Carousel -->
+    </div>
+    <!-- End of Perk carousel -->
+
+</body>
+</html>

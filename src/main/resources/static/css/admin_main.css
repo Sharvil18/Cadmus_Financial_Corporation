@@ -1,0 +1,92 @@
+/* Font styles */
+@import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display&family=Quicksand:wght@300;400;500;700&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* Main body */
+body {
+    background-color: #fceffa;
+}
+
+
+/* Main page header */
+.main-page-header {
+    padding: 10px 0px;
+    background-color: #6c2d60;
+}
+
+/* Company Logo */
+.company-logo {
+    position: fixed;
+    top: 8px;
+    left: 60px;
+    z-index: 1;
+}
+
+/* Company name */
+.company-name {
+    font-weight: bold;
+    color: #F2F2EE;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+.company-name span {
+    font-family: 'Cormorant SC', serif;
+    font-size: 23px;
+    position: relative; 
+    bottom: 27px;
+    left: 92px;
+    color: #e1b7d9;
+}
+
+/* Navigation */
+
+.navigation li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 5px 15px;
+}
+
+.navigation li a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Display Name */
+.display-name {
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Card */
+.card .card-title, .card-text {
+    font-family: 'Quicksand', sans-serif;
+}
+
+/* table */
+.table {
+    border-left: 2px solid #481e40;
+    border-right: 2px solid #481e40;
+}
+
+td {
+    font-family: 'BioRhyme', serif;
+}
+
+td, th{
+    text-align: center;
+}
+
+thead {
+    background-color: #481e40;
+    color: white;
+}

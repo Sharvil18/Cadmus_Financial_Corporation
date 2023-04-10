@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+    <style>
+        /* Font styles */
+        @import url('https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display&family=Quicksand:wght@300;400;500&family=Roboto:wght@100;300;400;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Quicksand', sans-serif;
+        }
+        body {
+            height: 100vh;
+            background-image:  url("../images/error_pg_bg.png");
+            background-repeat: none;
+            background-size: cover;
+        }
+
+        .card {
+            box-shadow: 0px 3px 8px rgb(139, 1, 1);
+        }
+
+        .card .card-title {
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .card .card-text {
+            font-size: 20px;
+        }
+
+        .card a {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+    <title>Error</title>
+</head>
+<body class="d-flex align-items-center justify-content-center">
+    <!--Error card-->
+    <div class="card col-4 alert alert-danger border-danger text-danger">
+        <!--Card title-->
+        <h3 class="card-title">
+            <i class="fa fa-window-close me-3"></i>Errors:
+        </h3>
+        <hr>
+        <!--End of Card title-->
+
+        <!--Card body-->
+        <div class="card-body">
+            <!--Card text-->
+            <p class="card-text">
+                <!-- Display Message -->
+                    <c:if test="${requestScope.error != null}">
+                        <div class="alert alert-danger text-center border border-danger">
+                            <b>${requestScope.error}</b>
+                        </div>
+                    </c:if>
+                    <!-- End of Display Message -->
+            </p>
+            <!--End of Card text-->
+
+        </div>
+        <!--End of Card body-->
+
+        <hr>
+        <!--Card text-->
+        <div class="card-text">
+            <!--Back to login page-->
+            <a href="/login" class="btn btn-md btn-danger">
+                <i class="fa fa-arrow-alt-circle-left me-3"></i>Back
+            </a>
+            <!--End of Back to login page-->
+        </div>
+        <!--End of Card text-->
+    </div>
+    <!--End of Error card-->
+</body>
+</html>
