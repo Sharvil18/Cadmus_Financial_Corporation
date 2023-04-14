@@ -1,8 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://example.com/functions" prefix="f" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 
-<!--Container-->
+
+
+        <!--Container-->
         <div class="container d-flex">
             <!--Account Button-->
             <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasaccount" class="btn btn-lg account-btn" type="button"><i class="fa-regular fa-credit-card fa-xl me-2"></i>Add new Account</button>
@@ -45,7 +48,7 @@
                                         <li class="list-group-item d-flex">Account Number <span class="ms-auto"><b>${account.account_number}</b></span></li>
                                         <li class="list-group-item d-flex">Account Type <span class="ms-auto"><b>${account.account_type}</b></span></li>
                                         <li class="list-group-item d-flex">Account Balance <span class="ms-auto"><b>${account.balance}</b></span></li>
-                                        <li class="list-group-item d-flex">Created at <span class="ms-auto"><b>${account.created_at}</b></span></li>
+                                        <li class="list-group-item d-flex">Created at Date <span class="ms-auto"><b>${f:formatLocalDateTime(account.created_at, 'yyyy/MM/dd')}</b></span></li>
                                     </ul>
                                     <!-- Account Details List -->
                                 </div>

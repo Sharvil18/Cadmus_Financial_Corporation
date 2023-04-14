@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 
+
 <!--Main Page Header-->
         <div class="main-page-header mb-3">
             <!--Container-->
@@ -14,14 +15,14 @@
 
                 <!--Navigation-->
                 <nav class="navigation">
-                    <li><a href="">Dashboard</a></li>
-                    <li><a href="">Payment History</a></li>
-                    <li><a href="">Transaction History</a></li>
+                    <li><a href="dashboard">Dashboard</a></li>
+                    <li><a href="payment_history">Payment History</a></li>
+                    <li><a href="transact_history">Transaction History</a></li>
                 </nav>
                 <!--End of Navigation-->
 
                 <!-- Company Logo -->
-                <img src="src/main/resources/static/images/logos/4.png" height="58px" class="company-logo">
+                <img src="images/logos/4.png" height="58px" class="company-logo">
                 <!--End of Company Logo -->
 
                 <!--Display Name-->

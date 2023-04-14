@@ -3,11 +3,13 @@ package com.bank.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "accounts")
 public class Account {
     @Id
     private int account_id;
