@@ -12,14 +12,14 @@ public class DateFormatter {
     }
 
     public static String getFormattedDate(LocalDateTime localDateTime) {
-        String pattern = "yyyy-MM-dd";
+        String pattern = "yyyy/MM/dd";
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
         String dateFormat = localDateTime.format(dateFormatter);
         return dateFormat;
     }
 
     public static String getFormattedTime(LocalDateTime localDateTime) {
-        String pattern = "hh:mm:ss a";
+        String pattern = "HH:MM:SS";
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern(pattern);
         String timeFormat = localDateTime.format(timeFormatter);
         return timeFormat;

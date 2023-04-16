@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface PaymentHistoryRepository extends CrudRepository<PaymentHistory, Integer> {
-    @Query(value = "SELECT * FROM v_payments where user_id = :user_id", nativeQuery = true)
+    @Query(value = "SELECT * FROM v_payments where user_id = :user_id ORDER BY created_at", nativeQuery = true)
     List<PaymentHistory> getPaymentRecordsById(@Param("user_id") int user_id);
 }

@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://example.com/functions" prefix="f" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="../css/fontawesome/css/all.css">
     <link rel="stylesheet" href="../css/main.css">
     <script src="../js/bootstrap.bundle.js"></script>
-    <title>Dashboard</title>
+    <title>Transaction History</title>
 </head>
 <body>
     <div id="blur-effect">
@@ -35,23 +36,25 @@
                 <c:if test="${requestScope.transact_history != null}">
                     <table class="table text-center table-striped">
                     <tr>
+                        <th>Date</th>
                         <th>Transaction ID</th>
                         <th>Transaction Type</th>
                         <th>Amount</th>
                         <th>Source</th>
                         <th>Status</th>
                         <th>Reason Code</th>
-                        <th>Created at</th>
+                        <th>Time</th>
                     </tr>
                     <c:forEach items="${requestScope.transact_history}" var="transactionHistory">
                       <tr style="border-bottom: 2px solid #413A92;">
+                          <td>${f:getFormattedDate(transactionHistory.created_at)}</td>
                           <td>${transactionHistory.transaction_id}</td>
                           <td>${transactionHistory.transaction_type}</td>
                           <td>${transactionHistory.amount}</td>
                           <td>${transactionHistory.source}</td>
                           <td>${transactionHistory.status}</td>
                           <td>${transactionHistory.reason_code}</td>
-                          <td>${transactionHistory.created_at}</td>
+                          <td>${f:getFormattedTime(transactionHistory.created_at)}</td>
                       </tr>
                     </c:forEach>
                     </table>

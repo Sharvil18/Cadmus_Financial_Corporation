@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://example.com/functions" prefix="f" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 
@@ -12,7 +13,7 @@
     <link rel="stylesheet" href="../css/fontawesome/css/all.css">
     <link rel="stylesheet" href="../css/main.css">
     <script src="../js/bootstrap.bundle.js"></script>
-    <title>Dashboard</title>
+    <title>Payment History</title>
 </head>
 <body>
     <div id="blur-effect">
@@ -36,25 +37,27 @@
                         <table class="table text-center table-striped">
                             <tr>
                                 <th>Record Number</th>
+                                <th>Date</th>
                                 <th>Beneficiary</th>
-                                <th>Beneficiary Account Number</th>
+                                <th>Beneficiary Acc. No.</th>
                                 <th>Amount</th>
                                 <th>Status</th>
                                 <th>Reference</th>
                                 <th>Reason Code</th>
-                                <th>Created at</th>
+                                <th>Time</th>
                             </tr>
                             <!-- Loop Through Payment History Records -->
                             <c:forEach items="${requestScope.payment_history}" var="payments">
                             <tr style="border-bottom: 2px solid #413A92;">
                                 <td>${payments.payment_id}</td>
+                                <td>${f:getFormattedDate(payments.created_at)}</td>
                                 <td>${payments.beneficiary}</td>
                                 <td>${payments.beneficiary_acc_no}</td>
                                 <td>${payments.amount}</td>
                                 <td>${payments.status}</td>
                                 <td>${payments.reference_no}</td>
                                 <td>${payments.reason_code}</td>
-                                <td>${payments.created_at}</td>
+                                <td>${f:getFormattedTime(payments.created_at)}</td>
                             </tr>
                              </c:forEach>
                             <!-- End Of Loop Through Payment History Records -->

@@ -30,6 +30,9 @@ public class TransactionHistoryPDFExporter {
         com.lowagie.text.Font font = FontFactory.getFont(FontFactory.TIMES_BOLD, 14);
         font.setColor(Color.WHITE);
 
+        cell.setPhrase(new Phrase("Date", font));
+        table.addCell(cell);
+
         cell.setPhrase(new Phrase("Transaction ID", font));
         table.addCell(cell);
 
@@ -48,9 +51,6 @@ public class TransactionHistoryPDFExporter {
         cell.setPhrase(new Phrase("Reason Code", font));
         table.addCell(cell);
 
-        cell.setPhrase(new Phrase("Date", font));
-        table.addCell(cell);
-
         cell.setPhrase(new Phrase("Time", font));
         table.addCell(cell);
     }
@@ -63,6 +63,11 @@ public class TransactionHistoryPDFExporter {
         cell.setHorizontalAlignment(Paragraph.ALIGN_CENTER);
         com.lowagie.text.Font font = FontFactory.getFont(FontFactory.COURIER, 11);
         for(TransactionHistory transactionHistory : transactionHistoryList) {
+            LocalDateTime localDateTime = transactionHistory.getCreated_at();
+
+            cell.setPhrase(new Phrase(DateFormatter.getFormattedDate(localDateTime), font));
+            table.addCell(cell);
+
             cell.setPhrase(new Phrase(String.valueOf(transactionHistory.getTransaction_id()), font));
             table.addCell(cell);
 
@@ -79,11 +84,6 @@ public class TransactionHistoryPDFExporter {
             table.addCell(cell);
 
             cell.setPhrase(new Phrase(transactionHistory.getReason_code(), font));
-            table.addCell(cell);
-
-            LocalDateTime localDateTime = transactionHistory.getCreated_at();
-
-            cell.setPhrase(new Phrase(DateFormatter.getFormattedDate(localDateTime), font));
             table.addCell(cell);
 
             cell.setPhrase(new Phrase(DateFormatter.getFormattedTime(localDateTime), font));
@@ -108,7 +108,7 @@ public class TransactionHistoryPDFExporter {
 
         PdfPTable table = new PdfPTable(8);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {6.0f, 6.0f, 5.0f, 5.0f, 5.0f, 9.0f, 6.0f, 6.0f});
+        table.setWidths(new float[] {6.0f, 6.0f, 6.0f, 5.0f, 5.0f, 5.0f, 9.0f, 6.0f});
         table.setSpacingBefore(15);
 
         writeTableHeader(table);
