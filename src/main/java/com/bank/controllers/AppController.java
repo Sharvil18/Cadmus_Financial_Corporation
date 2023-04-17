@@ -3,13 +3,8 @@ package com.bank.controllers;
 import com.bank.helpers.PDFExporter;
 import com.bank.helpers.PaymentHistoryPDFExporter;
 import com.bank.helpers.TransactionHistoryPDFExporter;
-import com.bank.models.Account;
-import com.bank.models.PaymentHistory;
-import com.bank.models.TransactionHistory;
-import com.bank.models.User;
-import com.bank.repository.AccountRepository;
-import com.bank.repository.PaymentHistoryRepository;
-import com.bank.repository.TransactHistoryRepository;
+import com.bank.models.*;
+import com.bank.repository.*;
 import com.lowagie.text.DocumentException;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -79,9 +74,12 @@ public class AppController {
         //Get payment record
         List<PaymentHistory> userPaymentHistory = paymentHistoryRepository.getPaymentRecordsById(user.getUser_id());
 
+        //Get the accounts of the logged in user
+        List<Account> getUserAccounts = accountRepository.getUserAccountsById(user.getUser_id());
+
         //Set objects
         getPaymentHistoryPage.addObject("payment_history", userPaymentHistory);
-
+        getPaymentHistoryPage.addObject("userAccounts", getUserAccounts);
 
         return getPaymentHistoryPage;
     }
@@ -94,10 +92,14 @@ public class AppController {
         // Get Logged In User:\
         user = (User) session.getAttribute("user");
 
-        // Get Payment History / Records:
+        // Get Transaction History / Records:
         List<TransactionHistory> userTransactHistory = transactHistoryRepository.getTransactionRecordsById(user.getUser_id());
 
+        //Get the accounts of the logged in user
+        List<Account> getUserAccounts = accountRepository.getUserAccountsById(user.getUser_id());
+
         getTransactHistoryPage.addObject("transact_history", userTransactHistory);
+        getTransactHistoryPage.addObject("userAccounts", getUserAccounts);
 
         return getTransactHistoryPage;
     }

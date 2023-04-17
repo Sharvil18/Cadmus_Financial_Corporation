@@ -20,6 +20,28 @@
                             <input type="text" name="account_number" class="form-control mt-2" placeholder="Enter Beneficiary Account number"/>
                         </div>
                         <!--End of Form group-->
+                        <!--Form group-->
+                        <div class="form-group">
+                            <label for="">Select Beneficiary Bank</label>
+                            <select name="beneficiary_bank" class="form-control my-3" id="">
+                                <option value="">-- Select Bank --</option>
+                                <option value="State Bank of India">State Bank of India</option>
+                                <option value="HDFC Bank">HDFC Bank</option>
+                                <option value="ICICI Bank">ICICI Bank</option>
+                                <option value="Cadmus Bank">Cadmus Bank</option>
+                                <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+                                <option value="Punjab National Bank">Punjab National Bank</option>
+                                <option value="Axis Bank">Axis Bank</option>
+                                <option value="Bank Of Baroda">Bank of Baroda</option>
+                                <option value="Canara Bank">Canara Bank</option>
+                                <option value="Union Bank of India">Union Bank of India</option>
+                                <option value="IDBI Bank">IDBI Bank</option>
+                            </select>
+                        </div>
+                        <!--End of Form group-->
+                        <!-- Select beneficiary bank options -->
+
+                        <!--End of Select beneficiary bank options -->
 
                         <!--Select account option-->
                         <!-- <button class="btn dropdown-toggle my-3 mx-0" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">

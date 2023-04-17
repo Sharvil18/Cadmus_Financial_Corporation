@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -186,23 +187,30 @@ public class TransactController {
     }
 
     //Payment Method
-    @PostMapping("/payment")
+    @RequestMapping(value = "/payment", method = {RequestMethod.GET, RequestMethod.POST})
     public String payment(@RequestParam("beneficiary") String beneficiary,
                           @RequestParam("account_number") String account_number,
+                          @RequestParam("beneficiary_bank") String beneficiary_bank,
                           @RequestParam("account_id") String account_id,
                           @RequestParam("reference") String reference,
                           @RequestParam("payment_amount") String payment_amount,
                           HttpSession session,
                           RedirectAttributes redirectAttributes) {
         //Check for empty strings
-        if(beneficiary.isEmpty() || account_number.isEmpty() || account_id.isEmpty() || payment_amount.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Beneficiary Account OR Account Number OR Payment Account OR Payment Amount cannot be Empty");
+        if(beneficiary.isEmpty() || account_number.isEmpty() || beneficiary_bank.isEmpty() || account_id.isEmpty() || payment_amount.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Beneficiary Account Name OR Beneficiary Account Number OR Beneficiary Bank OR Payment Account OR Payment Amount cannot be Empty");
             return "redirect:/app/dashboard";
         }
 
         //Convert variables
         int accountID = Integer.parseInt(account_id);
         double paymentAmount = Double.parseDouble(payment_amount);
+
+        //Check for beneficiary account number length
+        if(account_number.length() != 10) {
+            redirectAttributes.addFlashAttribute("error", "Beneficiary Account Number must be of 10 digits");
+            return "redirect:/app/dashboard";
+        }
 
         //Check for 0 values
         if(paymentAmount == 0) {
@@ -221,7 +229,7 @@ public class TransactController {
             redirectAttributes.addFlashAttribute("error", "Insufficient Funds to Perform this Payment");
             //Log failed transaction in payment DB
             String reasonCode = "Could not Process Payment due to Insufficient Funds";
-            paymentRepository.makePayment(accountID, beneficiary, account_number, paymentAmount, reference, "Failure", reasonCode, currentDateTime);
+            paymentRepository.makePayment(accountID, beneficiary, account_number, beneficiary_bank, paymentAmount, reference, "Failure", reasonCode, currentDateTime);
             //Log failed transaction
             transactRepository.logTransaction(accountID, "Payment", paymentAmount, "Online", "Failure", "Insufficient Funds", currentDateTime);
             return "redirect:/app/dashboard";
@@ -232,7 +240,7 @@ public class TransactController {
 
         //Make payment
         String reasonCode = "Payment Processed Successfully";
-        paymentRepository.makePayment(accountID, beneficiary, account_number, paymentAmount, reference, "Success", reasonCode, currentDateTime);
+        paymentRepository.makePayment(accountID, beneficiary, account_number,beneficiary_bank, paymentAmount, reference, "Success", reasonCode, currentDateTime);
 
         //Update account paying from
         accountRepository.changeAccountBalanceById(newBalance, accountID);

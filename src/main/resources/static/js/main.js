@@ -50,3 +50,28 @@ transactType.addEventListener('change', () => {
 
 });
 //End of Check for transaction type event listener
+
+const UrlString = window.location.search;
+const UrlParam = new URLSearchParams(UrlString);
+const isPayment = UrlParam.get('isPayment');
+const isTransaction = UrlParam.get('isTransaction');
+if(isPayment == 'true') {
+    document.getElementById('transact-btn').click();
+    const transactType2 = document.getElementById('transact-type');
+    transactType2.selectedIndex = 1;
+    paymentCard.style.display = 'block';
+    transferCard.style.display = 'none';
+    depositCard.style.display = 'none';
+    withdrawCard.style.display = 'none';
+}
+
+if(isTransaction == 'true') {
+    document.getElementById('transact-btn').click();
+    console.log('Inside isTransaction');
+}
+
+
+function myFunc() {
+
+}
+

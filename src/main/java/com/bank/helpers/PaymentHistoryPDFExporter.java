@@ -42,6 +42,9 @@ public class PaymentHistoryPDFExporter {
         cell.setPhrase(new Phrase("Beneficiary Acc No.", font));
         table.addCell(cell);
 
+        cell.setPhrase(new Phrase("Beneficiary Bank", font));
+        table.addCell(cell);
+
         cell.setPhrase(new Phrase("Amount", font));
         table.addCell(cell);
 
@@ -80,6 +83,9 @@ public class PaymentHistoryPDFExporter {
             cell.setPhrase(new Phrase(paymentHistory.getBeneficiary_acc_no(), font));
             table.addCell(cell);
 
+            cell.setPhrase(new Phrase(paymentHistory.getBeneficiary_bank(), font));
+            table.addCell(cell);
+
             cell.setPhrase(new Phrase(String.valueOf(paymentHistory.getAmount()), font));
             table.addCell(cell);
 
@@ -112,9 +118,9 @@ public class PaymentHistoryPDFExporter {
 
         document.add(p);
 
-        PdfPTable table = new PdfPTable(9);
+        PdfPTable table = new PdfPTable(10);
         table.setWidthPercentage(100f);
-        table.setWidths(new float[] {4.5f, 6.0f, 6.0f, 7.0f, 4.5f, 4.5f, 7.0f, 9.0f, 6.0f});
+        table.setWidths(new float[] {4.5f, 6.5f, 6.8f, 7.0f, 8.5f, 5.2f, 4.9f, 7.0f, 9.0f, 6.0f});
         table.setSpacingBefore(15);
 
         writeTableHeader(table);

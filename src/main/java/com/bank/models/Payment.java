@@ -14,6 +14,7 @@ public class Payment {
     private int account_id;
     private String beneficiary;
     private String beneficiary_acc_no;
+    private String beneficiary_bank;
     private double amount;
     private String reference_no;
     private String status;
@@ -50,6 +51,14 @@ public class Payment {
 
     public void setBeneficiary_acc_no(String beneficiary_acc_no) {
         this.beneficiary_acc_no = beneficiary_acc_no;
+    }
+
+    public String getBeneficiary_bank() {
+        return beneficiary_bank;
+    }
+
+    public void setBeneficiary_bank(String beneficiary_bank) {
+        this.beneficiary_bank = beneficiary_bank;
     }
 
     public double getAmount() {

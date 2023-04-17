@@ -21,57 +21,28 @@
         <!-- Header -->
         <c:import url="components/include/header.jsp"/>
 
-        <!-- Container -->
-        <div class="payment-history">
-        <!-- Card: Transaction History Card -->
-        <div class="card shadow">
-            <!-- Card Header -->
-            <div class="card-header">
-                <h2><i class="fa fa-file-invoice-dollar me-2" aria-hidden="true"></i> Transaction History</h2>
-            </div>
-            <!-- End Of Card Header -->
-
-            <!-- Card Body -->
-            <div class="card-body">
-                <c:if test="${requestScope.transact_history != null}">
-                    <table class="table text-center table-striped">
-                    <tr>
-                        <th>Date</th>
-                        <th>Transaction ID</th>
-                        <th>Transaction Type</th>
-                        <th>Amount</th>
-                        <th>Source</th>
-                        <th>Status</th>
-                        <th>Reason Code</th>
-                        <th>Time</th>
-                    </tr>
-                    <c:forEach items="${requestScope.transact_history}" var="transactionHistory">
-                      <tr style="border-bottom: 2px solid #413A92;">
-                          <td>${f:getFormattedDate(transactionHistory.created_at)}</td>
-                          <td>${transactionHistory.transaction_id}</td>
-                          <td>${transactionHistory.transaction_type}</td>
-                          <td>${transactionHistory.amount}</td>
-                          <td>${transactionHistory.source}</td>
-                          <td>${transactionHistory.status}</td>
-                          <td>${transactionHistory.reason_code}</td>
-                          <td>${f:getFormattedTime(transactionHistory.created_at)}</td>
-                      </tr>
-                    </c:forEach>
-                    </table>
-                </c:if>
-            </div>
-            <!-- End Of Card Body -->
-
-            <!-- Card footer -->
-            <div class="card-footer">
-                <h4 class="my-3"><a href="transaction_history_export_pdf"><i class="fa-solid fa-download me-3"></i>Download Transaction History as PDF</a></h4>
-            </div>
-            <!-- End of Card footer -->
-        </div>
-        <!-- End Of Card: Transaction History Card -->
-
-        </div>
-        <!-- End of Container -->
+        <!-- Account check -->
+        <c:choose>
+            <c:when test="${fn:length(userAccounts) == 0}">
+                <!-- Dont Display Accounts -->
+                <c:import url="components/no_account_display.jsp"/>
+            </c:when>
+            <c:otherwise>
+                <!-- Transaction check -->
+                <c:choose>
+                    <c:when test="${fn:length(transact_history) > 0}">
+                        <!-- Display transaction history -->
+                        <c:import url="components/record_views/TransactionHistoryDisplay.jsp"/>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- Dont display transaction history -->
+                        <c:import url="components/record_views/TransactionHistoryNoDisplay.jsp"/>
+                    </c:otherwise>
+                </c:choose>
+                <!-- End of Transaction check -->
+            </c:otherwise>
+        </c:choose>
+        <!-- End of Account check -->
 
 <!-- Footer -->
 <c:import url="components/include/footer.jsp"/>

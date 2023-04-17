@@ -32,8 +32,8 @@ public class AccountController {
         User user = (User) session.getAttribute("user");
 
         //Generate account number
-        int setAccountNumber = GenerateAccountNumber.generateAccountNumber();
-        String bankAccountNumber = Integer.toString(setAccountNumber);
+        String bankAccountNumber = GenerateAccountNumber.generateAccountNumber();
+
         //Creating account
         accountRepository.createBankAccount(user.getUser_id(), bankAccountNumber, accountName, accountType);
 

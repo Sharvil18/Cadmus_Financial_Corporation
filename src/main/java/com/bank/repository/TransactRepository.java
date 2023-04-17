@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public interface TransactRepository extends CrudRepository<Transact, Integer> {
@@ -23,4 +24,5 @@ public interface TransactRepository extends CrudRepository<Transact, Integer> {
                         @Param("status") String status,
                         @Param("reason_code") String reason_code,
                         @Param("created_at") LocalDateTime created_at);
+
 }

@@ -12,7 +12,7 @@
             <!--End of Account Button-->
 
             <!--Transaction Button-->
-            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvastransaction" class="btn btn-lg ms-auto transaction-btn" type="button"><i class="fa-solid fa-file-invoice-dollar me-2 fa-xl"></i>Transaction</button>
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvastransaction" class="btn btn-lg ms-auto transaction-btn" id="transact-btn" type="button"><i class="fa-solid fa-file-invoice-dollar me-2 fa-xl"></i>Transaction</button>
             <!--End of Transaction Button-->
         </div>
         <!--End of Container-->
