@@ -51,6 +51,7 @@ transactType.addEventListener('change', () => {
 });
 //End of Check for transaction type event listener
 
+//Script for buttons returning from payment history / transaction history to dashboard
 const UrlString = window.location.search;
 const UrlParam = new URLSearchParams(UrlString);
 const isPayment = UrlParam.get('isPayment');
@@ -71,7 +72,10 @@ if(isTransaction == 'true') {
 }
 
 
-function myFunc() {
 
-}
+
+
+
+
+
 

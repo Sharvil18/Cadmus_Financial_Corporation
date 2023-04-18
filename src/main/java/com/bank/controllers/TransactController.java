@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/transact")
@@ -235,6 +236,40 @@ public class TransactController {
             return "redirect:/app/dashboard";
         }
 
+        //Get account numbers of current user
+        List<String> userAccountNumbers = accountRepository.getAccountNumberById(user.getUser_id());
+
+        //Check if mentioned account number is one of the current user's account number
+        if(userAccountNumbers.contains(account_number)) {
+            redirectAttributes.addFlashAttribute("error", "Beneficiary Account Number is invalid. Please head to Transfer Section for Internal Transaction of Funds");
+
+            //Log failed transaction in payment DB
+            String reasonCode = "Could not Process Payment due to Internal Transaction of Funds";
+            paymentRepository.makePayment(accountID, beneficiary, account_number, beneficiary_bank, paymentAmount, reference, "Failure", reasonCode, currentDateTime);
+
+            //Log failed transaction
+            transactRepository.logTransaction(accountID, "Payment", paymentAmount, "Online", "Failure", "Internal Payment", currentDateTime);
+
+            return "redirect:/app/dashboard";
+        }
+
+        //Get all account numbers
+        List<String> accountNumbers = accountRepository.getAllAccountNumber();
+
+        //Check if mentioned account number exists
+        if(beneficiary_bank.equals("Cadmus Bank") && (!accountNumbers.contains(account_number))) {
+            redirectAttributes.addFlashAttribute("error", "Beneficiary Account Number does not exist. Please try again");
+
+            //Log failed transaction in payment DB
+            String reasonCode = "Could not Process Payment due to Non-existent Beneficiary Account Number";
+            paymentRepository.makePayment(accountID, beneficiary, account_number, beneficiary_bank, paymentAmount, reference, "Failure", reasonCode, currentDateTime);
+
+            //Log failed transaction
+            transactRepository.logTransaction(accountID, "Payment", paymentAmount, "Online", "Failure", "Non-existent Beneficiary Acc. No. ", currentDateTime);
+
+            return "redirect:/app/dashboard";
+        }
+
         //Set new balance for account paying from
         newBalance = accountBalance - paymentAmount;
 
@@ -247,6 +282,22 @@ public class TransactController {
 
         //Log successful transaction
         transactRepository.logTransaction(accountID, "Payment", paymentAmount, "Online", "Success", "Amount Process Successful", currentDateTime);
+
+        //Deposit money in case the beneficiary bank is Cadmus Bank
+        if(beneficiary_bank.equals("Cadmus Bank")) {
+            //Get beneficiary account balance
+            double beneficiaryAccountBalance = accountRepository.getBalanceByAccountNumber(account_number);
+
+            //Get account ID
+            int beneficiaryAccountId = accountRepository.getAccountIdByAccountNumber(account_number);
+
+            //Update beneficiary account balance
+            double newBeneficiaryBalance = beneficiaryAccountBalance + paymentAmount;
+            accountRepository.changeAccountBalanceByAccountNumber(newBeneficiaryBalance, account_number);
+
+            //Log successful transaction
+            transactRepository.logTransaction(beneficiaryAccountId, "Reception", paymentAmount, "Online", "Success", "Amount Received Successfully", currentDateTime);
+        }
 
         redirectAttributes.addFlashAttribute("success", reasonCode + "!");
         return "redirect:/app/dashboard";

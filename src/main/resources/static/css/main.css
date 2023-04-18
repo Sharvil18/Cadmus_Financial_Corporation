@@ -142,6 +142,8 @@ body {
 }
 
 .payment-history table th {
+    position: sticky;
+    top: 0px;
     background-color: #413A92;
     color: white;
 }

@@ -101,8 +101,11 @@
                 <div class="row">
                     <!--Form group-->
                     <div class="form-group col">
-                        <form:input type="password" path="password" class="form-control form-control-lg" placeholder="Enter Password" />
+                        <form:input type="password" path="password" id="passwordInput" class="form-control form-control-lg" placeholder="Enter Password" />
                         <form:errors path="password" class="text-white bg-danger px-2" style="font-family: 'BioRhyme', serif;display: inline-block; margin-top: 5px" />
+                        <!-- Password strength meter -->
+                        <div id="strengthBox" class="text-center mt-4 mb-3 alert border alert-dark border-dark">Password Strength Meter</div>
+                        <!-- End of Password strength meter -->
                     </div>
                     <!--End of Form group-->
 
@@ -134,9 +137,156 @@
             </p>
             <!--End of Back button to home page-->
 
+            <!-- Password Strength Suggestions -->
+            <div id="suggest">
+                <h1>Tips for a stronger password:</h1>
+                <div id="tip"></div>
+            </div>
+            <!--End of Password Strength Suggestions -->
+
         </div>
         <!--End of Card body-->
     </div>
     <!--End of Registration form card-->
+
+    <script>
+        var timeout;
+        const password = document.getElementById('passwordInput');
+        const strengthBox = document.getElementById('strengthBox');
+        const suggest = document.getElementById('suggest');
+        const tip = document.getElementById('tip');
+        var tipString = '<ul>';
+
+        const length8Regex = new RegExp('.{8,}');
+        const length6Regex = new RegExp('.{6,}');
+        const upperRegex = new RegExp('.*[A-Z]');
+        const lowerRegex = new RegExp('.*[a-z]');
+        const digitRegex = new RegExp('.*[0-9]');
+        const specialCharRegex = new RegExp('[^A-Za-z0-9]');
+
+        function PasswordStrength(password) {
+            isLength8 = length8Regex.test(password);
+            isUpper = upperRegex.test(password);
+            isLower = lowerRegex.test(password);
+            isDigit = digitRegex.test(password);
+            isSpecial = specialCharRegex.test(password);
+
+            if(strengthBox.innerHTML == 'Strong') {
+                if(strengthBox.classList.contains('alert-danger')) {
+                    strengthBox.classList.replace('alert-danger','alert-success');
+                    strengthBox.classList.replace('border-danger', 'border-success');
+                }
+                else if(strengthBox.classList.contains('alert-warning')) {
+                    strengthBox.classList.replace('alert-warning','alert-success');
+                    strengthBox.classList.replace('border-warning', 'border-success');
+                }
+            }
+
+            if(strengthBox.innerHTML == 'Medium') {
+                if(strengthBox.classList.contains('alert-danger')) {
+                    strengthBox.classList.replace('alert-danger','alert-warning');
+                    strengthBox.classList.replace('border-danger', 'border-warning');
+                }
+                else if(strengthBox.classList.contains('alert-success')) {
+                    strengthBox.classList.replace('alert-success','alert-warning');
+                    strengthBox.classList.replace('border-success', 'border-warning');
+                }
+            }
+
+            if(strengthBox.innerHTML == 'Weak') {
+                if(strengthBox.classList.contains('alert-warning')) {
+                    strengthBox.classList.replace('alert-warning','alert-danger');
+                    strengthBox.classList.replace('border-warning', 'border-danger');
+                }
+                else if(strengthBox.classList.contains('alert-success')) {
+                    strengthBox.classList.replace('alert-success','alert-danger');
+                    strengthBox.classList.replace('border-success', 'border-danger');
+                }
+            }
+
+            if(isLength8 & isUpper & isLower & isDigit & isSpecial) {
+                strengthBox.classList.replace('alert-warning', 'alert-success');
+                strengthBox.classList.replace('border-warning', 'border-success');
+                strengthBox.innerHTML = 'Strong';
+                tip.innerHTML = '<ul>';
+            }
+
+            else if(isLength8 & isLower & isDigit & isSpecial) {
+                strengthBox.classList.replace('alert-danger','alert-warning');
+                strengthBox.classList.replace('border-danger','border-warning');
+                strengthBox.innerHTML = 'Medium';
+                tipString = "<ul>";
+                tipString += '<li>Upper Character</li>';
+                tip.innerHTML = tipString;
+            }
+
+            else if(isLength8 & isUpper & isDigit & isSpecial) {
+                strengthBox.classList.replace('alert-danger','alert-warning');
+                strengthBox.classList.replace('border-danger','border-warning');
+                strengthBox.innerHTML = 'Medium';
+                tipString = "<ul>";
+                tipString += '<li>Lower Character</li>';
+                tip.innerHTML = tipString;
+            }
+
+            else if(isLength8 & isUpper & isLower & isSpecial) {
+                strengthBox.classList.replace('alert-danger','alert-warning');
+                strengthBox.classList.replace('border-danger','border-warning');
+                strengthBox.innerHTML = 'Medium';
+                tipString = "<ul>";
+                tipString += '<li>Digits</li>';
+                tip.innerHTML = tipString;
+            }
+
+            else if(isLength8 & isUpper & isLower & isDigit) {
+                strengthBox.classList.replace('alert-danger','alert-warning');
+                strengthBox.classList.replace('border-danger','border-warning');
+                strengthBox.innerHTML = 'Medium';
+                tipString = "<ul>";
+                tipString += '<li>Special Characters</li>';
+                tip.innerHTML = tipString;
+            }
+
+            else {
+                strengthBox.classList.replace('alert-dark','alert-danger');
+                strengthBox.classList.replace('border-dark', 'border-danger');
+                strengthBox.innerHTML = 'Weak';
+                tipString = "<ul>";
+                if(!isLength8) {
+                    tipString += '<li>8 characters</li>';
+                }
+                if(!isUpper) {
+                    tipString += '<li>uppercase</li>';
+                }
+                if(!isLower) {
+                    tipString += '<li>lowercase</li>';
+                }
+                if(!isDigit) {
+                    tipString += '<li>digit</li>';
+                }
+                if(!isSpecial) {
+                    tipString += '<li>special character</li>';
+                }
+                tipString += "</ul>";
+                tip.innerHTML = tipString;
+            }
+        }
+
+        password.addEventListener('input', () => {
+            strengthBox.style.display = 'block';
+            suggest.style.display = 'block';
+            tipString = '<ul>';
+            clearTimeout(timeout);
+            timeout = setTimeout(() => PasswordStrength(password.value), 500);
+            PasswordStrength(password.value);
+            if(password.value.length !== 0) {
+                strengthBox.style.display != 'block';
+                suggest.style.display = 'block';
+            } else {
+                strengthBox.style.display = 'none';
+                suggest.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

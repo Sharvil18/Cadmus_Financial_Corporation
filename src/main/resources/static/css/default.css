@@ -103,7 +103,7 @@ body.home {
 /* main card paragraph */
 #main-card p {
     font-family: 'Trirong', serif;
-    font-size: 22px;   
+    font-size: 22px;
     font-weight: 600;
 }
 
@@ -146,7 +146,7 @@ body.home {
     box-shadow: 0 4px 8px 0 rgba(42, 14, 88, 0.6), 0 6px 20px 0 rgb(42, 14, 88, 0.4);
     background-color: #EFD9FF;
     margin-top: 357px;
-    padding: 100px 0px 20px 0px; 
+    padding: 100px 0px 20px 0px;
 }
 
 .perk-scroller .scroller-content {
@@ -225,6 +225,14 @@ body.signup {
     font-size: 18px;
     font-weight: bold;
     margin-left: -14px;
+}
+
+#strengthBox {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    display: none;
+    marginVertical: 0px;
 }
 
 /* LOGIN.HTML STYLING */
@@ -460,7 +468,7 @@ body.aboutus {
     font-family: 'Quicksand', sans-serif;
     font-weight: 500;
     text-align: center;
-    
+
 }
 
 .aboutus .panel .bod .card-body .accordion-body {
@@ -496,7 +504,7 @@ body.aboutus {
     height: 200px;
     width: 200px;
     object-fit: cover;
-} 
+}
 
 
 /* PERK PAGE STYLING */
