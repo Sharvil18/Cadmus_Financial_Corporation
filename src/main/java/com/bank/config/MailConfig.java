@@ -1,5 +1,7 @@
 package com.bank.config;
 
+import jakarta.mail.Authenticator;
+import jakarta.mail.Session;
 import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
@@ -13,16 +15,22 @@ public class MailConfig {
 
         //Set Properties:
         Properties props = emailConfig.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls,enable", "true");
-        props.put("mail.debug", "true");
+        props.setProperty("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.ssl.enable", "true");
 
-        //Set Mail Credentials
-        emailConfig.setHost("localhost");
-        emailConfig.setPort(25);
-        emailConfig.setUsername("no-reply@cadmus.com");
-        emailConfig.setPassword("password123");
+//        Session sess = Session.getDefaultInstance(props, new Authenticator() {
+//            @Override
+//            protected jakarta.mail.PasswordAuthentication getPasswordAuthentication() {
+//                return new jakarta.mail.PasswordAuthentication("cadmus.finance.corp@gmail.com", "cghm ssum irce npjf");
+//            }
+//        });
+//
+//        sess.setDebug(true);
+
+        emailConfig.setUsername("cadmus.finance.corp@gmail.com");
+        emailConfig.setPassword("cghm ssum irce npjf");
 
         return emailConfig;
     }

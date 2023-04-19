@@ -54,8 +54,9 @@ transactType.addEventListener('change', () => {
 //Script for buttons returning from payment history / transaction history to dashboard
 const UrlString = window.location.search;
 const UrlParam = new URLSearchParams(UrlString);
-const isPayment = UrlParam.get('isPayment');
-const isTransaction = UrlParam.get('isTransaction');
+const isPayment = UrlParam.get('payment');
+const isTransaction = UrlParam.get('transaction');
+const isAddAccount = UrlParam.get('addAccount');
 if(isPayment == 'true') {
     document.getElementById('transact-btn').click();
     const transactType2 = document.getElementById('transact-type');
@@ -69,6 +70,11 @@ if(isPayment == 'true') {
 if(isTransaction == 'true') {
     document.getElementById('transact-btn').click();
     console.log('Inside isTransaction');
+}
+
+if(isAddAccount == 'true') {
+    document.getElementById('add-account-btn').click();
+    console.log('Inside isAddAccount');
 }
 
 

@@ -8,7 +8,7 @@
         <!--Container-->
         <div class="container d-flex">
             <!--Account Button-->
-            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasaccount" class="btn btn-lg account-btn" type="button"><i class="fa-regular fa-credit-card fa-xl me-2"></i>Add new Account</button>
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasaccount" class="btn btn-lg account-btn" id="add-account-btn" type="button"><i class="fa-regular fa-credit-card fa-xl me-2"></i>Add new Account</button>
             <!--End of Account Button-->
 
             <!--Transaction Button-->

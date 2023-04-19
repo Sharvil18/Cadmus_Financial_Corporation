@@ -25,7 +25,7 @@
         <c:choose>
             <c:when test="${fn:length(userAccounts) == 0}">
                 <!-- Dont Display Accounts -->
-                <c:import url="components/no_account_display.jsp"/>
+                <c:import url="components/no_account_display_view.jsp"/>
             </c:when>
             <c:otherwise>
                 <!-- Payment check -->

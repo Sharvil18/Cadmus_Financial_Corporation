@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface UserRepository extends CrudRepository<User, Integer> {
 
@@ -22,6 +24,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT verified FROM users WHERE email = :email", nativeQuery = true)
     int isVerified(@Param("email") String email);
+
+    @Query(value = "SELECT email FROM users", nativeQuery = true)
+    List<String> getAllEmails();
 
     @Modifying
     @Query(value = "INSERT INTO users (first_name, last_name, email, password, token, code, created_at) VALUES" +

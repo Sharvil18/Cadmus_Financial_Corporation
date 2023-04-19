@@ -22,7 +22,7 @@
                     <!--End of Card text-->
 
                     <!--Account Button-->
-                    <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasaccount" id="add-account-btn" class="btn btn-md account-btn mt-3 mb-3" type="button"><i class="fa-regular fa-credit-card fa-xl me-2"></i>Add new Account</button>
+                    <a href="dashboard?addAccount=true"><button class="btn btn-md account-btn mt-3 mb-3" type="button"><i class="fa-regular fa-credit-card fa-xl me-2"></i>Add new Account</button></a>
                     <!--End of Account Button-->
 
                 </div>

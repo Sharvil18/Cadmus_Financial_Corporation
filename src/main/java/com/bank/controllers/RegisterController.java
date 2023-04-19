@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -55,6 +56,12 @@ public class RegisterController {
             return registrationPage;
         }
 
+        List<String> allEmails = userRepository.getAllEmails();
+        if(allEmails.contains(email)) {
+            registrationPage.addObject("EmailExists", "Email Address is already registered. Please head to the log in section.");
+            return registrationPage;
+        }
+
         //Get token string
         String token = Token.generateToken();
 
@@ -73,7 +80,7 @@ public class RegisterController {
         userRepository.registerUser(first_name, last_name, email, hashed_password, token, code);
 
         //Send email notification
-        MailMessenger.htmlEmailMessenger("no-reply@cadmus.com", email, "Account Verification for Cadmus Financial Corporation", emailBody);
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Account Verification for Cadmus Financial Corporation", emailBody);
 
         //Return to register page
         String successMessage = "Account Registered Successfully. Please check your email and verify your account!";

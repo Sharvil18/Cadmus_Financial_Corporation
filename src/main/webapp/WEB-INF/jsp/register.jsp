@@ -62,6 +62,14 @@
             <!-- End of Display Message -->
 
             <!-- Display Message -->
+            <c:if test="${requestScope.EmailExists != null}">
+                <div class="alert alert-danger text-center border border-danger">
+                    <b>${requestScope.EmailExists}</b>
+                </div>
+            </c:if>
+            <!-- End of Display Message -->
+
+            <!-- Display Message -->
             <c:if test="${requestScope.success != null}">
                 <div class="alert alert-success text-center border border-success">
                     <b>${requestScope.success}</b>

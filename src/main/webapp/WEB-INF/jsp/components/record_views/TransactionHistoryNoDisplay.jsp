@@ -28,7 +28,7 @@
                         <!--End of Card text -->
 
                         <!-- Transaction button -->
-                        <a href="dashboard?isTransaction=true"><button class="btn btn-md my-3 px-4" type="button" style="background-color: #635bbe;border: 2px solid #191637;box-shadow: 2px 3px 6px rgb(0, 0, 145);color: white; font-size: 20px;"><i class="fa-solid fa-file-contract me-3 fa-lg"></i>Transact</button></a>
+                        <a href="dashboard?transaction=true"><button class="btn btn-md my-3 px-4" type="button" style="background-color: #635bbe;border: 2px solid #191637;box-shadow: 2px 3px 6px rgb(0, 0, 145);color: white; font-size: 20px;"><i class="fa-solid fa-file-contract me-3 fa-lg"></i>Transact</button></a>
                         <!--End of transaction button -->
                     </div>
                     <!--End of Card body -->
