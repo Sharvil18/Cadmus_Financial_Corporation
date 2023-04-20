@@ -39,3 +39,9 @@
     border: solid 2px #4C2B3E;
     border-radius: 20px 50px;
 }
+
+.interest-rate .card-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 23px;
+    text-align: center;
+}
