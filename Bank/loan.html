@@ -54,23 +54,29 @@
     </div>
     <!--End of Main Page Header-->
 
-    <div id="myGroup">
-        <p>
-            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#home-loan" aria-expanded="false"
+
+    <div class="bg-image jumbotron container mt-4">
+            <div class="justify-content-center d-flex">
+                <button class="btn btn-grad mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#home-loan" aria-expanded="false"
                 aria-controls="home-loan">
                 Home Loan
-            </button>
-            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#personal-loan" aria-expanded="false"
-                aria-controls="personal-loan">
-                Personal Loan
-            </button>
-            <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#gold-loan" aria-expanded="false"
+                        </button>
+                        <button class="btn btn-grad mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#personal-loan" aria-expanded="false"
+                        aria-controls="personal-loan">
+                        Personal Loan
+                    </button>
+
+                    <button class="btn btn-grad mx-5" type="button" data-bs-toggle="collapse" data-bs-target="#gold-loan" aria-expanded="false"
                 aria-controls="gold-loan">
                 Gold Loan
             </button>
-        </p>
+            </div>
+    </div>
     
-    
+
+
+
+    <div id="myGroup">
         <div class="collapse mb-5 pt-4" data-bs-parent="#myGroup" id="home-loan">
      
             <div class="container">
@@ -421,7 +427,9 @@
                                     </div>
                                     
                                     <div class="container mt-5" style="width: 1000px;font-family: 'Roboto', sans-serif;color: #9a7e8c;">
-                                        <p> <i>
+                                        <p> 
+                                            <b>NOTE:</b>
+                                            <i>
                                             Please take note that the above list of qualifying requirements is only indicative. Terms & Conditions apply. <br>
                                             Age at loan maturity is taken into account while determining the upper age limit. <br>
                                             Please be aware that the list of given documents is only representative. Additional documents might be required during the loan application process. <br>
@@ -1184,11 +1192,14 @@
     
                                 <br><br>
                             </div>
+
+                            <div class="tab-pane fade" id="gold-calculator-tab-pane" role="tabpanel" aria-labelledby="gold-calculator-tab"
+                            tabindex="0">
+                                
+                            </div>
     
                         </div>
-                        <div class="tab-pane fade" id="gold-calculator-tab-pane" role="tabpanel" aria-labelledby="gold-calculator-tab"
-                            tabindex="0">tab4
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -1198,6 +1209,87 @@
     
 
     <script src="js/main.js"></script>
+
+    <div class="container mt-5">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+    </div>
+
+
+    <br><br>
+        
+                                <div class="container py-5 nav-tab-section" style="width: 1100px; margin: 0px auto;">
+                                    
+                                    <div class="card bg-transparent border-0 interest-rate">
+                                        <div class="card-body" style="font-size: 20px;">
+                                            <div class="card-title mb-4" style="font-size: 28px;">
+                                                Calculate your EMIs
+                                            </div>
+                                            <div class="container" style="width: 1000px;">
+                                                <div class="card bg-transparent border-0">
+                                                    <div style="display: flex">
+                                                        <h4>Loan Amount (in <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>):</h4>
+                                                        <div style="position: absolute; right: 0px;font-family: 'Roboto', sans-serif;text-decoration: dashed;"> <u><h4 id="principalAmt"></h4></u> </div>
+                                                    </div>
+                                                    <input type="range" min="100000" max="4000000" value="4000000" class="slider" id="principal">
+                                                        <div class="d-flex" style="color: hsl(330, 12%, 40%);">
+                                                            <span onclick="updateLoan(100000)" style="margin-right: 147px;cursor: pointer;">1 L</span>
+                                                            <span onclick="updateLoan(800000)" style="margin-right: 164px;cursor: pointer;">8 L</span>
+                                                            <span onclick="updateLoan(1600000)" style="margin-right: 162px;cursor: pointer;">16 L</span>
+                                                            <span onclick="updateLoan(2400000)" style="margin-right: 159px;cursor: pointer;">24 L</span>
+                                                            <span style="cursor: pointer;" onclick="updateLoan(3200000)">32 L</span>
+                                                            <span onclick="updateLoan(4000000)" style="position: absolute;right: 0px;cursor: pointer;">40 L</span>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="container" style="width: 1000px;">
+                                                <div class="card bg-transparent border-0">
+                                                    <div style="display: flex">
+                                                        <h4>Loan Amount (in <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>):</h4>
+                                                        <div style="position: absolute; right: 0px;font-family: 'Roboto', sans-serif;text-decoration: dashed;"> <u><h4 id="principalAmt"></h4></u> </div>
+                                                    </div>
+                                                    <input type="range" min="100000" max="4000000" value="4000000" class="slider" id="principal">
+                                                        <div class="d-flex" style="color: hsl(330, 12%, 40%);">
+                                                            <span onclick="updateLoan(100000)" style="margin-right: 147px;cursor: pointer;">1 L</span>
+                                                            <span onclick="updateLoan(800000)" style="margin-right: 164px;cursor: pointer;">8 L</span>
+                                                            <span onclick="updateLoan(1600000)" style="margin-right: 162px;cursor: pointer;">16 L</span>
+                                                            <span onclick="updateLoan(2400000)" style="margin-right: 159px;cursor: pointer;">24 L</span>
+                                                            <span style="cursor: pointer;" onclick="updateLoan(3200000)">32 L</span>
+                                                            <span onclick="updateLoan(4000000)" style="position: absolute;right: 0px;cursor: pointer;">40 L</span>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                    </div>
+                                    
+                                    <div class="container mt-5" style="width: 1000px;font-family: 'Roboto', sans-serif;color: #9a7e8c;">
+                                        <p> 
+                                            <b>NOTE:</b><br>
+                                            <i>
+                                            Please take note that the above list of qualifying requirements is only indicative. Terms & Conditions apply. <br>
+                                            Age at loan maturity is taken into account while determining the upper age limit. <br>
+                                            Please be aware that the list of given documents is only representative. Additional documents might be required during the loan application process. <br>
+                                            </i>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                                <script>
+                                    var slider = document.getElementById("principal");
+                                    var output = document.getElementById("principalAmt");
+                                    output.innerHTML = slider.value;
+                                    
+                                    slider.oninput = function() {
+                                      output.innerHTML = this.value;
+                                    }
+
+                                    function updateLoan(amt) {
+                                        slider.value = amt;
+                                        output.innerHTML = amt;
+                                    }
+                                    </script>
 
 </body>
 
