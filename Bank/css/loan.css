@@ -50,7 +50,7 @@
     border: 2px solid #003300;
     box-shadow: 2px 4px 10px #003300;
     background-image: url('../images/loan/loan-bg-2.jpg');
-    background-size: contain; 
+    background-size: cover; 
     height: 150px; 
     border-radius: 25px;
     padding-top: 25px;
@@ -74,6 +74,42 @@
     outline: none;
     accent-color: #4C2B3E;
   }
+           
+  .apply-btn .btn-grad {
+    background-image: linear-gradient(to right, #00C9FF 0%, #92FE9D  51%, #00C9FF  100%);
+    font-family: 'Oswald', sans-serif;
+    font-style: bold;
+    margin: 10px;
+    padding: 15px 70px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: #006480; 
+    border: 3px solid #006480;
+    font-size: 25px;           
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+  }
+
+  .apply-btn .btn-grad:hover {
+    background-position: right center; 
+    color: #017e0e;
+    text-decoration: none;
+  }
+
+  .loan-submit-btn {
+    background-color: #007899;
+    border: 2px solid hsl(193, 100%, 10%);
+    box-shadow: 2px 3px 6px #005066;
+    color: white;
+  }
+
+  .loan-submit-btn:hover {
+    background-color: #ccf3ff;
+  }
+ 
 
 
            
