@@ -12,6 +12,5 @@ Spring Initializr -> Spring Web, Spring Data JPA, MySQL Driver, Java Mail Sender
 For more dependencies, check pom.xml file.
 
 GO TO my.ini CONFIGURATION FILE OF DATABASE AND MAKE THE FOLLOWING CHANGE:
-
 max_allowed_packet = 128*1024*1024
 
