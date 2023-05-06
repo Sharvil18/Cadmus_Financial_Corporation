@@ -151,4 +151,29 @@ public class AppController {
         transactionHistoryPDFExporter.export(response);
     }
 
+    @GetMapping("/loan")
+    public ModelAndView getLoan(HttpSession session, RedirectAttributes redirectAttributes) {
+        //Set view
+        ModelAndView getLoanPage = new ModelAndView("loan");
+
+        //Get the details of the logged in user
+        user = (User) session.getAttribute("user");
+
+        //Get the accounts of the logged in user
+        List<Account> getUserAccounts = accountRepository.getUserAccountsById(user.getUser_id());
+
+        //Get total balance
+        BigDecimal totalAccountBalance =  accountRepository.getTotalBalance(user.getUser_id());
+        int accBalance;
+        if(totalAccountBalance == null)
+             accBalance = 0;
+        else
+            accBalance = totalAccountBalance.intValue();
+
+        getLoanPage.addObject("userAccounts", getUserAccounts);
+        getLoanPage.addObject("totalAccountBalance", accBalance);
+        return getLoanPage;
+    }
+
+
 }

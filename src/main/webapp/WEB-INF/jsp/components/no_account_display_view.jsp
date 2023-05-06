@@ -5,15 +5,14 @@
 <!--No account container-->
         <div class="container mt-3">
             <!--No account card-->
-            <div class="card no-account-card">
+            <div class="card no-account-card shadow">
                 <!--Card body-->
                 <div class="card-body">
                     <!--Card title-->
-                    <h1 class="card-title">
+                    <h1 class="card-header">
                         <i class="fa-solid fa-handshake-slash text-danger me-3 fa-lg"></i>NO Registered Accounts
                     </h1>
                     <!--End of Card title-->
-                    <hr>
                     <!--Card text-->
                     <div class="card-text">
                         You currently do not have any registered accounts. <br>

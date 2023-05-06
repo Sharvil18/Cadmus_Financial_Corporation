@@ -10,4 +10,10 @@ public class GenerateAccountNumber {
         String accNum = UUIDNum.substring( UUIDNum.length() - 10);
         return accNum;
     }
+
+    public static String generateApplicationNumber() {
+        String applicationNumber = UUID.randomUUID().toString();
+        applicationNumber = applicationNumber.substring(applicationNumber.length() - 10);
+        return applicationNumber;
+    }
 }

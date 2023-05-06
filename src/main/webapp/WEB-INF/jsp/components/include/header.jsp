@@ -18,6 +18,7 @@
                     <li><a href="dashboard">Dashboard</a></li>
                     <li><a href="payment_history">Payment History</a></li>
                     <li><a href="transact_history">Transaction History</a></li>
+                    <li><a href="loan">Loan</a></li>
                 </nav>
                 <!--End of Navigation-->
 

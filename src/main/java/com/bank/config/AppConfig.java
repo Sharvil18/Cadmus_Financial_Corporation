@@ -22,7 +22,8 @@ public class AppConfig extends WebMvcConfigurationSupport {
                         "/app/dashboard/css/**" , "/app/dashboard/images/**", "/app/dashboard/js/**",
                         "/account/css/**" , "/account/images/**", "/account/js/**",
                         "/login/css/**" , "/login/images/**", "/login/js/**",
-                        "/transact/css/**" , "/transact/images/**", "/transact/js/**"
+                        "/transact/css/**" , "/transact/images/**", "/transact/js/**",
+                        "/apply/css/**" , "/apply/images/**", "/apply/js/**"
                         )
                 .addResourceLocations("classpath:/static/css/", "classpath:/static/images/", "classpath:/static/js/");
     }
