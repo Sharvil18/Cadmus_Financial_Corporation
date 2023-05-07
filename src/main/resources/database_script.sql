@@ -88,3 +88,52 @@ select * from v_transaction_history;
 select * from v_payments;
 
 
+-- ADMIN TABLE CREATION
+
+-- department table
+CREATE TABLE department (
+	department_id INT PRIMARY KEY,
+	department_name INT NOT NULL,
+	department_head VARCHAR(255) NOT NULL,
+	department_description VARCHAR(255));
+
+--branch table
+CREATE TABLE branch (
+	branch_id INT PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	address VARCHAR(255) NOT NULL,
+	city VARCHAR(255) NOT NULL,
+	state VARCHAR(255) NOT NULL,
+	contact VARCHAR(255) NOT NULL,
+	manager_id VARCHAR(255) NOT NULL);
+
+--employee table
+CREATE TABLE employee (
+  	employee_id INT PRIMARY KEY,
+  	first_name VARCHAR(100) NOT NULL,
+  	last_name VARCHAR(100) NOT NULL,
+  	email VARCHAR(100) NOT NULL,
+  	contact VARCHAR(20) NOT NULL,
+  	address VARCHAR(255) NOT NULL,
+  	city VARCHAR(100) NOT NULL,
+  	state VARCHAR(100) NOT NULL,
+  	postal_code VARCHAR(20) NOT NULL,
+  	hire_date DATE NOT NULL,
+  	age INT NOT NULL,
+  	gender VARCHAR(50) NOT NULL,
+  	marital_status VARCHAR(100) NOT NULL,
+  	education_level VARCHAR(100) NOT NULL,
+  	primary_language VARCHAR(100) NOT NULL,
+  	subsidiary_language VARCHAR(255) NOT NULL,
+  	employee_type VARCHAR(100) NOT NULL,
+  	employee_status VARCHAR(100) NOT NULL,
+  	job_title VARCHAR(100) NOT NULL,
+	salary DECIMAL(10, 2) NOT NULL,
+	department_id INT NOT NULL,
+  	branch_id INT NOT NULL
+  	manager_id INT,
+  	FOREIGN_KEY(manager_id) REFERENCES employee(employee_id),
+	FOREIGN_KEY(department_id) REFERENCES department(department_id),
+	FOREIGN_KEY(branch_id) REFERENCES branch(branch_id));
+
+
