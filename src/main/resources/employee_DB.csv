@@ -1,0 +1,108 @@
+employee_id,first_name,last_name,email,contact,address,city,state,postal_code,hire_date,age,gender,marital_status,education_level,primary_language,subsidiary_language,employee_type,employee_status,job_title,salary,department_id,branch_id,manager_id
+8,Akash,Gupta,akash.gupta@gmail.com,9876543210,MG Road,Bangalore,Karnataka,560001,01-05-2022,27,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Financial Analyst,75000,1,7,20
+9,Amit,Shah,amit.shah@gmail.com,9876543211,Nehru Road,Mumbai,Maharashtra,400001,01-05-2022,29,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Accountant,45000,1,1,19
+10,Shruti,Patil,shruti.patil@gmail.com,9876543212,Karve Road,Pune,Maharashtra,411001,01-05-2022,25,Female,Single,Graduate,English,Marathi,Full Time,Active,Accountant,40000,1,4,19
+11,Rajesh,Kumar,rajesh.kumar@gmail.com,9876543213,Suryanagar,Hyderabad,Telangana,500001,01-05-2022,28,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Tax Manager,80000,1,2,NULL
+12,Manpreet,Kaur,manpreet.kaur@gmail.com,9876543214,Ferozepur Road,Ludhiana,Punjab,141001,01-05-2022,26,Female,Single,Graduate,English,Punjabi,Part Time,Active,Accountant,25000,1,5,19
+13,Rahul,Verma,rahul.verma@gmail.com,9876543215,Connaught Place,New Delhi,Delhi,110001,01-05-2022,24,Male,Single,Graduate,English,Hindi,Full Time,Active,Accountant,40000,1,6,19
+14,Priya,Singh,priya.singh@gmail.com,9876543216,Omkar Road,Chennai,Tamil Nadu,600001,01-05-2022,27,Female,Married,Post Graduate,English,Tamil,Full Time,Active,Financial Reporting Manager,75000,1,7,20
+15,Aarav,Kapoor,aarav.kapoor@gmail.com,9876543233,Ravi Road,Pune,Maharashtra,400001,01-05-2022,25,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Bookkeeper,40000,1,4,19
+16,Isha,Chopra,isha.chopra@gmail.com,9876543234,Jaya Nagar,Hyderabad,Telangana,500001,01-05-2022,29,Female,Married,Post Graduate,English,Hindi,Full Time,Active,Treasury Analyst,75000,1,2,20
+17,Anika,Jain,anika.jain@gmail.com,9876543238,Shanti Park,Ahmedabad,Gujarat,380001,01-05-2022,27,Female,Married,Graduate,English,Gujarati,Full Time,Active,Tax Compliance Officer,55000,1,3,11
+18,Rajat,Singh,rajat.singh@gmail.com,9876543240,GT Road,Amritsar,Punjab,143001,01-05-2022,28,Male,Married,Post Graduate,English,Punjabi,Full Time,Active,Tax Counsel,30000,1,5,11
+19,Mira,Rao,mira.rao@gmail.com,9876543242,Pooja Nagar,Delhi,Delhi,110001,01-05-2022,26,Female,Single,Graduate,English,Hindi,Part Time,Active,Accountant Manager,90000,1,6,NULL
+20,Aryan,Kumar,aryan.kumar@gmail.com,9876543247,Anna Salai,Chennai,Tamil Nadu,600001,01-05-2022,24,Male,Single,Graduate,English,Tamil,Full Time,Active,Finance Manager,85000,2,7,NULL
+21,Kirti,Shah,kirti.shah@gmail.com,9876543217,Bapu Nagar,Ahmedabad,Gujarat,380024,02-05-2022,26,Female,Single,Graduate,English,Gujarati,Part Time,Active,Internal Auditor,28000,2,3,27
+22,Ankit,Nair,ankit.nair@gmail.com,9876543218,Park Street,Pune,Maharashtra,700016,02-05-2022,30,Male,Married,Post Graduate,English,Bengali,Full Time,Active,External Auditor,55000,2,4,27
+23,Nisha,Rastogi,nisha.rastogi@gmail.com,9876543219,Shastri Nagar,Pune,Maharashtra,302016,02-05-2022,28,Female,Single,Post Graduate,English,Hindi,Full Time,Active,IT Auditor,40000,2,4,27
+24,Rahul,Saxena,rahul.saxena@gmail.com,9876543220,DLF Phase-1,Pune,Maharashtra,122002,02-05-2022,29,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Audit Supervisor,75000,2,4,27
+25,Akanksha,Pathak,akanksha.pathak@gmail.com,9876543221,Tilak Nagar,Mumbai,Maharashtra,400089,02-05-2022,25,Female,Single,Graduate,English,Hindi,Full Time,Active,Quality Control Auditor,50000,2,1,27
+26,Amitabh,Kumar,amitabh.kumar@gmail.com,9876543222,Sector-16,Noida,New Delhi,201301,02-05-2022,27,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Financial Auditor,70000,2,11,27
+27,Sneha,Yadav,sneha.yadav@gmail.com,9876543223,Civil Lines,Jalandhar,Punjab,144001,02-05-2022,28,Female,Married,Graduate,English,Punjabi,Part Time,Active,Audit Manager,30000,2,5,NULL
+28,Ravi,Narang,ravi.narang@gmail.com,9876543224,Ashok Vihar,Delhi,Delhi,110052,03-05-2022,32,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Teller,40000,3,6,37
+29,Sneha,Mehta,sneha.mehta@gmail.com,9876543225,Kandivali,Mumbai,Maharashtra,400101,03-05-2022,29,Female,Single,Post Graduate,English,Marathi,Full Time,Active,Teller,40000,3,1,37
+30,Aditya,Joshi,aditya.joshi@gmail.com,9876543226,Maninagar,Ahmedabad,Gujarat,380008,03-05-2022,27,Male,Single,Graduate,English,Gujarati,Full Time,Active,Teller,40000,3,3,37
+31,Simran,Mehra,simran.mehra@gmail.com,9876543227,Sector-23,Pune,Maharashtra,122022,03-05-2022,24,Female,Single,Graduate,English,Hindi,Full Time,Active,Teller,40000,3,4,37
+32,Rajesh,Bhatia,rajesh.bhatia@gmail.com,9876543228,Model Town,Ludhiana,Punjab,141002,03-05-2022,35,Male,Married,Post Graduate,English,Punjabi,Full Time,Active,Teller,40000,3,5,37
+33,Priya,Chawla,priya.chawla@gmail.com,9876543229,Malviya Nagar,Pune,Maharashtra,302017,03-05-2022,26,Female,Single,Graduate,English,Hindi,Full Time,Active,Teller,45000,3,4,37
+34,Rakesh,Sharma,rakesh.sharma@gmail.com,9876543230,Nehru Nagar,Pune,Maharashtra,201001,03-05-2022,31,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Payment Analyst,66000,3,4,37
+35,Sahil,Malhotra,sahil.malhotra@gmail.com,9876543235,Green Park,Delhi,Delhi,110016,02-05-2022,27,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Loan Analyst,55000,3,6,37
+36,Rohit,Patel,rohit.patel@gmail.com,9876543236,Laxmi Nagar,Ahmedabad,Gujarat,380008,02-05-2022,28,Male,Single,Graduate,English,Gujarati,Full Time,Active,Teller,40000,3,3,37
+37,Deepika,Singh,deepika.singh@gmail.com,9876543237,Powai,Mumbai,Maharashtra,400076,02-05-2022,29,Female,Married,Post Graduate,English,Marathi,Full Time,Active,Operations Manager,80000,3,1,NULL
+38,Jaspreet,Kaur,jaspreet.kaur@gmail.com,9876543243,Dwarka,Pune,Maharashtra,411001,02-05-2022,32,Female,Married,Post Graduate,English,Hindi,Full Time,Active,Senior Branch Manager,85000,3,4,39
+39,Praveen,Shetty,praveen.shetty@gmail.com,9876543244,Rajendra Nagar,Pune,Maharashtra,411001,02-05-2022,32,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Branch Manager,110000,3,4,NULL
+40,Pallavi,Ahuja,pallavi.ahuja@gmail.com,9876543201,Eden Garden,Delhi,Delhi,110016,02-05-2022,26,Female,Single,Graduate,English,Hindi,Part Time,Active,Investment Banking Analyst,70000,6,6,48
+41,Rajat,Verma,rajat.verma@gmail.com,9876543202,Shankar Nagar,Nagpur,Maharashtra,440010,02-05-2022,30,Male,Married,Post Graduate,English,Marathi,Full Time,Active,Investment Banking Associate,85000,6,1,48
+42,Arjun,Kapoor,arjun.kapoor@gmail.com,9876543203,Ellis Road,Chennai,Tamil Nadu,600002,02-05-2022,28,Male,Single,Post Graduate,English,Tamil,Full Time,Active,Asset Management,75000,6,7,48
+43,Tanvi,Singh,tanvi.singh@gmail.com,9876543204,Tagore Nagar,Ludhiana,Punjab,141002,02-05-2022,29,Female,Married,Post Graduate,English,Punjabi,Full Time,Active,Corporate Banking Analyst,50000,6,5,48
+44,Arun,Shah,arun.shah@gmail.com,9876543205,Satellite Road,Ahmedabad,Gujarat,380015,02-05-2022,25,Male,Single,Graduate,English,Gujarati,Full Time,Active,Equity Research,80000,6,3,48
+45,Shreya,Kumar,shreya.kumar@gmail.com,9876543206,Bhakti Marg,Hyderabad,Telangana,500033,02-05-2022,27,Female,Single,Post Graduate,English,Telugu,Full Time,Active,Capital Markets Associate,70000,6,2,48
+46,Neha,Shukla,neha.shukla@gmail.com,9876543276,RJ Road,Pune,Maharashtra,411001,02-05-2022,25,Female,Single,Post Graduate,English,Marathi,Full Time,Active,Derivatives Analyst,85000,6,4,48
+47,Sachin,Arora,sachin.arora@gmail.com,9876543278,Yogi Marg,Hyderabad,Telangana,500033,02-05-2022,28,Male,Married,Post Graduate,English,Telugu,Full Time,Active,Investment Banking Analyst,70000,6,2,48
+48,Raman,Chawla,raman.chawla@gmail.com,9876543232,Lawrence Road,Amritsar,Punjab,143001,02-05-2022,29,Male,Single,Post Graduate,English,Punjabi,Full Time,Active,Financial Investment Manager,95000,6,5,NULL
+49,Nitesh,Mehra,nitesh.mehra@gmail.com,8765432101,Viman Nagar,Pune,Maharashtra,411014,02-05-2022,25,Male,Single,Bachelor's Degree,English,Hindi,Full Time,Active,Customer Service Representative,40000,5,4,66
+50,Aditi,Chopra,aditi.chopra@gmail.com,8765432102,Zenith Lane,Hyderabad,Telangana,500033,02-05-2022,28,Female,Married,Bachelor's Degree,English,Telugu,Full Time,Active,Customer Service Representative,40000,5,2,66
+51,Kunal,Joshi,kunal.joshi@gmail.com,8765432103,Naranpura,Ahmedabad,Gujarat,380013,02-05-2022,27,Male,Single,Bachelor's Degree,English,Gujarati,Full Time,Active,Customer Service Representative,40000,5,3,66
+52,Kavita,Singh,kavita.singh@gmail.com,8765432104,Kailash Heights,Ludhiana,Punjab,141002,02-05-2022,30,Female,Married,Bachelor's Degree,English,Punjabi,Full Time,Active,Customer Service Representative,40000,5,5,66
+53,Sahil,Kulkarni,sahil.kulkarni@gmail.com,8765432105,Lajpat Nagar,Delhi,Delhi,110024,02-05-2022,26,Male,Single,Bachelor's Degree,English,Hindi,Full Time,Active,Customer Service Representative,40000,5,6,66
+54,Mira,Kumar,mira.kumar@gmail.com,8765432106,Adyar,Chennai,Tamil Nadu,600020,02-05-2022,29,Female,Married,Bachelor's Degree,English,Tamil,Full Time,Active,Call Center Representative,40000,5,7,66
+55,Pranav,Sharma,pranav.sharma@gmail.com,9812345671,Bhandarkar Road,Pune,Maharashtra,411004,02-05-2022,24,Male,Single,Bachelor's Degree,English,Marathi,Full Time,Active,Call Center Representative,40000,5,4,66
+56,Aarav,Konar,aarav.konar@gmail.com,9812345672,Begumpet,Hyderabad,Telangana,500016,02-05-2022,28,Male,Married,Bachelor's Degree,English,Telugu,Full Time,Active,Call Center Representative,40000,5,2,66
+57,Kavya,Patel,kavya.patel@gmail.com,9812345673,Navrangpura,Ahmedabad,Gujarat,380009,02-05-2022,26,Female,Single,Bachelor's Degree,English,Gujarati,Full Time,Active,Call Center Representative,40000,5,3,66
+58,Aman,Mitra,aman.mitra@gmail.com,9812345674,Rani Ka Bagh,Amritsar,Punjab,143001,02-05-2022,29,Male,Married,Bachelor's Degree,English,Punjabi,Full Time,Active,Call Center Representative,40000,5,5,66
+59,Anaya,Kaur,anaya.kaur@gmail.com,9812345675,Safdarjung Enclave,New Delhi,Delhi,110029,02-05-2022,30,Female,Single,Bachelor's Degree,English,Hindi,Full Time,Active,Call Center Representative,40000,5,6,66
+60,Arjun,Suresh,arjun.suresh@gmail.com,9812345676,Velachery,Chennai,Tamil Nadu,600042,02-05-2022,27,Male,Single,Bachelor's Degree,English,Tamil,Full Time,Active,Call Center Representative,40000,5,7,66
+61,Srishti,Nair,srishti.nair@gmail.com,9812345677,Rajiv Chowk,Pune,Maharashtra,122001,02-05-2022,25,Female,Single,Bachelor's Degree,English,Hindi,Full Time,Active,Call Center Representative,40000,5,4,66
+62,Ria,Desai,ria.desai@gmail.com,9012345678,Main Street,Mumbai,Maharashtra,400001,01-01-2020,28,Female,Single,Graduate,English,English,Full-time,Active,Client Service Specialist,50000,5,1,66
+63,Rajat,Reddy,rajat.reddy@gmail.com,9123456789,Shanti Nagar,Hyderabad,Telangana,500001,01-01-2019,30,Male,Married,Graduate,English,Telugu,Full-time,Active,Relationship Manager,45000,5,2,66
+64,Kavya,Shah,kavya.shah@gmail.com,9234567890,Bliss Residency,Ahmedabad,Gujarat,380001,01-05-2020,25,Female,Single,Graduate,English,Gujarati,Full-time,Active,Customer Service Trainer,45000,5,3,66
+65,Karan,Singh,karan.singh@gmail.com,9345678901,Paldi Society,Ludhiana,Punjab,141001,01-01-2018,32,Male,Married,Graduate,English,Punjabi,Full-time,Active,Service Desk,40000,5,5,66
+66,Isha,Malhotra,isha.malhotra@gmail.com,9456789012,Vijay Nagar Colony,New Delhi,Delhi,110001,01-01-2017,32,Female,Married,Graduate,English,Punjabi,Full-time,Active,Customer Service Manager,80000,5,6,NULL
+67,Shalini,Kulkarni,shalini.kulkarni@gmail.com,9820845678,Kothrud,Pune,Maharashtra,411038,08-05-2021,25,Female,Married,Graduate,English,Hindi,Full-Time,Active,HR Generalist,55000,7,4,79
+68,Sneha,Rao,sneha.rao@gmail.com,9892307654,Indigo Lane,Hyderabad,Telangana,500033,18-03-2021,27,Female,Single,Master of Computer Applications,English,Telugu,Full-Time,Active,HR Coordinator,40000,7,2,79
+69,Krishna,Patel,krishna.patel@gmail.com,9823014567,Sarkhej,Ahmedabad,Gujarat,380055,11-02-2021,28,Male,Single,Graduate,English,Gujarati,Full-Time,Active,HR Administrator,45000,7,3,79
+70,Harpreet,Singh,harpreet.singh@gmail.com,9812323456,Lakshya Residency,Ludhiana,Punjab,141002,21-01-2021,29,Male,Married,Graduate,English,Punjabi,Full-Time,Active,Recruitment Specialist,45000,7,5,79
+71,Meena,Kumar,meena.kumar@gmail.com,4876543210,Safdarjung,New Delhi,Delhi,110029,06-04-2021,26,Female,Single,Post Graduate,English,Hindi,Full-Time,Active,Recruitment Specialist,45000,7,6,79
+72,Vikram,Chakravarthy,vikram.chakravarthy@gmail.com,9884487654,T Nagar,Chennai,Tamil Nadu,600017,02-06-2021,24,Male,Single,Graduate,English,Tamil,Full-Time,Active,Recruitment Specialist,45000,7,7,79
+73,Manasi,Goel,manasi.goel@gmail.com,9876543280,Sahakar Nagar,Pune,Maharashtra,411009,08-05-2023,25,Female,Single,Graduate,English,Marathi,Full Time,Active,Talent Acquisition Specialist,40000,7,4,79
+74,Siddharth,Gupta,siddharth.gupta@gmail.com,9876543239,Ekalavya Lane,Hyderabad,Telangana,500033,08-05-2023,28,Male,Married,Post Graduate,English,Telugu,Full Time,Active,Talent Acquisition Specialist,40000,7,2,79
+75,Krishna,Sharma,krishna.sharma@gmail.com,9876543241,Wazirpur Road,Ahmedabad,Gujarat,380015,08-05-2023,27,Male,Single,Graduate,English,Gujarati,Full Time,Active,Compensation and Benefits Manager,55000,7,3,79
+76,Rahul,Mehta,rahul.mehta@gmail.com,9876543245,Rajaji Nagar,Ludhiana,Punjab,141002,08-05-2023,30,Male,Married,Post Graduate,English,Punjabi,Full Time,Active,Employee Relations Manager,45000,7,5,79
+77,Nandini,Menon,nandini.menon@gmail.com,9876543248,Surya Lane,Chennai,Tamil Nadu,600002,08-05-2023,26,Female,Single,Graduate,English,Tamil,Part Time,Active,Employee Engagement Specialist,40000,7,7,79
+78,Karan,Hariharan,karan.hariharan@gmail.com,9876543249,Jasmine Heights,Delhi,Delhi,110016,08-05-2023,29,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Diversity and Inclusion Specialist,40000,7,6,79
+79,Mihir,Shah,mihir.shah@gmail.com,9876543250,Sita Nagar,Pune,Maharashtra,440010,08-05-2023,27,Male,Single,Graduate,English,Marathi,Full Time,Active,HR Manager,90000,7,4,NULL
+80,Pallavi,Ahuja,pallavi.ahuja@gmail.com,9876543281,Raj Nagar,New Delhi,Delhi,110016,02-05-2022,26,Female,Single,Graduate,English,Hindi,Part Time,Active,IT Security Analyst,60000,8,6,90
+81,Rajat,Verma,rajat.verma@gmail.com,9876543282,Gokulam,Nagpur,Maharashtra,440010,02-05-2022,30,Male,Married,Post Graduate,English,Marathi,Full Time,Active,Network Administrator,85000,8,1,90
+82,Naveen,Ghosh,naveen.ghosh@gmail.com,9876543283,Trishul Road,Chennai,Tamil Nadu,600002,02-05-2022,28,Male,Single,Post Graduate,English,Tamil,Full Time,Active,Systems Administrator,75000,8,7,90
+83,Nidhi,Singh,nidhi.singh@gmail.com,9876543284,Model Town Road,Ludhiana,Punjab,141002,02-05-2022,29,Female,Married,Post Graduate,English,Punjabi,Full Time,Active,Database Administrator,50000,8,5,90
+84,Arun,Joshi,arun.joshi@gmail.com,9876543285,SG Road,Ahmedabad,Gujarat,380015,02-05-2022,25,Male,Single,Graduate,English,Gujarati,Full Time,Active,Cybersecurity Analyst,80000,8,3,90
+85,Shreya,Mahajan,shreya.mahajan@gmail.com,9876543286,Jubilee Hills Road,Hyderabad,Telangana,500033,02-05-2022,27,Female,Single,Post Graduate,English,Telugu,Full Time,Active,Web Developer,45000,8,2,90
+86,Ravi,Narang,ravi.narang@gmail.com,9876543267,Lavender Heights,New Delhi,Delhi,110052,03-05-2022,32,Male,Married,Post Graduate,English,Hindi,Full Time,Active,UX/UI Designer,50000,8,6,90
+87,Sneha,Mehta,sneha.mehta@gmail.com,9876543269,Taramani,Mumbai,Maharashtra,400101,03-05-2022,29,Female,Single,Post Graduate,English,Marathi,Full Time,Active,IT Support,40000,8,1,90
+88,Aditya,Joshi,aditya.joshi@gmail.com,9876543273,Prabhat Road,Ahmedabad,Gujarat,380008,03-05-2022,27,Male,Single,Graduate,English,Gujarati,Full Time,Active,IT Support,40000,8,3,90
+89,Simran,Mehra,simran.mehra@gmail.com,9876543275,Oasis Court,Pune,Maharashtra,122022,03-05-2022,24,Female,Single,Graduate,English,Hindi,Full Time,Active,Cloud Architect,70000,8,4,90
+90,Rajesh,Bhatia,rajesh.bhatia@gmail.com,9876543271,Chanakyapuri,Ludhiana,Punjab,141002,03-05-2022,35,Male,Married,Post Graduate,English,Punjabi,Full Time,Active,IT Manager,90000,8,5,NULL
+91,Manav,Dhawan,manav.dhawan@gmail.com,9876543251,Baner Road,Pune,Maharashtra,411045,02-05-2022,27,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Digital Marketing,60000,10,4,101
+92,Shruti,Rao,shruti.rao@gmail.com,9876543255,Jubilee Hills,Hyderabad,Telangana,500033,02-05-2022,25,Female,Single,Graduate,English,Telugu,Full Time,Active,Product Marketing,50000,10,2,101
+93,Jay,Patel,jay.patel@gmail.com,9876543259,Mahim Road,Pune,Maharashtra,411014,02-05-2022,28,Male,Married,Post Graduate,English,Gujarati,Full Time,Active,Brand Marketing,45000,10,4,101
+94,Amrita,Dube,amrita.dube@gmail.com,9876543263,Durga Nagar,Jalandhar,Punjab,144003,02-05-2022,29,Female,Married,Graduate,English,Punjabi,Full Time,Active,Marketing Analyst,55000,10,5,101
+95,Aditya,Mishra,aditya.mishra@gmail.com,9876543266,Kalkaji,New Delhi,Delhi,110019,02-05-2022,26,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Customer Insights Analyst,55000,10,6,101
+96,Aarav,Goyal,aarav.goyal@gmail.com,9876543272,Beach Road,Chennai,Tamil Nadu,600005,02-05-2022,27,Male,Single,Post Graduate,English,Tamil,Full Time,Active,Content Marketing,50000,10,7,101
+97,Pooja,Kadam,pooja.kadam@gmail.com,9876543277,Kasturba Road,Delhi,New Delhi,110052,02-05-2022,26,Female,Single,Post Graduate,English,Hindi,Full Time,Active,Social Media Marketing,45000,10,11,101
+98,Akash,Saxena,akash.saxena@gmail.com,9876543279,Jayanagar,Hyderabad,Telangana,500032,02-05-2022,29,Male,Married,Post Graduate,English,Telugu,Full Time,Active,Events Manager,55000,10,2,101
+99,Prachi,Jain,prachi.jain@gmail.com,9876543231,Kothrud,Pune,Maharashtra,411038,02-05-2022,27,Female,Single,Post Graduate,English,Marathi,Full Time,Active,Public Relations Manager,80000,10,4,101
+100,Rashi,Chopra,rashi.chopra@gmail.com,9876543268,Lohia Lane,Pune,Maharashtra,411004,03-05-2022,27,Female,Single,Post Graduate,English,Marathi,Full Time,Active,Advertising Manager,60000,10,4,101
+101,Vikram,Trivedi,vikram.trivedi@gmail.com,9876543270,Panjagutta,Hyderabad,Telangana,500082,03-05-2022,31,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Marketing Manager,95000,10,2,NULL
+102,Nandini,Krishnan,nandini.krishnan@gmail.com,9876543274,Near C.G. Road,Ahmedabad,Gujarat,380009,03-05-2022,28,Female,Single,Graduate,English,Gujarati,Full Time,Active,Sales Representative,45000,12,3,114
+103,Rohan,Singh,rohan.singh@gmail.com,9876543252,Sahar Road,Mumbai,Maharashtra,400099,02-05-2022,27,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Sales Representative,45000,12,1,114
+104,Shweta,Gupta,shweta.gupta@gmail.com,9876543256,Sankaranagar,Pune,Maharashtra,411001,02-05-2022,28,Female,Married,Graduate,English,Marathi,Full Time,Active,Sales Representative,45000,12,4,114
+105,Rahul,Goyal,rahul.goyal@gmail.com,9876543260,Banjara Hills,Hyderabad,Telangana,500034,02-05-2022,29,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Sales Representative ,45000,12,2,114
+106,Komal,Verma,komal.verma@gmail.com,9876543264,Sarkhej Road,Ahmedabad,Gujarat,380054,02-05-2022,26,Female,Single,Graduate,English,Gujarati,Full Time,Active,Sales Executive,45000,12,3,114
+107,Manoj,Sharma,manoj.sharma@gmail.com,9876543253,Gandhi Road,Mumbai,Maharashtra,400001,02-05-2022,32,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Sales Executive,45000,12,1,114
+108,Deepa,Patil,deepa.patil@gmail.com,9876543257,Swargate,Pune,Maharashtra,411042,02-05-2022,27,Female,Single,Post Graduate,English,Marathi,Full Time,Active,Sales Consultant,50000,12,4,114
+109,Vikas,Khanna,vikas.khanna@gmail.com,9876543261,Karol Bagh,Delhi,Delhi,110005,02-05-2022,28,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Territory Sales Manager,60000,12,6,114
+110,Komal,Joshi,komal.joshi@gmail.com,9876543265,Lohia Nagar,Ahmedabad,Gujarat,380007,02-05-2022,26,Female,Single,Graduate,English,Gujarati,Part Time,Active,Sales Trainer,45000,12,3,114
+111,Anjali,Deshmukh,anjali.deshmukh@gmail.com,9876543254,Janakpuri,Pune,Maharashtra,411042,02-05-2022,28,Female,Single,Post Graduate,English,Marathi,Full Time,Active,Regional Sales Manager,60000,12,4,114
+112,Varun,Bajaj,varun.bajaj@gmail.com,9876543258,Wazirabad,Delhi,Delhi,110084,02-05-2022,30,Male,Married,Post Graduate,English,Hindi,Full Time,Active,Mortgage Loan Officer,50000,12,6,114
+113,Jatin,Rana,jatin.rana@gmail.com,9876543262,Turquoise Road,Ahmedabad,Gujarat,122001,02-05-2022,28,Male,Single,Post Graduate,English,Hindi,Full Time,Active,Sales Coordinator,45000,12,3,114
+114,Kavya,Thakur,kavya.thakur@gmail.com,9876543246,Satyam Towers,Hyderabad,Telangana,500016,02-05-2022,29,Female,Married,Post Graduate,English,Telugu,Full Time,Active,Sales Manager,90000,12,2,NULL
