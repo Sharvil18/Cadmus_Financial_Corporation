@@ -10,9 +10,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/fontawesome/css/all.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="css/default.css">
     <title>Register</title>
 </head>
+<style>
+.custom-popover {
+    --bs-popover-max-width: 400px;
+    --bs-popover-header-bg: white;
+    --bs-popover-border-color: black;
+    font-size: 16px;
+}
+
+.custom-popover .popover-header {
+    font-size: 20px;
+    font-weight: bold;
+}
+</style>
 <body class="d-flex align-items-center justify-content-center bg-image signup">
 
     <!--Main Page Header-->
@@ -112,7 +128,9 @@
                         <form:input type="password" path="password" id="passwordInput" class="form-control form-control-lg" placeholder="Enter Password" />
                         <form:errors path="password" class="text-white bg-danger px-2" style="font-family: 'BioRhyme', serif;display: inline-block; margin-top: 5px" />
                         <!-- Password strength meter -->
-                        <div id="strengthBox" class="text-center mt-4 mb-3 alert border alert-dark border-dark">Password Strength Meter</div>
+                        <span tabindex="0" id="tipPassword" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Tips for a stronger password" data-bs-html="true" data-bs-custom-class="custom-popover" data-bs-placement="left" data-bs-content="Strength Password">
+                            <div id="strengthBox" class="text-center mt-4 mb-3 alert border alert-dark border-dark">Password Strength Meter</div>
+                        </span>
                         <!-- End of Password strength meter -->
                     </div>
                     <!--End of Form group-->
@@ -145,12 +163,16 @@
             </p>
             <!--End of Back button to home page-->
 
-            <!-- Password Strength Suggestions -->
-            <div id="suggest">
-                <h1>Tips for a stronger password:</h1>
-                <div id="tip"></div>
-            </div>
-            <!--End of Password Strength Suggestions -->
+                            <div class="toast mx-auto mb-5" id="GL_error-toast-personal-info" data-bs-delay="10000" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="toast-header">
+
+                                <h5 class="me-auto text-danger"><i class="fa-solid fa-triangle-exclamation me-3"></i>Error</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                </div>
+                                <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="GL_error-toast-msg-personal-info">
+                                    Toast message
+                                </div>
+                            </div>
 
         </div>
         <!--End of Card body-->
@@ -158,12 +180,15 @@
     <!--End of Registration form card-->
 
     <script>
+        const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+        const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    </script>
+
+    <script>
         var timeout;
         const password = document.getElementById('passwordInput');
         const strengthBox = document.getElementById('strengthBox');
-        const suggest = document.getElementById('suggest');
-        const tip = document.getElementById('tip');
-        var tipString = '<ul>';
+        const tipPopover = bootstrap.Popover.getOrCreateInstance('#tipPassword');
 
         const length8Regex = new RegExp('.{8,}');
         const length6Regex = new RegExp('.{6,}');
@@ -216,7 +241,10 @@
                 strengthBox.classList.replace('alert-warning', 'alert-success');
                 strengthBox.classList.replace('border-warning', 'border-success');
                 strengthBox.innerHTML = 'Strong';
-                tip.innerHTML = '<ul>';
+                tipPopover.setContent({
+                    '.popover-header': '<div class="alert-success border border-success p-2">This is a strong password!</div>',
+                    '.popover-body' : ''
+                });
             }
 
             else if(isLength8 & isLower & isDigit & isSpecial) {
@@ -225,7 +253,10 @@
                 strengthBox.innerHTML = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Upper Character</li>';
-                tip.innerHTML = tipString;
+                tipPopover.setContent({
+                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-body': tipString
+                });
             }
 
             else if(isLength8 & isUpper & isDigit & isSpecial) {
@@ -234,7 +265,10 @@
                 strengthBox.innerHTML = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Lower Character</li>';
-                tip.innerHTML = tipString;
+                tipPopover.setContent({
+                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-body': tipString
+                });
             }
 
             else if(isLength8 & isUpper & isLower & isSpecial) {
@@ -243,7 +277,10 @@
                 strengthBox.innerHTML = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Digits</li>';
-                tip.innerHTML = tipString;
+                tipPopover.setContent({
+                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-body': tipString
+                });
             }
 
             else if(isLength8 & isUpper & isLower & isDigit) {
@@ -252,7 +289,10 @@
                 strengthBox.innerHTML = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Special Characters</li>';
-                tip.innerHTML = tipString;
+                tipPopover.setContent({
+                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-body': tipString
+                });
             }
 
             else {
@@ -276,23 +316,24 @@
                     tipString += '<li>special character</li>';
                 }
                 tipString += "</ul>";
-                tip.innerHTML = tipString;
+                tipPopover.setContent({
+                    '.popover-header': '<div class="alert-danger border border-danger p-2">Tips for a strong password:</div>',
+                    '.popover-body': tipString
+                });
             }
         }
 
         password.addEventListener('input', () => {
             strengthBox.style.display = 'block';
-            suggest.style.display = 'block';
             tipString = '<ul>';
             clearTimeout(timeout);
             timeout = setTimeout(() => PasswordStrength(password.value), 500);
             PasswordStrength(password.value);
             if(password.value.length !== 0) {
                 strengthBox.style.display != 'block';
-                suggest.style.display = 'block';
+
             } else {
                 strengthBox.style.display = 'none';
-                suggest.style.display = 'none';
             }
         });
     </script>
