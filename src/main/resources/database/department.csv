@@ -1,0 +1,10 @@
+department_id,department_name,department_head,department_description,department_head_id
+1,Accounting,"Mira Rao","Responsible for maintaining the financial records and transactions of the bank.",19
+2,Audit,"Sneha Yadav","Responsible for monitoring and ensuring compliance with the bank's policies and procedures.",27
+3,"Branch Operations","Deepika Singh","Responsible for managing the day-to-day operations of the bank branch.",37
+5,"Customer Service","Isha Malhotra","Responsible for providing high-quality customer service and support to clients.",66
+6,Finance,"Raman Chawla","Responsible for managing the bank's financial resources and investments.",48
+7,"Human Resources","Mihir Shah","Responsible for managing employee relations, recruitment, and compensation.",79
+8,"Information Technology","Rajesh Nayar","Responsible for managing the bank's technology infrastructure and systems.",90
+10,Marketing,"Vikram Trivedi","Responsible for creating and executing marketing strategies to promote bank services and products.",101
+12,Sales,"Kavya Thakur","Responsible for generating revenue and sales for the bank.",114

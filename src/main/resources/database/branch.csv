@@ -1,0 +1,8 @@
+branch_id,name,address,city,state,contact,manager_id
+1,"Mumbai Central","Cathedral Road, Dadar",Mumbai,Maharashtra,9876543210,23
+2,"Hyderabad Central","Sapphire Street, Banjara Hills",Hyderabad,Telangana,4078901234,53
+3,"Ahmedabad West","Skyline Heights, CG Road",Ahmedabad,Gujarat,7989012345,17
+4,"Pune East","Coral Avenue, Koregaon Park",Pune,Maharashtra,2090123456,82
+5,"Chandigarh City","Royal Gardens, Sector 17",Chandigarh,Punjab,1723456789,64
+6,"New Delhi Main","Diamond Drive, Connaught Place","New Delhi",Delhi,1123456789,77
+7,"Coimbatore West","Silver Springs, Race Course Road",Coimbatore,"Tamil Nadu",4228901234,59
