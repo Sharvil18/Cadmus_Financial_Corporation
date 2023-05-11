@@ -103,7 +103,7 @@ cloud-upload:
 cny:
   name: yen-sign
 code-fork:
-  name: code-branch
+  name: code-Branch
 commenting:
   name: comment-dots
 commenting-o:

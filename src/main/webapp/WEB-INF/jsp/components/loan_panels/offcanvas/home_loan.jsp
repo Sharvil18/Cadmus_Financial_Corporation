@@ -68,20 +68,20 @@
                                 <div class="form-group mb-3">
                                     <label class="ms-1" for="">Marital Status:</label>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserMaritalStatus" value="married" class="form-check-input" id="MaritalStatus_radio1">
+                                        <input type="radio" name="HL_UserMaritalStatus" value="Married" class="form-check-input" id="MaritalStatus_radio1">
                                         <label class="form-check-label" for="MaritalStatus_radio1">Married</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserMaritalStatus" value="single" class="form-check-input" id="MaritalStatus_radio2">
+                                        <input type="radio" name="HL_UserMaritalStatus" value="Single" class="form-check-input" id="MaritalStatus_radio2">
                                         <label class="form-check-label" for="MaritalStatus_radio2">Single</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserMaritalStatus" value="divorced" class="form-check-input" id="MaritalStatus_radio3">
+                                        <input type="radio" name="HL_UserMaritalStatus" value="Divorced" class="form-check-input" id="MaritalStatus_radio3">
                                         <label class="form-check-label" for="MaritalStatus_radio3">Divorced</label>
                                     </div>
 
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserMaritalStatus" value="widowed" class="form-check-input" id="MaritalStatus_radio4">
+                                        <input type="radio" name="HL_UserMaritalStatus" value="Widowed" class="form-check-input" id="MaritalStatus_radio4">
                                         <label class="form-check-label" for="MaritalStatus_radio4">Widowed</label>
                                     </div>
                                 </div>
@@ -238,15 +238,15 @@
                                 <div class="form-group mb-3">
                                     <label class="ms-1" for="">Work Mode:</label>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserWorkMode" value="WFH" class="form-check-input" id="workMode_radio1">
+                                        <input type="radio" name="HL_UserWorkMode" value="Work From Home" class="form-check-input" id="workMode_radio1">
                                         <label class="form-check-label" for="workMode_radio1">Work From Home (WFH)</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserWorkMode" value="onSite" class="form-check-input" id="workMode_radio2">
+                                        <input type="radio" name="HL_UserWorkMode" value="On-Site Work" class="form-check-input" id="workMode_radio2">
                                         <label class="form-check-label" for="workMode_radio2">On-Site Work</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserWorkMode" value="hybrid" class="form-check-input" id="workMode_radio3">
+                                        <input type="radio" name="HL_UserWorkMode" value="Hybrid" class="form-check-input" id="workMode_radio3">
                                         <label class="form-check-label" for="workMode_radio3">Hybrid</label>
                                     </div>
                                 </div>
@@ -360,11 +360,11 @@
                                 <div class="form-group mb-3">
                                     <label class="ms-1" for="">Is your current home owned or rented?</label>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserCurrentHome" value="owned" class="form-check-input" id="CurrentHome_radio1">
+                                        <input type="radio" name="HL_UserCurrentHome" value="Owned" class="form-check-input" id="CurrentHome_radio1">
                                         <label class="form-check-label" for="CurrentHome_radio1">Owned</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserCurrentHome" value="rented" class="form-check-input" id="CurrentHome_radio2">
+                                        <input type="radio" name="HL_UserCurrentHome" value="Rented" class="form-check-input" id="CurrentHome_radio2">
                                         <label class="form-check-label" for="CurrentHome_radio2">Rented</label>
                                     </div>
                                 </div>
@@ -372,11 +372,11 @@
                                 <div class="form-group mb-3">
                                     <label class="ms-1" for="">Do you need to sell your current house before buying a new one?</label>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserSellCurrent" value="yes" class="form-check-input" id="SellCurrent_radio1">
+                                        <input type="radio" name="HL_UserSellCurrent" value="Yes" class="form-check-input" id="SellCurrent_radio1">
                                         <label class="form-check-label" for="SellCurrent_radio1">Yes</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="HL_UserSellCurrent" value="no" class="form-check-input" id="SellCurrent_radio2">
+                                        <input type="radio" name="HL_UserSellCurrent" value="No" class="form-check-input" id="SellCurrent_radio2">
                                         <label class="form-check-label" for="SellCurrent_radio2">No</label>
                                     </div>
                                 </div>
@@ -385,9 +385,9 @@
                                     <label class="ms-1" for="">Motto of Purchase:</label>
                                     <select id="HL_UserMottoPurchase" name="HL_UserMottoPurchase" class="form-control" id="">
                                         <option value="">-- Select Motto of Purchase --</option>
-                                        <option value="primary-residence">Primary Residence</option>
-                                        <option value="secondary-residence">Secondary Residence</option>
-                                        <option value="investment">Investment</option>
+                                        <option value="Primary Residence">Primary Residence</option>
+                                        <option value="Secondary Residence">Secondary Residence</option>
+                                        <option value="Investment">Investment</option>
                                     </select>
                                 </div>
 

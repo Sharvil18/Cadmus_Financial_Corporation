@@ -1,6 +1,7 @@
 package com.bank.repository;
 
 import com.bank.models.GoldLoanApplication;
+import com.bank.models.HomeLoanApplication;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,6 +18,8 @@ public interface GoldLoanApplicationRepository extends CrudRepository<GoldLoanAp
     @Query(value= "SELECT user_id from gold_loan_application", nativeQuery = true)
     List<Integer> getAllUsersAppliedGoldLoan();
 
+    @Query(value= "SELECT * FROM gold_loan_application", nativeQuery = true)
+    List<GoldLoanApplication> getAllGoldLoanApplications();
 
     @Modifying
     @Transactional

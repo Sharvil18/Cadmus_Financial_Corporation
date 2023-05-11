@@ -26,6 +26,7 @@
 
 .custom-popover .popover-header {
     font-size: 20px;
+    color: black;
     font-weight: bold;
 }
 </style>
@@ -56,7 +57,7 @@
     <!--End of Main Page Header-->
 
     <!-- Company Logo -->
-    <a href="/"><img src="images/logos/3.png" height="66px" class="company-logo"></a>
+    <a href="/"><img src="images/logos/3.png" height="62px" class="company-logo"></a>
     <!--End of Company Logo -->
 
     <!--Registration form card-->
@@ -94,7 +95,7 @@
             <!-- End of Display Message -->
 
             <!--Registration form-->
-            <form:form action="/register" class="reg-form" modelAttribute="registerUser">
+            <form:form action="/register" id="reg-form" class="reg-form" modelAttribute="registerUser">
 
                 <!--Row-->
                 <div class="row">
@@ -127,6 +128,7 @@
                     <div class="form-group col">
                         <form:input type="password" path="password" id="passwordInput" class="form-control form-control-lg" placeholder="Enter Password" />
                         <form:errors path="password" class="text-white bg-danger px-2" style="font-family: 'BioRhyme', serif;display: inline-block; margin-top: 5px" />
+                        <errors class="text-white bg-danger px-2" style="font-family: 'BioRhyme', serif;display: inline-block; margin-top: 5px" >${pass}</errors>
                         <!-- Password strength meter -->
                         <span tabindex="0" id="tipPassword" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-title="Tips for a stronger password" data-bs-html="true" data-bs-custom-class="custom-popover" data-bs-placement="left" data-bs-content="Strength Password">
                             <div id="strengthBox" class="text-center mt-4 mb-3 alert border alert-dark border-dark">Password Strength Meter</div>
@@ -134,6 +136,7 @@
                         <!-- End of Password strength meter -->
                     </div>
                     <!--End of Form group-->
+
 
                     <!--Form group-->
                     <div class="form-group col">
@@ -143,6 +146,10 @@
                     <!--End of Form group-->
                 </div>
                 <!--End of Row-->
+
+                <div class="form-group">
+                    <input type="hidden" name="password-strength" id="passwordStrength" class="form-control form-control-lg"/>
+                </div>
 
                 <!--Form group-->
                 <button class="btn btn-lg register_button">Register</button>
@@ -198,6 +205,7 @@
         const specialCharRegex = new RegExp('[^A-Za-z0-9]');
 
         function PasswordStrength(password) {
+
             isLength8 = length8Regex.test(password);
             isUpper = upperRegex.test(password);
             isLower = lowerRegex.test(password);
@@ -241,8 +249,9 @@
                 strengthBox.classList.replace('alert-warning', 'alert-success');
                 strengthBox.classList.replace('border-warning', 'border-success');
                 strengthBox.innerHTML = 'Strong';
+                document.getElementById('passwordStrength').value = 'Strong';
                 tipPopover.setContent({
-                    '.popover-header': '<div class="alert-success border border-success p-2">This is a strong password!</div>',
+                    '.popover-header': "<div class='text-success'>This is a strong password!</div>",
                     '.popover-body' : ''
                 });
             }
@@ -251,10 +260,11 @@
                 strengthBox.classList.replace('alert-danger','alert-warning');
                 strengthBox.classList.replace('border-danger','border-warning');
                 strengthBox.innerHTML = 'Medium';
+                document.getElementById('passwordStrength').value = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Upper Character</li>';
                 tipPopover.setContent({
-                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-header': "<div class='text-warning'>Tips for a strong password:</div>",
                     '.popover-body': tipString
                 });
             }
@@ -263,10 +273,11 @@
                 strengthBox.classList.replace('alert-danger','alert-warning');
                 strengthBox.classList.replace('border-danger','border-warning');
                 strengthBox.innerHTML = 'Medium';
+                document.getElementById('passwordStrength').value = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Lower Character</li>';
                 tipPopover.setContent({
-                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-header': "<div class='text-warning'>Tips for a strong password:</div>",
                     '.popover-body': tipString
                 });
             }
@@ -275,10 +286,11 @@
                 strengthBox.classList.replace('alert-danger','alert-warning');
                 strengthBox.classList.replace('border-danger','border-warning');
                 strengthBox.innerHTML = 'Medium';
+                document.getElementById('passwordStrength').value = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Digits</li>';
                 tipPopover.setContent({
-                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-header': "<div class='text-warning'>Tips for a strong password:</div>",
                     '.popover-body': tipString
                 });
             }
@@ -287,10 +299,11 @@
                 strengthBox.classList.replace('alert-danger','alert-warning');
                 strengthBox.classList.replace('border-danger','border-warning');
                 strengthBox.innerHTML = 'Medium';
+                document.getElementById('passwordStrength').value = 'Medium';
                 tipString = "<ul>";
                 tipString += '<li>Special Characters</li>';
                 tipPopover.setContent({
-                    '.popover-header': '<div class="alert-warning border border-warning p-2">Tips for a strong password:</div>',
+                    '.popover-header': "<div class='text-warning'>Tips for a strong password:</div>",
                     '.popover-body': tipString
                 });
             }
@@ -299,6 +312,7 @@
                 strengthBox.classList.replace('alert-dark','alert-danger');
                 strengthBox.classList.replace('border-dark', 'border-danger');
                 strengthBox.innerHTML = 'Weak';
+                document.getElementById('passwordStrength').value = 'Weak';
                 tipString = "<ul>";
                 if(!isLength8) {
                     tipString += '<li>8 characters</li>';
@@ -317,7 +331,7 @@
                 }
                 tipString += "</ul>";
                 tipPopover.setContent({
-                    '.popover-header': '<div class="alert-danger border border-danger p-2">Tips for a strong password:</div>',
+                    '.popover-header': "<div class='text-danger'>Tips for a strong password:</div>",
                     '.popover-body': tipString
                 });
             }

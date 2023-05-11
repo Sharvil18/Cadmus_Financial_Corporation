@@ -37,13 +37,7 @@ public class IndexController {
         return getAboutusPage;
     }
 
-    @GetMapping("/adminlogin")
-    public ModelAndView getAdminlogin() {
-        ModelAndView getAdminloginPage = new ModelAndView(("adminlogin"));
-        System.out.println("In Adminlogin controller");
-        getAdminloginPage.addObject("PageTitle", "Adminlogin");
-        return getAdminloginPage;
-    }
+
 
     @GetMapping("/error")
     public ModelAndView getError() {
@@ -76,4 +70,5 @@ public class IndexController {
         getVerifyPage.addObject("success", "Account Verified Successfully, Please proceed to log in!");
         return getVerifyPage;
     }
+
 }

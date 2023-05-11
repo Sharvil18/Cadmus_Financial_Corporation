@@ -15,8 +15,11 @@ import java.util.List;
 @Repository
 public interface HomeApplicationRepository extends CrudRepository<HomeLoanApplication, Integer> {
 
-    @Query(value= "SELECT user_id from home_loan_application", nativeQuery = true)
+    @Query(value= "SELECT user_id FROM home_loan_application", nativeQuery = true)
     List<Integer> getAllUsersAppliedHomeLoan();
+
+    @Query(value= "SELECT * FROM home_loan_application", nativeQuery = true)
+    List<HomeLoanApplication> getAllHomeLoanApplications();
 
     @Modifying
     @Transactional

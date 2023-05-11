@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +13,7 @@
     <link rel="stylesheet" href="css/default.css">
     <title>Admin Login</title>
 </head>
-
-<body id="admin-login" class="align-items-center justify-content-center bg-image login">
+<body id="admin-login" class="d-flex align-items-center justify-content-center bg-image login">
 
     <!--Main Page Header-->
     <div class="main-page-header mb-3">
@@ -27,7 +30,7 @@
                 <li ><a href="/"><i class="fa-solid fa-house mx-2 my-2"></i>Home</a></li>
                 <li ><a href="/perk"><i class="fa-solid fa-hand-holding-heart fa-lg mx-2 my-3"></i>Perks</a></li>
                 <li ><a href="/aboutus"><i class="fa-solid fa-users fa-lg mx-2 my-3"></i>About Us</a></li>
-                <li class="navbar-selected"><a href="adminlogin.html"><i class="fa-solid fa-briefcase fa-lg mx-2 my-3"></i>Admin Login</a></li>
+                <li class="navbar-selected"><a href="/admin_login"><i class="fa-solid fa-briefcase fa-lg mx-2 my-3"></i>Admin Login</a></li>
             </nav>
             <!--End of Navigation-->
 
@@ -37,10 +40,10 @@
     <!--End of Main Page Header-->
 
     <!-- Company Logo -->
-    <a href="/"><img src="images/logos/3.png" height="66px" class="company-logo"></a>
+    <a href="/"><img src="images/logos/3.png" height="62px" class="company-logo"></a>
     <!--End of Company Logo -->
 
-    <!--Admin Login form card-->
+    <!--Login form card-->
     <div id="admin-login-card" class="card registration-form-card col-4 bg-transparent border-0">
         <!--Card body-->
         <div class="card-body">
@@ -50,8 +53,38 @@
             </h1>
             <!--End of Form header-->
 
-            <!--Admin Login form-->
-            <form action="" class="login-form">
+            <!-- Display Message -->
+            <c:if test="${requestScope.success != null}">
+                <div class="alert alert-success text-center border border-success">
+                    <b>${requestScope.success}</b>
+                </div>
+            </c:if>
+            <!-- End of Display Message -->
+
+            <!-- Display Message -->
+            <c:if test="${logged_out != null}">
+                <div class="alert alert-info text-center border border-info">
+                    <b>${logged_out}</b>
+                </div>
+            </c:if>
+            <!-- End of Display Message -->
+
+            <!-- Display Message -->
+            <c:if test="${requestScope.error != null}">
+                <div class="alert alert-danger text-center border border-danger">
+                    <b>${requestScope.error}</b>
+                </div>
+            </c:if>
+            <!-- End of Display Message -->
+
+            <!--Login form-->
+            <form action="/adminlogin" method="POST" class="login-form">
+
+                <!--Form group-->
+                <div class="form-group col mb-4">
+                    <input type="text" name="admin_id" class="form-control form-control-lg" placeholder="Enter Admin Identification Code" />
+                </div>
+                <!--End of Form group-->
 
                 <!--Form group-->
                 <div class="form-group col mb-4">
@@ -65,27 +98,15 @@
                 <!--End of Form group-->
 
                 <!--Form group-->
-                <div class="form-group col">
-                    <input type="text" name="admin_id" class="form-control form-control-lg" placeholder="Enter Admin Identification Number" />
-                </div>
-                <!--End of Form group-->
-
-                <!--Form group-->
-                <button  class="btn btn-lg admin-login-btn">Login</button>
+                <button class="btn btn-lg admin-login-btn" type="submit">Login</button>
                 <!--End of Form group-->
 
             </form>
-            <!--End of Admin Login form-->
-
-            <!--Back button to home page-->
-            <p>
-                <a href="/" id="back_button" class="btn btn-md"><i class="fa fa-arrow-alt-circle-left me-2"></i> Back</a>
-            </p>
-            <!--End of Back button to home page-->
+            <!--End of Login form-->
 
         </div>
         <!--End of Card body-->
     </div>
-    <!--End of Admin Login form card-->
+    <!--End of Login form card-->
 </body>
 </html>

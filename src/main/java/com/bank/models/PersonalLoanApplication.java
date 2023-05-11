@@ -98,6 +98,8 @@ public class PersonalLoanApplication {
     @NotNull
     private int loan_term;
 
+    private String approved;
+
     public int getUser_id() {
         return user_id;
     }
@@ -384,5 +386,13 @@ public class PersonalLoanApplication {
 
     public void setLoan_term(int loan_term) {
         this.loan_term = loan_term;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
     }
 }

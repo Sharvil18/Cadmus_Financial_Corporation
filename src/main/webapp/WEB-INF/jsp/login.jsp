@@ -40,7 +40,7 @@
     <!--End of Main Page Header-->
 
     <!-- Company Logo -->
-    <a href="/"><img src="images/logos/3.png" height="66px" class="company-logo"></a>
+    <a href="/"><img src="images/logos/3.png" height="62px" class="company-logo"></a>
     <!--End of Company Logo -->
 
     <!--Login form card-->

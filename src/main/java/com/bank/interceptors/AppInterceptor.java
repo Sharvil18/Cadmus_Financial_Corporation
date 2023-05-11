@@ -1,5 +1,6 @@
 package com.bank.interceptors;
 
+import com.bank.models.Admin;
 import com.bank.models.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,9 +26,15 @@ public class AppInterceptor implements HandlerInterceptor {
             //Get user object stored in the session
             User user = (User) session.getAttribute("user");
 
+            Admin admin = (Admin) session.getAttribute("admin");
+
+            //Allow if admin
+            if(admin != null)
+                return true;
+
             //Validate session attributes
             if(token == null || user == null) {
-                response.sendRedirect("/login");
+                response.sendRedirect("/");
                 return false;
             }
         }

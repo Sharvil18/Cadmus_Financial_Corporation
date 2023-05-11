@@ -568,7 +568,7 @@ coding:
     - bug-slash
     - circle-nodes
     - code
-    - code-branch
+    - code-Branch
     - code-commit
     - code-compare
     - code-fork

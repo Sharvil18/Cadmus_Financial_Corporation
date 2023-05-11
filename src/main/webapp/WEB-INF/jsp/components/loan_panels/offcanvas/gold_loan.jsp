@@ -63,20 +63,20 @@
                                 <div class="form-group mb-3">
                                     <label class="ms-1" for="">Marital Status:</label>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserMaritalStatus" value="married" class="form-check-input" id="GL_MaritalStatus_radio1">
+                                        <input type="radio" name="GL_UserMaritalStatus" value="Married" class="form-check-input" id="GL_MaritalStatus_radio1">
                                         <label class="form-check-label" for="GL_MaritalStatus_radio1">Married</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserMaritalStatus" value="single" class="form-check-input" id="GL_MaritalStatus_radio2">
+                                        <input type="radio" name="GL_UserMaritalStatus" value="Single" class="form-check-input" id="GL_MaritalStatus_radio2">
                                         <label class="form-check-label" for="GL_MaritalStatus_radio2">Single</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserMaritalStatus" value="divorced" class="form-check-input" id="GL_MaritalStatus_radio3">
+                                        <input type="radio" name="GL_UserMaritalStatus" value="Divorced" class="form-check-input" id="GL_MaritalStatus_radio3">
                                         <label class="form-check-label" for="GL_MaritalStatus_radio3">Divorced</label>
                                     </div>
 
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserMaritalStatus" value="widowed" class="form-check-input" id="GL_MaritalStatus_radio4">
+                                        <input type="radio" name="GL_UserMaritalStatus" value="Widowed" class="form-check-input" id="GL_MaritalStatus_radio4">
                                         <label class="form-check-label" for="GL_MaritalStatus_radio4">Widowed</label>
                                     </div>
                                 </div>
@@ -232,15 +232,15 @@
                                 <div class="form-group mb-3">
                                     <label class="ms-1" for="">Work Mode:</label>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserWorkMode" value="WFH" class="form-check-input" id="GL_workMode_radio1">
+                                        <input type="radio" name="GL_UserWorkMode" value="Work From Home" class="form-check-input" id="GL_workMode_radio1">
                                         <label class="form-check-label" for="GL_workMode_radio1">Work From Home (WFH)</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserWorkMode" value="onSite" class="form-check-input" id="GL_workMode_radio2">
+                                        <input type="radio" name="GL_UserWorkMode" value="On-Site Work" class="form-check-input" id="GL_workMode_radio2">
                                         <label class="form-check-label" for="GL_workMode_radio2">On-Site Work</label>
                                     </div>
                                     <div class="form-check my-1">
-                                        <input type="radio" name="GL_UserWorkMode" value="hybrid" class="form-check-input" id="GL_workMode_radio3">
+                                        <input type="radio" name="GL_UserWorkMode" value="Hybrid" class="form-check-input" id="GL_workMode_radio3">
                                         <label class="form-check-label" for="GL_workMode_radio3">Hybrid</label>
                                     </div>
                                 </div>
@@ -339,14 +339,14 @@
                                     <label class="ms-1" for="">Purpose of Gold Loan:</label>
                                     <select name="GL_UserLoanPurpose" class="form-control" id="">
                                         <option value="">-- Select Purpose of Loan --</option>
-                                        <option value="debt-consolidation">Debt Consolidation</option>
-                                        <option value="home-improvements">Home Improvements</option>
-                                        <option value="education">Education</option>
-                                        <option value="purchases">Major Purchases</option>
-                                        <option value="travel">Travel</option>
-                                        <option value="medical">Medical</option>
-                                        <option value="wedding">Wedding</option>
-                                        <option value="business">Business</option>
+                                        <option value="Debt Consolidation">Debt Consolidation</option>
+                                        <option value="Home Improvements">Home Improvements</option>
+                                        <option value="Education">Education</option>
+                                        <option value="Major Purchases">Major Purchases</option>
+                                        <option value="Travel">Travel</option>
+                                        <option value="Medical">Medical</option>
+                                        <option value="Wedding">Wedding</option>
+                                        <option value="Business">Business</option>
                                     </select>
                                 </div>
 
@@ -367,19 +367,19 @@
                                 <div class="form-group mb-3">
                                   <label class="ms-1" for="">Gold Ornaments:</label>
                                   <div class="form-check my-1">
-                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="chain" class="form-check-input" id="GL_goldOrnament_checkbox1">
+                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="Chain" class="form-check-input" id="GL_goldOrnament_checkbox1">
                                     <label class="form-check-label" for="GL_goldOrnament_checkbox1">Chain</label>
                                   </div>
                                   <div class="form-check my-1">
-                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="bangles" class="form-check-input" id="GL_goldOrnament_checkbox2">
+                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="Bangles" class="form-check-input" id="GL_goldOrnament_checkbox2">
                                     <label class="form-check-label" for="GL_goldOrnament_checkbox2">Bangles</label>
                                   </div>
                                   <div class="form-check my-1">
-                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="rings" class="form-check-input" id="GL_goldOrnament_checkbox3">
+                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="Rings" class="form-check-input" id="GL_goldOrnament_checkbox3">
                                     <label class="form-check-label" for="GL_goldOrnament_checkbox3">Rings</label>
                                   </div>
                                   <div class="form-check my-1">
-                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="earring" class="form-check-input" id="GL_goldOrnament_checkbox4">
+                                    <input type="checkbox" name="GL_UserGoldOrnaments" value="Earrings" class="form-check-input" id="GL_goldOrnament_checkbox4">
                                     <label class="form-check-label" for="GL_goldOrnament_checkbox4">Earrings</label>
                                   </div>
                                 </div>

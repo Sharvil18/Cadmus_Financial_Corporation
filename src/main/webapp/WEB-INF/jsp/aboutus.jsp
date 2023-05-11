@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +63,7 @@
     <!--End of Quote Card -->
 
     <!-- Company Logo -->
-    <a href="/"><img src="images/logos/3.png" height="66px" class="company-logo"></a>
+    <a href="/"><img src="images/logos/3.png" height="62px" class="company-logo"></a>
     <!--End of Company Logo -->
 
     <!-- First panel -->

@@ -28,7 +28,7 @@ public class User {
     @NotEmpty(message="Email cannot be empty")
     @Pattern(regexp = "([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})", message = "Please enter a valid email")
     private String email;
-    @NotEmpty(message="Password cannot be empty")
+    @NotEmpty(message="Password cannot empty")
     @NotNull
     private String password;
     private String token;

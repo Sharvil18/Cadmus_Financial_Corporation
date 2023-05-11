@@ -48,4 +48,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT token FROM users WHERE token = :token", nativeQuery = true)
     String checkToken(@Param("token") String token);
+
+    @Query(value = "SELECT * FROM users", nativeQuery = true)
+    List<User> getAllUsers();
 }

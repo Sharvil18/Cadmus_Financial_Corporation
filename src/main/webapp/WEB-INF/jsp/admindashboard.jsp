@@ -1,3 +1,7 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,77 +17,41 @@
 </head>
 
 <body>
-    <!--Main Page Header-->
-    <div class="main-page-header mb-3">
-        <!--Container-->
-        <div class="container-fluid d-flex align-items-center justify-content-center mb-2 mt-3">
-            <!--Company name-->
-            <div class="company-name">
-                <span>( admin )</span> Cadmus Finance Corporation
-            </div>
-            <!--End of Company name-->
 
-            <!--Navigation-->
-            <div class="navigation ms-3 me-5">
-                <li><a href="">Dashboard</a></li>
-                <li><a href="">Applications</a></li>
-                <li><a href="">Employees DB</a></li>
-                <li><a href="">Customers DB</a></li>
-                <li><a href="">Customer Affluency</a></li>
-                <li><a href="">Branches</a></li>
-            </div>
-            <!--End of Navigation-->
+    <!-- Header -->
+    <c:import url="components/include/admin_header.jsp"/>
 
-            <!-- Company Logo -->
-                <a href="/admindashboard"><img src="images/logos/5.png" height="75px" class="company-logo"></a>
-            <!--End of Company Logo -->
-
-            <!--Display Name-->
-            <div class="display-name ms-5 text-white">
-                <i class="fa fa-circle text-success me-2"></i> Welcome: <span>Admin</span>
-            </div>
-            <!--End of Display Name-->
-
-            <!--Signout button-->
-            <a href="" class="btn btn-md text-white mt-1 ms-3">
-                <i class="fa-solid fa-right-from-bracket ms-3 me-3"></i>Sign Out
-            </a>
-            <!--End of Signout button-->
-        </div>
-        <!--End of Container-->
-    </div>
-    <!--End of Main Page Header-->
 
     <!-- Transaction container-->
-    <div class="container mt-5">
-        <!--transaction card-->
-        <div class="card">
-            <!--Card body-->
-            <div class="card-body">
-                <!--Card title-->
-                <h1 class="card-title">
-                    Transaction Section
-                </h1>
-                <!--End of Card title-->
-                <hr>
-                <!--Card text-->
-                <div class="card-text">
-                    <h4>Stats for transactions carried out in that day</h4>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore iure quod consectetur optio
-                    placeat ipsam in laudantium omnis rerum?
+        <div class="container mt-4">
+            <!--Transactions card-->
+            <div class="card shadow">
+                <!--Card body-->
+                <div class="card-body">
+                    <!--Card title-->
+                    <h1 class="card-title">
+                        Transaction Section
+                    </h1>
+                    <!--End of Card title-->
+                    <hr>
+                    <!--Card text-->
+                    <div class="card-text">
+                        <h4>Transactions of customers for loan, mortgage, credit card, etc.</h4>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore iure quod consectetur optio
+                        placeat ipsam in laudantium omnis rerum?
+                    </div>
+                    <!--End of Card text-->
                 </div>
-                <!--End of Card text-->
+                <!--End of Card body-->
             </div>
-            <!--End of Card body-->
+            <!--End of Transaction card-->
         </div>
-        <!--End of transaction card-->
-    </div>
-    <!--End of Transaction container-->
+        <!--End of Transaction container-->
 
     <!-- Application container-->
     <div class="container mt-4">
         <!--Applications card-->
-        <div class="card">
+        <div class="card shadow">
             <!--Card body-->
             <div class="card-body">
                 <!--Card title-->
@@ -109,9 +77,9 @@
     <!-- Databases section -->
     <div class="container mt-4 d-flex">
         <!-- Employee DB container -->
-        <div class=" container">
+        <div class="container">
             <!--Employee DB card-->
-            <div class="card">
+            <div class="card shadow">
                 <!--Card body-->
                 <div class="card-body">
                     <!--Card title-->
@@ -125,49 +93,26 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Department</th>
-                                <th>Designation</th>
-                                <th>Manager</th>
                                 <th>Age</th>
-                                <th>Hiring</th>
+                                <th>Job Title</th>
+                                <th>Hire Date</th>
+                                <th>Department</th>
+                                <th>Branch</th>
                             </tr>
                         </thead>
-                            <tr>
-                                <td>101</td>
-                                <td>Sharvil</th>
-                                <td>Accounts</td>
-                                <td>Assistant</td>
-                                <td>Krina</td>
-                                <td>23</td>
-                                <td>23/05/1992</td>
-                            </tr>
-                            <tr>
-                                <td>101</td>
-                                <td>Sharvil</th>
-                                <td>Accounts</td>
-                                <td>Assistant</td>
-                                <td>Krina</td>
-                                <td>23</td>
-                                <td>23/05/1992</td>
-                            </tr>
-                            <tr>
-                                <td>101</td>
-                                <td>Sharvil</th>
-                                <td>Accounts</td>
-                                <td>Assistant</td>
-                                <td>Krina</td>
-                                <td>23</td>
-                                <td>23/05/1992</td>
-                            </tr>
+                            <!-- Loop Through Employee Records -->
+                            <c:forEach items="${requestScope.employeeViews}" var="employee">
                             <tr style="border-bottom: 2px solid #481e40;">
-                                <td>101</td>
-                                <td>Sharvil</th>
-                                <td>Accounts</td>
-                                <td>Assistant</td>
-                                <td>Krina</td>
-                                <td>23</td>
-                                <td>23/05/1992</td>
+                                <td>${employee.employee_id}</td>
+                                <td>${employee.name}</td>
+                                <td>${employee.age}</td>
+                                <td>${employee.job_title}</td>
+                                <td>${employee.hire_date}</td>
+                                <td>${employee.department_name}</td>
+                                <td>${employee.branch_name}</td>
                             </tr>
+                             </c:forEach>
+                            <!-- End Of Loop Through Employee Records -->
                     </table>
                 </div>
                 <!--End of Card body-->
@@ -179,7 +124,7 @@
         <!-- Customer DB container -->
         <div class="container">
             <!--Customer DB card-->
-            <div class="card">
+            <div class="card shadow">
                 <!--Card body-->
                 <div class="card-body">
                     <!--Card title-->
@@ -191,41 +136,22 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Sr. No.</th>
-                                <th>First</th>
-                                <th>Last</th>
+                                <th>ID</th>
+                                <th>Name</th>
                                 <th>Email</th>
-                                <th>Contact</th>
+                                <th>Account Count</th>
                             </tr>
                         </thead>
-                            <tr>
-                                <td>1</td>
-                                <td>Sharvil</th>
-                                <td>Rane</td>
-                                <td>sharvil@gmail.com</td>
-                                <td>401520123</td>
+                            <!-- Loop Through User Records -->
+                            <c:forEach items="${requestScope.userViews}" var="user">
+                            <tr style="border-bottom: 2px solid #413A92;">
+                                <td>${user.user_id}</td>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.account_count}</td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sharvil</th>
-                                <td>Rane</td>
-                                <td>sharvil@gmail.com</td>
-                                <td>401520123</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Sharvil</th>
-                                <td>Rane</td>
-                                <td>sharvil@gmail.com</td>
-                                <td>401520123</td>
-                            </tr>
-                            <tr style="border-bottom: 2px solid #481e40;">
-                                <td>1</td>
-                                <td>Sharvil</th>
-                                <td>Rane</td>
-                                <td>sharvil@gmail.com</td>
-                                <td>401520123</td>
-                            </tr>
+                             </c:forEach>
+                            <!-- End Of Loop Through User Records -->
                     </table>
                 </div>
                 <!--End of Card body-->
@@ -239,7 +165,7 @@
     <!-- Affluency container-->
     <div class="container mb-5 mt-4">
         <!--Affluency card-->
-        <div class="card">
+        <div class="card shadow">
             <!--Card body-->
             <div class="card-body">
                 <!--Card title-->
@@ -265,7 +191,7 @@
     <!-- Branch container-->
     <div class="container mb-5 mt-4">
         <!--Branch card-->
-        <div class="card">
+        <div class="card shadow">
             <!--Card body-->
             <div class="card-body">
                 <!--Card title-->

@@ -1,7 +1,9 @@
 package com.bank.controllers;
 
 import com.bank.helpers.Token;
+import com.bank.models.Admin;
 import com.bank.models.User;
+import com.bank.repository.AdminRepository;
 import com.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -15,11 +17,19 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @Controller
 public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
@@ -45,10 +55,27 @@ public class AuthController {
             model.addAttribute("error", "Username or Password cannot be empty");
             return "login";
         }
+
+        //Check for valid email
+        String regex = "([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        if(!matcher.matches()) {
+            model.addAttribute("error", "Please enter a Valid Email Address");
+            return "login";
+        }
+
+        //Check if email exists
+        List<String> allEmails = userRepository.getAllEmails();
+        if(!allEmails.contains(email)) {
+            model.addAttribute("error", "Your Account does not exist. Please Sign Up!");
+            return "login";
+        }
+
         //Get email from database
         String getEmailInDB = userRepository.getUserEmail(email);
 
-        //Check if email exists
+        //Check password
         if(getEmailInDB != null) {
             //Get password from database
             String getPasswordInDB = userRepository.getUserPassword(getEmailInDB);
@@ -90,5 +117,73 @@ public class AuthController {
         session.invalidate();
         redirectAttributes.addFlashAttribute("logged_out", "Logged Out successfully");
         return "redirect:/login";
+    }
+
+    @GetMapping("/adminlogin")
+    public ModelAndView getAdminLogin() {
+        System.out.println("In admin login controller");
+        ModelAndView getAdminLoginPage = new ModelAndView("adminlogin");
+        return getAdminLoginPage;
+    }
+
+    @PostMapping("/adminlogin")
+    public String loginAdmin(@RequestParam("admin_email") String adminEmail,
+                             @RequestParam("admin_password") String adminPassword,
+                             @RequestParam("admin_id") String adminID,
+                             HttpSession session,
+                             Model model) {
+
+        if(adminEmail.isEmpty() || adminPassword.isEmpty() || adminID.isEmpty()) {
+            model.addAttribute("error", "Email OR Password OR ID cannot be Empty");
+            return "adminlogin";
+        }
+
+        //Check if admin ID exists
+        List<String> allAdminID = adminRepository.getAllAdminID();
+        if(!allAdminID.contains(adminID)) {
+            model.addAttribute("error", "Admin with this ID does not exist");
+            return "adminlogin";
+        }
+
+        //Check for valid email
+        String regex = "([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(adminEmail);
+        if(!matcher.matches()) {
+            model.addAttribute("error", "Please enter a Valid Email Address");
+            return "adminlogin";
+        }
+
+        //Check if email matches
+        String adminEmailInDB = adminRepository.getAdminEmail(adminID);
+        if(!adminEmail.equals(adminEmailInDB)) {
+            model.addAttribute("error", "Incorrect Email Address OR Password");
+            return "adminlogin";
+        }
+
+        //Check if password matches
+        String adminPasswordInDB = adminRepository.getAdminPassword(adminID);
+        if(!BCrypt.checkpw(adminPassword, adminPasswordInDB)) {
+            model.addAttribute("error", "Incorrect Email Address or Password");
+            return "adminlogin";
+        }
+
+        //Get admin details
+        Admin admin = adminRepository.getAdminDetails(adminID);
+
+        LocalDateTime currentTimeStamp = LocalDateTime.now();
+        adminRepository.updateAdminLastLogin(currentTimeStamp, admin.getAdmin_id());
+
+        //Set session attribute
+        session.setAttribute("admin", admin);
+
+        return "redirect:/app/admin_dashboard";
+    }
+
+    @GetMapping("/adminlogout")
+    public String AdminLogout(HttpSession session, RedirectAttributes redirectAttributes) {
+        session.invalidate();
+        redirectAttributes.addFlashAttribute("logged_out", "Logged Out successfully");
+        return "redirect:/adminlogin";
     }
 }

@@ -11304,7 +11304,7 @@ code-branch:
   label: Code Branch
   search:
     terms:
-      - branch
+      - Branch
       - git
       - github
       - rebase

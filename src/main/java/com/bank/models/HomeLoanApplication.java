@@ -105,6 +105,8 @@ public class HomeLoanApplication {
     @NotNull
     private String motto_purchase;
 
+    private String approved;
+
     public int getUser_id() {
         return user_id;
     }
@@ -415,5 +417,13 @@ public class HomeLoanApplication {
 
     public void setMotto_purchase(String motto_purchase) {
         this.motto_purchase = motto_purchase;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
     }
 }

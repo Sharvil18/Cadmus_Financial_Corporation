@@ -97,6 +97,8 @@ public class GoldLoanApplication {
     @NotNull
     private int gold_ornament_count;
 
+    private String approved;
+
     public int getUser_id() {
         return user_id;
     }
@@ -391,5 +393,13 @@ public class GoldLoanApplication {
 
     public void setGold_ornament_count(int gold_ornament_count) {
         this.gold_ornament_count = gold_ornament_count;
+    }
+
+    public String getApproved() {
+        return approved;
+    }
+
+    public void setApproved(String approved) {
+        this.approved = approved;
     }
 }

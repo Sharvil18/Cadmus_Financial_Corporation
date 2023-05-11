@@ -17,16 +17,16 @@
                         <!-- Payment History Table -->
                         <table class="table text-center table-striped">
                             <tr>
-                                <th>Record Number</th>
-                                <th>Date</th>
-                                <th>Beneficiary</th>
-                                <th>Beneficiary Acc. No.</th>
-                                <th>Beneficiary Bank</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                                <th>Reference</th>
-                                <th>Reason Code</th>
-                                <th>Time</th>
+                                <th style="position: sticky; top:51px">Record Number</th>
+                                <th style="position: sticky; top:51px">Date</th>
+                                <th style="position: sticky; top:51px">Beneficiary</th>
+                                <th style="position: sticky; top:51px">Beneficiary Acc. No.</th>
+                                <th style="position: sticky; top:51px">Beneficiary Bank</th>
+                                <th style="position: sticky; top:51px">Amount</th>
+                                <th style="position: sticky; top:51px">Status</th>
+                                <th style="position: sticky; top:51px">Reference</th>
+                                <th style="position: sticky; top:51px">Reason Code</th>
+                                <th style="position: sticky; top:51px">Time</th>
                             </tr>
                             <!-- Loop Through Payment History Records -->
                             <c:forEach items="${requestScope.payment_history}" var="payments">

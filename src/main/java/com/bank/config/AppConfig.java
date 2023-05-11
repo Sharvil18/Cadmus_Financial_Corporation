@@ -23,7 +23,8 @@ public class AppConfig extends WebMvcConfigurationSupport {
                         "/account/css/**" , "/account/images/**", "/account/js/**",
                         "/login/css/**" , "/login/images/**", "/login/js/**",
                         "/transact/css/**" , "/transact/images/**", "/transact/js/**",
-                        "/apply/css/**" , "/apply/images/**", "/apply/js/**"
+                        "/apply/css/**" , "/apply/images/**", "/apply/js/**",
+                        "/app/admin/css/**" , "/app/admin/images/**", "/app/admin/js/**"
                         )
                 .addResourceLocations("classpath:/static/css/", "classpath:/static/images/", "classpath:/static/js/");
     }
@@ -41,8 +42,8 @@ public class AppConfig extends WebMvcConfigurationSupport {
     // End Of View Resolver.
 
 
-    @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AppInterceptor()).addPathPatterns("/app/*");
-    }
+//    @Override
+//    protected void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new AppInterceptor()).addPathPatterns("/app/*");
+//    }
 }

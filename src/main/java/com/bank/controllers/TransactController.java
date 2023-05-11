@@ -44,8 +44,8 @@ public class TransactController {
 
         //Check for empty strings
         if(depositAmount.isEmpty() || accountID.isEmpty()) {
-            redirectAttributes.addFlashAttribute("error", "Deposit Amount OR Depositing Account cannot be Empty");
-            return "redirect:/app/dashboard";
+                redirectAttributes.addFlashAttribute("error", "Deposit Amount OR Depositing Account cannot be Empty");
+                return "redirect:/app/dashboard";
         }
 
         //Get logged in user

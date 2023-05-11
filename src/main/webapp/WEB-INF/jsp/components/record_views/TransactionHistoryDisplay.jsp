@@ -18,14 +18,14 @@
                 <c:if test="${requestScope.transact_history != null}">
                     <table class="table text-center table-striped">
                     <tr>
-                        <th>Date</th>
-                        <th>Transaction ID</th>
-                        <th>Transaction Type</th>
-                        <th>Amount</th>
-                        <th>Source</th>
-                        <th>Status</th>
-                        <th>Reason Code</th>
-                        <th>Time</th>
+                        <th style="position: sticky; top: 51px">Date</th>
+                        <th style="position: sticky; top: 51px">Transaction ID</th>
+                        <th style="position: sticky; top: 51px">Transaction Type</th>
+                        <th style="position: sticky; top: 51px">Amount</th>
+                        <th style="position: sticky; top: 51px">Source</th>
+                        <th style="position: sticky; top: 51px">Status</th>
+                        <th style="position: sticky; top: 51px">Reason Code</th>
+                        <th style="position: sticky; top: 51px">Time</th>
                     </tr>
                     <c:forEach items="${requestScope.transact_history}" var="transactionHistory">
                       <tr style="border-bottom: 2px solid #413A92;">

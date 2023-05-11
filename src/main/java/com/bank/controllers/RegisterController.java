@@ -41,7 +41,8 @@ public class RegisterController {
                                  @RequestParam("last_name") String last_name,
                                  @RequestParam("email") String email,
                                  @RequestParam("password") String password,
-                                 @RequestParam("confirm_password") String confirm_password) throws MessagingException {
+                                 @RequestParam("confirm_password") String confirm_password,
+                                 @RequestParam("password-strength") String passwordStrength) throws MessagingException {
         ModelAndView registrationPage = new ModelAndView("register");
 
         //Check for Errors
@@ -50,11 +51,18 @@ public class RegisterController {
             return registrationPage;
         }
 
+        if(!passwordStrength.equals("Strong")) {
+            registrationPage.addObject("pass", "Password Strength must be Strong");
+            return registrationPage;
+        }
+
         //Check for password match
         if(!password.equals(confirm_password)) {
             registrationPage.addObject("passwordMisMatch", "Passwords do not match");
             return registrationPage;
         }
+
+
 
         List<String> allEmails = userRepository.getAllEmails();
         if(allEmails.contains(email)) {

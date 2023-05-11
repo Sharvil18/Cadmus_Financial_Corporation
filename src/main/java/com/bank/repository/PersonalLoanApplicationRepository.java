@@ -1,5 +1,6 @@
 package com.bank.repository;
 
+import com.bank.models.HomeLoanApplication;
 import com.bank.models.PersonalLoanApplication;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +18,8 @@ public interface PersonalLoanApplicationRepository extends CrudRepository<Person
     @Query(value= "SELECT user_id from personal_loan_application", nativeQuery = true)
     List<Integer> getAllUsersAppliedPersonalLoan();
 
+    @Query(value= "SELECT * FROM personal_loan_application", nativeQuery = true)
+    List<PersonalLoanApplication> getAllPersonalLoanApplications();
 
     @Modifying
     @Transactional

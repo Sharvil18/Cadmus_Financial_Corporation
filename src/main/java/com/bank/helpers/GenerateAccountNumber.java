@@ -12,8 +12,14 @@ public class GenerateAccountNumber {
     }
 
     public static String generateApplicationNumber() {
+        String UUIDNum = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-",""), 16));
+        String accNum = UUIDNum.substring( UUIDNum.length() - 7);
+        return accNum;
+    }
+
+    public static String generateAdminID() {
         String applicationNumber = UUID.randomUUID().toString();
-        applicationNumber = applicationNumber.substring(applicationNumber.length() - 10);
+        applicationNumber = applicationNumber.substring(applicationNumber.length() - 15);
         return applicationNumber;
     }
 }
