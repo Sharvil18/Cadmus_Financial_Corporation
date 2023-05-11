@@ -1,15 +1,20 @@
 package com.bank.controllers;
 
+import com.bank.helpers.HTML;
 import com.bank.helpers.PDFExporter;
 import com.bank.helpers.PaymentHistoryPDFExporter;
 import com.bank.helpers.TransactionHistoryPDFExporter;
+import com.bank.mailMessenger.MailMessenger;
 import com.bank.models.*;
 import com.bank.repository.*;
+import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -222,6 +232,34 @@ public class AppController {
         List<UserView> userViews = userViewRepository.getUserView();
         getDashboardPage.addObject("userViews", userViews);
 
+        //Get Home loan count
+        int homeLoanCount = homeApplicationRepository.getHomeLoanApplicationCount();
+        getDashboardPage.addObject("homeLoanCount", homeLoanCount);
+
+        //Get Personal loan count
+        int personalLoanCount = personalLoanApplicationRepository.getPersonalLoanApplicationCount();
+        getDashboardPage.addObject("personalLoanCount", personalLoanCount);
+
+        //Get Gold loan count
+        int goldLoanCount = goldLoanApplicationRepository.getGoldLoanApplicationCount();
+        getDashboardPage.addObject("goldLoanCount", goldLoanCount);
+
+        //Get all user applied for home loan
+        List<HomeLoanApplication> allUsersAppliedHomeLoan = homeApplicationRepository.getAllHomeLoanApplications();
+        getDashboardPage.addObject("allUsersAppliedHomeLoan", allUsersAppliedHomeLoan);
+
+        //Get all user applied for personal loan
+        List<PersonalLoanApplication> allUsersAppliedPersonalLoan = personalLoanApplicationRepository.getAllPersonalLoanApplications();
+        getDashboardPage.addObject("allUsersAppliedPersonalLoan", allUsersAppliedPersonalLoan);
+
+
+        //Get all user applied for personal loan
+        List<GoldLoanApplication> allUsersAppliedGoldLoan = goldLoanApplicationRepository.getAllGoldLoanApplications();
+        getDashboardPage.addObject("allUsersAppliedGoldLoan", allUsersAppliedGoldLoan);
+
+        //Get all transactions
+        List<TransactionHistory> allTransactionRecords = transactHistoryRepository.getAllTransactionRecords();
+        getDashboardPage.addObject("allTransactionRecords", allTransactionRecords);
 
 
         return getDashboardPage;
@@ -246,6 +284,28 @@ public class AppController {
         getEmployeePage.addObject("allBranches", allBranches);
 
         return getEmployeePage;
+
+    }
+
+    @GetMapping("/customer_panel")
+    public ModelAndView getCustomerPanel(HttpSession session, RedirectAttributes redirectAttributes) {
+        System.out.println("In customer panel controller");
+        //Set view
+        ModelAndView getCustomerPage = new ModelAndView("customerPanel");
+
+        //Get all employees
+        List<Employee> allEmployees =  employeeRepository.getAllEmployee();
+        getCustomerPage.addObject("allEmployees", allEmployees);
+
+        //Get Departments
+        List<Department> allDepartments = departmentRepository.getAllDepartment();
+        getCustomerPage.addObject("allDepartments", allDepartments);
+
+        //Get Branches
+        List<Branch> allBranches = branchRepository.getAllBranch();
+        getCustomerPage.addObject("allBranches", allBranches);
+
+        return getCustomerPage;
 
     }
 
@@ -620,4 +680,256 @@ public class AppController {
         return getEmployeePage;
 
     }
+
+    @GetMapping("/application_panel/home_loan/export_address_proof")
+    public ResponseEntity<byte[]> exportAddressProofPDFHomeLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting home loan address proof pdf controller");
+        byte[] pdfBytes = homeApplicationRepository.getAddressProofHomeLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Home Loan Address Proof Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/home_loan/export_identity_proof")
+    public ResponseEntity<byte[]> exportIdentityProofPDFHomeLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting home loan identity proof pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = homeApplicationRepository.getIdentityProofHomeLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Home Loan Proof of Identity Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/home_loan/export_salary_slip")
+    public ResponseEntity<byte[]> exportSalarySlipPDFHomeLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting home loan salary slip pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = homeApplicationRepository.getSalarySlipHomeLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Home Loan Salary Slip Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/home_loan/export_account_statement")
+    public ResponseEntity<byte[]> exportAccountStatementPDFHomeLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting home loan account statement pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = homeApplicationRepository.getAccountStatementHomeLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Home Loan Account Statement Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/personal_loan/export_address_proof")
+    public ResponseEntity<byte[]> exportAddressProofPDFPersonalLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting personal loan address proof pdf controller");
+        byte[] pdfBytes = personalLoanApplicationRepository.getAddressProofPersonalLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Personal Loan Address Proof Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/personal_loan/export_identity_proof")
+    public ResponseEntity<byte[]> exportIdentityProofPDFPersonalLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting personal loan identity proof pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = personalLoanApplicationRepository.getIdentityProofPersonalLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Personal Loan Proof of Identity Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/personal_loan/export_salary_slip")
+    public ResponseEntity<byte[]> exportSalarySlipPDFPersonalLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting personal loan salary slip pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = personalLoanApplicationRepository.getSalarySlipPersonalLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Personal Loan Salary Slip Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/personal_loan/export_account_statement")
+    public ResponseEntity<byte[]> exportAccountStatementPDFPersonalLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting personal loan account statement pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = personalLoanApplicationRepository.getAccountStatementPersonalLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Personal Loan Account Statement Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/gold_loan/export_address_proof")
+    public ResponseEntity<byte[]> exportAddressProofPDFGoldLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting gold loan address proof pdf controller");
+        byte[] pdfBytes = goldLoanApplicationRepository.getAddressProofGoldLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Gold Loan Address Proof Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/gold_loan/export_identity_proof")
+    public ResponseEntity<byte[]> exportIdentityProofPDFGoldLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting gold loan identity proof pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = goldLoanApplicationRepository.getIdentityProofGoldLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Gold Loan Proof of Identity Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/gold_loan/export_salary_slip")
+    public ResponseEntity<byte[]> exportSalarySlipPDFGoldLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting gold loan salary slip pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = goldLoanApplicationRepository.getSalarySlipGoldLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Gold Loan Salary Slip Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+    @GetMapping("/application_panel/gold_loan/export_account_statement")
+    public ResponseEntity<byte[]> exportAccountStatementPDFGoldLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
+        System.out.println("Inside exporting gold loan account statement pdf controller");
+        System.out.println(applicationNumber);
+        byte[] pdfBytes = goldLoanApplicationRepository.getAccountStatementGoldLoanApplicationByApplicationNumber(applicationNumber);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_PDF);
+        httpHeaders.setContentDisposition(ContentDisposition.builder("attachment").filename("Gold Loan Account Statement Application Number - " + applicationNumber).build());
+        ResponseEntity<byte[]> response = new ResponseEntity<>(pdfBytes, httpHeaders, HttpStatus.OK);
+        return response;
+    }
+
+
+
+    @PostMapping("/application_panel/approve/home_loan")
+    public String approveHomeLoan(@RequestParam("loan_amount") String loanAmount,
+                                  @RequestParam("interest_rate") String interestRate,
+                                  @RequestParam("tenure") String tenure,
+                                  @RequestParam("application_number") String applicationNumber,
+                                  HttpSession session,
+                                  RedirectAttributes redirectAttributes) {
+        System.out.println("In approve home loan panel");
+        //Check for empty strings
+        if(loanAmount.isEmpty() || interestRate.isEmpty() || tenure.isEmpty()) {
+            redirectAttributes.addFlashAttribute("error", "Loan Amount OR Interest Rate OR Tenure cannot be empty");
+            return "redirect:/app/application_panel?application_number=" + applicationNumber;
+        }
+
+        //Set approved to yes
+        homeApplicationRepository.setApprovedToYesHomeLoanApplication(applicationNumber);
+
+        //Get email
+        String email = homeApplicationRepository.getEmailHomeLoanApplicationByApplicationNumber(applicationNumber);
+
+        //Get email HTML body
+        String emailBody = HTML.htmlHomeLoanApprovalTemplate("Home", applicationNumber, loanAmount, interestRate, tenure);
+
+        //Send email notification
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Home Loan Application Approval", emailBody);
+
+        return "redirect:/app/application_panel";
+    }
+
+    @PostMapping("/application_panel/approve/personal_loan")
+    public String approvePersonalLoan(@RequestParam("loan_amount") String loanAmount,
+                                  @RequestParam("interest_rate") String interestRate,
+                                  @RequestParam("tenure") String tenure,
+                                  @RequestParam("application_number") String applicationNumber,
+                                  HttpSession session,
+                                  RedirectAttributes redirectAttributes) {
+        System.out.println("In approve personal loan panel");
+        //Check for empty strings
+        if(loanAmount.isEmpty() || interestRate.isEmpty() || tenure.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorPersonal", "Loan Amount OR Interest Rate OR Tenure cannot be empty");
+            return "redirect:/app/application_panel?application_number=" + applicationNumber;
+        }
+
+        //Set approved to yes
+        personalLoanApplicationRepository.setApprovedToYesPersonalLoanApplication(applicationNumber);
+
+        //Get email
+        String email = personalLoanApplicationRepository.getEmailPersonalLoanApplicationByApplication(applicationNumber);
+
+        //Get email HTML body
+        String emailBody = HTML.htmlPersonalLoanApprovalTemplate("Home", applicationNumber, loanAmount, interestRate, tenure);
+
+        //Send email notification
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Personal Loan Application Approval", emailBody);
+
+        return "redirect:/app/application_panel";
+    }
+
+    @PostMapping("/application_panel/approve/gold_loan")
+    public String approveGoldLoan(@RequestParam("gold_weight") String goldWeight,
+                                      @RequestParam("interest_rate") String interestRate,
+                                      @RequestParam("gold_rate") String goldRate,
+                                      @RequestParam("application_number") String applicationNumber,
+                                      HttpSession session,
+                                      RedirectAttributes redirectAttributes) {
+        System.out.println("In approve gold loan panel");
+        //Check for empty strings
+        if(goldWeight.isEmpty() || goldRate.isEmpty() || interestRate.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorGold", "Gold Weight OR Interest Rate OR Gold Rate cannot be empty");
+            return "redirect:/app/application_panel?application_number=" + applicationNumber;
+        }
+
+        //Set approved to yes
+        goldLoanApplicationRepository.setApprovedToYesGoldLoanApplication(applicationNumber);
+
+        //Get email
+        String email = goldLoanApplicationRepository.getEmailGoldLoanApplicationByApplication(applicationNumber);
+
+        //Convert variables
+        int goldWeightInt = Integer.parseInt(goldWeight);
+        float interestRateFloat = Float.parseFloat(interestRate);
+        float goldRateFloat = Float.parseFloat(goldRate);
+
+        double loanAmount = goldWeightInt * goldRateFloat;
+
+        //Get email HTML body
+        String emailBody = HTML.htmlGoldLoanApprovalTemplate("Gold", applicationNumber, goldWeight, interestRate, loanAmount);
+
+        //Send email notification
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Gold Loan Application Approval", emailBody);
+
+        return "redirect:/app/application_panel";
+    }
+
+
+
 }

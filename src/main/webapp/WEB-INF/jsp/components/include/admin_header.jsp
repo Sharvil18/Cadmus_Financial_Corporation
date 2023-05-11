@@ -13,9 +13,7 @@
                 <li><a href="admin_dashboard">Dashboard</a></li>
                 <li><a href="application_panel">Applications</a></li>
                 <li><a href="employee_panel">Employees</a></li>
-                <li><a href="">Customers</a></li>
-                <li><a href="">Customer Affluency</a></li>
-                <li><a href="">Branches</a></li>
+                <li><a href="customer_panel">Customers</a></li>
             </div>
             <!--End of Navigation-->
 

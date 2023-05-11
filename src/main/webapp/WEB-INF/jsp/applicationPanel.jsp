@@ -80,17 +80,23 @@
                                                 <div class="accordion accordion-flush" id="accordionFlushExample">
                                                     <div class="accordion-item">
                                                         <h2 class="accordion-header d-flex" id="flush-headingOne">
-                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-${application.application_number}" aria-expanded="false" aria-controls="flush-collapseOne" style="font-size: 19px;font-family: 'Trirong', serif;">
+                                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-${application.application_number}" aria-expanded="true" aria-controls="flush-collapseOne" style="font-size: 19px;font-family: 'Trirong', serif;">
                                                               ${fn:toUpperCase(application.first_name)} ${fn:toUpperCase(application.last_name)}
                                                             </button>
                                                         </h2>
-                                                        <div id="flush-${application.application_number}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                        <div id="flush-${application.application_number}" class="accordion-collapse collapse <c:if test='${application.application_number == param.application_number}'>show</c:if>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                                             <div class="accordion-body">
+
+                                                                <c:if test="${requestScope.error != null}">
+                                                                    <div class="alert alert-danger text-center border border-danger">
+                                                                        <b>${requestScope.error}</b>
+                                                                    </div>
+                                                                </c:if>
 
                                                                 <c:choose>
                                                                     <c:when test="${application.approved == 'no'}">
                                                                         <div class="container my-5 p-4 alert-warning border-warning border rounded" style="font-size:25px;">
-                                                                            <form action="" class="d-flex">
+                                                                            <form action="/app/application_panel/approve/home_loan" method="POST" class="d-flex">
                                                                                 <div class="form-group mb-3">
                                                                                     <label for="">Loan Amount</label>
                                                                                     <div class="input-group">
@@ -103,7 +109,7 @@
                                                                                     <label for="">Interest Rate</label>
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-text"><i class="fa-solid fa-percent me-1"></i></span>
-                                                                                        <input type="text" class="form-control" name="loan_amount" />
+                                                                                        <input type="text" class="form-control" name="interest_rate" />
                                                                                         <span class="input-group-text">p.a.</span>
                                                                                     </div>
                                                                                 </div>
@@ -115,7 +121,8 @@
                                                                                         <span class="input-group-text">years</span>
                                                                                     </div>
                                                                                 </div>
-                                                                                <button type="button" class="btn btn-outline-success ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-regular fa-circle-check fa-lg me-2"></i>Approve</button>
+                                                                                <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                                <button class="btn btn-outline-success ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-regular fa-circle-check fa-lg me-2"></i>Approve</button>
                                                                             </form>
                                                                         </div>
                                                                     </c:when>
@@ -190,6 +197,25 @@
                                                                     </ul>
                                                                 </div>
 
+                                                                <div class="container mt-5 p-3 border border-dark rounded d-flex" style="width: 70%">
+                                                                    <form action="/app/application_panel/home_loan/export_identity_proof">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Proof of Identity</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/home_loan/export_address_proof" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Address Proof</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/home_loan/export_salary_slip" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Salary Slip</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/home_loan/export_account_statement" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Bank Account Statement</button>
+                                                                    </form>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -224,13 +250,19 @@
                                                               ${fn:toUpperCase(application.first_name)} ${fn:toUpperCase(application.last_name)}
                                                             </button>
                                                         </h2>
-                                                        <div id="flush-${application.application_number}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                        <div id="flush-${application.application_number}" class="accordion-collapse collapse <c:if test='${application.application_number == param.application_number}'>show</c:if>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                                             <div class="accordion-body">
+
+                                                                <c:if test="${requestScope.errorPersonal != null}">
+                                                                    <div class="alert alert-danger text-center border border-danger">
+                                                                        <b>${requestScope.errorPersonal}</b>
+                                                                    </div>
+                                                                </c:if>
 
                                                                 <c:choose>
                                                                     <c:when test="${application.approved == 'no'}">
                                                                         <div class="container my-5 p-4 alert-warning border-warning border rounded" style="font-size:25px;">
-                                                                            <form action="" class="d-flex">
+                                                                            <form action="/app/application_panel/approve/personal_loan" method="POST" class="d-flex">
                                                                                 <div class="form-group mb-3">
                                                                                     <label for="">Loan Amount</label>
                                                                                     <div class="input-group">
@@ -243,7 +275,7 @@
                                                                                     <label for="">Interest Rate</label>
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-text"><i class="fa-solid fa-percent me-1"></i></span>
-                                                                                        <input type="text" class="form-control" name="loan_amount" />
+                                                                                        <input type="text" class="form-control" name="interest_rate" />
                                                                                         <span class="input-group-text">p.a.</span>
                                                                                     </div>
                                                                                 </div>
@@ -255,7 +287,8 @@
                                                                                         <span class="input-group-text">months</span>
                                                                                     </div>
                                                                                 </div>
-                                                                                <button type="button" class="btn btn-outline-success ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-regular fa-circle-check fa-lg me-2"></i>Approve</button>
+                                                                                <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                                <button class="btn btn-outline-success ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-regular fa-circle-check fa-lg me-2"></i>Approve</button>
                                                                             </form>
                                                                         </div>
                                                                     </c:when>
@@ -327,6 +360,25 @@
                                                                     </ul>
                                                                 </div>
 
+                                                                <div class="container mt-5 p-3 border border-dark rounded d-flex" style="width: 70%">
+                                                                    <form action="/app/application_panel/personal_loan/export_identity_proof">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Proof of Identity</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/personal_loan/export_address_proof" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Address Proof</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/personal_loan/export_salary_slip" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Salary Slip</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/personal_loan/export_account_statement" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Bank Account Statement</button>
+                                                                    </form>
+                                                                </div>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -360,14 +412,19 @@
                                                               ${fn:toUpperCase(application.first_name)} ${fn:toUpperCase(application.last_name)}
                                                             </button>
                                                         </h2>
-                                                        <div id="flush-${application.application_number}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                        <div id="flush-${application.application_number}" class="accordion-collapse collapse <c:if test='${application.application_number == param.application_number}'>show</c:if>" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                                             <div class="accordion-body">
 
+                                                                <c:if test="${requestScope.errorGold != null}">
+                                                                    <div class="alert alert-danger text-center border border-danger">
+                                                                        <b>${requestScope.errorGold}</b>
+                                                                    </div>
+                                                                </c:if>
 
                                                                 <c:choose>
                                                                     <c:when test="${application.approved == 'no'}">
                                                                         <div class="container my-5 p-4 alert-warning border-warning border rounded" style="font-size:25px;">
-                                                                            <form action="" class="d-flex">
+                                                                            <form action="/app/application_panel/approve/gold_loan" method="POST" class="d-flex">
                                                                                 <div class="form-group mb-3">
                                                                                     <label for="">Gold Weight</label>
                                                                                     <div class="input-group">
@@ -380,7 +437,7 @@
                                                                                     <label for="">Interest Rate</label>
                                                                                     <div class="input-group">
                                                                                         <span class="input-group-text"><i class="fa-solid fa-percent me-1"></i></span>
-                                                                                        <input type="text" class="form-control" name="loan_amount" />
+                                                                                        <input type="text" class="form-control" name="interest_rate" />
                                                                                         <span class="input-group-text">p.a.</span>
                                                                                     </div>
                                                                                 </div>
@@ -392,7 +449,8 @@
                                                                                         <span class="input-group-text">per gram</span>
                                                                                     </div>
                                                                                 </div>
-                                                                                <button type="button" class="btn btn-outline-success ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-regular fa-circle-check fa-lg me-2"></i>Approve</button>
+                                                                                <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                                <button class="btn btn-outline-success ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-regular fa-circle-check fa-lg me-2"></i>Approve</button>
                                                                             </form>
                                                                         </div>
                                                                     </c:when>
@@ -465,6 +523,25 @@
                                                                         <li class="list-group-item d-flex">Credit Card Debt <span class="ms-auto"><b><i class="fa-solid fa-indian-rupee-sign me-1"></i><fmt:formatNumber value="${application.credit_card_debt}" /></b></span></li>
                                                                         <li class="list-group-item d-flex">Account <span class="ms-auto"><b>${application.account}</b></span></li>
                                                                     </ul>
+                                                                </div>
+
+                                                                <div class="container mt-5 p-3 border border-dark rounded d-flex" style="width: 70%">
+                                                                    <form action="/app/application_panel/gold_loan/export_identity_proof">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Proof of Identity</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/gold_loan/export_address_proof" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Address Proof</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/gold_loan/export_salary_slip" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Salary Slip</button>
+                                                                    </form>
+                                                                    <form action="/app/application_panel/gold_loan/export_account_statement" class="ms-auto">
+                                                                        <input type="hidden" value="${application.application_number}" name="application_number" />
+                                                                        <button class="btn btn-secondary ms-auto px-4 my-auto" style="height: 50px;font-weight: bold;" type="submit"><i class="fa-solid fa-download fa-lg me-2"></i>Bank Account Statement</button>
+                                                                    </form>
                                                                 </div>
 
                                                             </div>

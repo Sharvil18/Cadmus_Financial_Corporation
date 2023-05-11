@@ -21,6 +21,34 @@ public interface PersonalLoanApplicationRepository extends CrudRepository<Person
     @Query(value= "SELECT * FROM personal_loan_application", nativeQuery = true)
     List<PersonalLoanApplication> getAllPersonalLoanApplications();
 
+    @Query(value= "SELECT email FROM personal_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    String getEmailPersonalLoanApplicationByApplication(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT address_proof FROM personal_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getAddressProofPersonalLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT proof_of_identity FROM personal_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getIdentityProofPersonalLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT salary_slip FROM personal_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getSalarySlipPersonalLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT bank_account_statement FROM personal_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getAccountStatementPersonalLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT COUNT(*) FROM personal_loan_application", nativeQuery = true)
+    int getPersonalLoanApplicationCount();
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE personal_loan_application SET approved='yes' WHERE application_number=:application_number", nativeQuery = true)
+    void setApprovedToYesPersonalLoanApplication(@Param("application_number") String application_number);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE personal_loan_application SET confirm='yes' WHERE application_number=:application_number", nativeQuery = true)
+    void setConfirmToYesPersonalLoanApplication(@Param("application_number") String application_number);
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO personal_loan_application(user_id, application_number, first_name, last_name, email, contact, religion, age, birth_date, marital_status, proof_of_identity, address_house, address_complex, address_street_line1, address_street_line2, " +

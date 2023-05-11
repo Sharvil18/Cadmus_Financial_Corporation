@@ -21,6 +21,34 @@ public interface GoldLoanApplicationRepository extends CrudRepository<GoldLoanAp
     @Query(value= "SELECT * FROM gold_loan_application", nativeQuery = true)
     List<GoldLoanApplication> getAllGoldLoanApplications();
 
+    @Query(value= "SELECT email FROM gold_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    String getEmailGoldLoanApplicationByApplication(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT address_proof FROM gold_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getAddressProofGoldLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT proof_of_identity FROM gold_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getIdentityProofGoldLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT salary_slip FROM gold_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getSalarySlipGoldLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value= "SELECT bank_account_statement FROM gold_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getAccountStatementGoldLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT COUNT(*) FROM gold_loan_application", nativeQuery = true)
+    int getGoldLoanApplicationCount();
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE gold_loan_application SET confirm='yes' WHERE application_number=:application_number", nativeQuery = true)
+    void setConfirmToYesGoldLoanApplication(@Param("application_number") String application_number);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE gold_loan_application SET approved='yes' WHERE application_number=:application_number", nativeQuery = true)
+    void setApprovedToYesGoldLoanApplication(@Param("application_number") String application_number);
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO gold_loan_application(user_id, application_number, first_name, last_name, email, contact, religion, age, birth_date, marital_status, proof_of_identity, address_house, address_complex, address_street_line1, address_street_line2, " +

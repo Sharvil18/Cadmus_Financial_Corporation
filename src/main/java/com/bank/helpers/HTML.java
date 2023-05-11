@@ -18,9 +18,9 @@ public class HTML {
                 "    <title>Email Verification</title>\n" +
                 "</head>\n" +
                 "\n" +
-                "<bod style=\"font-family: 'Quicksand', sans-serif;height: 100vh;background-color: #d4d0ff;display: flex;align-items: center;justify-content: center;\">\n" +
+                "<body style=\"font-family: 'Quicksand', sans-serif;height: 100vh;background-color: #d4d0ff;display: flex;align-items: center;justify-content: center;\">\n" +
                 "    <!--Wrapper-->\n" +
-                "    <div style=\"width: 650px;height: auto;padding: 15px;background-color: white;border-radius: 7px;\">\n" +
+                "    <div style=\"width: 650px;height: auto;padding: 15px;background-color: white;border-radius: 7px;margin: 0px auto;\">\n" +
                 "        <!-- Email message header -->\n" +
                 "        <h2 style=\"text-align: center;\">\n" +
                 "            Welcome and Thank You for Choosing\n" +
@@ -54,5 +54,227 @@ public class HTML {
                 "</html>";
         return emailTemplate;
 
+    }
+
+    public static String htmlHomeLoanApprovalTemplate(String loanType, String applicationNumber, String loanAmount, String interestRate, String tenure) {
+        String url = "http://127.0.0.1:8070/confirm?loan_type=" + loanType + "&application_number=" + applicationNumber;
+        String emailTemplate = "<!DOCTYPE html>\n" +
+                "<html lang='en'>\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta charset='UTF-8'>\n" +
+                "    <meta http-equiv='X-UA-Compatible' content='IE=edge'>\n" +
+                "    <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n" +
+                "    <meta http-equiv=\"Content-Type\" content=\"text/html charset=UTF-8\" />\n" +
+                "    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                "    <link href=\"https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display&family=Quicksand:wght@300;400;500;700&family=Roboto:wght@100;300;400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                "    <title>Email Verification</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<bod style=\"font-family: 'Quicksand', sans-serif;height: 100vh;background-color: #e8cae2;display: flex;align-items: center;justify-content: center;\">\n" +
+                "    <!--Wrapper-->\n" +
+                "    <div style=\"width: 650px;height: auto;padding: 15px;background-color: white;border-radius: 7px;\">\n" +
+                "        <!-- Email message header -->\n" +
+                "        <h1 style=\"text-align: center;\">\n" +
+                "            Cadmus Finance Corporation\n" +
+                "        </h1>\n" +
+                "        <!--End of Email message header -->\n" +
+                "        <!-- Company name -->\n" +
+                "        <h3 style=\"text-align: center;\">\n" +
+                "            " + loanType + " Loan Application Approval \n" +
+                "         </h3>\n" +
+                "        <!--End of  Company name -->\n" +
+                "        <hr color='black'>\n" +
+                "        <!-- welcome-text -->\n" +
+                "        <div style=\"text-align: center;font-size: 18px;margin: 15px 10px;\">\n" +
+                "            We are delighted to inform you that your loan application " + applicationNumber + " has been approved. <br> <b> Congratulations! </b>\n" +
+                "\n" +
+                "            <div style=\"margin-top: 30px;\">\n" +
+                "                <table style=\"border: 3px solid #481e40;margin: 0px auto;\" cellpadding=\"11\" border=\"4\">\n" +
+                "                    <thead>\n" +
+                "                        <tr>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Loan Amount</th>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Interest Rate</th>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Tenure</th>\n" +
+                "                        </tr>\n" +
+                "                    </thead>\n" +
+                "                        <tr style=\"background-color: white;\">\n" +
+                "                            <td style=\"text-align: center;\">Rs. " + loanAmount + "</td>\n" +
+                "                            <td style=\"text-align: center;\">" + interestRate + "% p.a.</td>\n" +
+                "                            <td style=\"text-align: center;\">" + tenure + " years</td>\n" +
+                "                        </tr>\n" +
+                "                </table>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "        <!--End of welcome-text -->\n" +
+                "        <br>\n" +
+                "        <br>\n" +
+                "        <!-- Verify account button -->\n" +
+                "        <div style=\"text-align: center;\">\n" +
+                "            <a href='" + url + "' style=\"padding: 15px 25px;background-color: #6c2d60;text-decoration: none;color: white;border-radius: 5px;font-family: 'Roboto', sans-serif;\" role=\"button\">Confirm</a>\n" +
+                "        </div>\n" +
+                "        <!--End of Verify account button -->\n" +
+                "\n" +
+                "        <!-- Copyright wrapper -->\n" +
+                "        <p style=\"padding: 15px;font-size: 14px;margin-top: 10px;margin-bottom: -15px;text-align: center;color: rgb(156, 156, 156);\">\n" +
+                "            &copy; Copy Right 2021. All Rights Reserved.\n" +
+                "        </p>\n" +
+                "        <!--End of Copyright wrapper -->\n" +
+                "\n" +
+                "    </div>\n" +
+                "    <!--End of Wrapper -->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return emailTemplate;
+    }
+
+    public static String htmlPersonalLoanApprovalTemplate(String loanType, String applicationNumber, String loanAmount, String interestRate, String tenure) {
+        String url = "http://127.0.0.1:8070/confirm?loan_type=" + loanType + "&application_number=" + applicationNumber;
+        String emailTemplate = "<!DOCTYPE html>\n" +
+                "<html lang='en'>\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta charset='UTF-8'>\n" +
+                "    <meta http-equiv='X-UA-Compatible' content='IE=edge'>\n" +
+                "    <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n" +
+                "    <meta http-equiv=\"Content-Type\" content=\"text/html charset=UTF-8\" />\n" +
+                "    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                "    <link href=\"https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display&family=Quicksand:wght@300;400;500;700&family=Roboto:wght@100;300;400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                "    <title>Email Verification</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<bod style=\"font-family: 'Quicksand', sans-serif;height: 100vh;background-color: #e8cae2;display: flex;align-items: center;justify-content: center;\">\n" +
+                "    <!--Wrapper-->\n" +
+                "    <div style=\"width: 650px;height: auto;padding: 15px;background-color: white;border-radius: 7px;\">\n" +
+                "        <!-- Email message header -->\n" +
+                "        <h1 style=\"text-align: center;\">\n" +
+                "            Cadmus Finance Corporation\n" +
+                "        </h1>\n" +
+                "        <!--End of Email message header -->\n" +
+                "        <!-- Company name -->\n" +
+                "        <h3 style=\"text-align: center;\">\n" +
+                "            " + loanType + " Loan Application Approval \n" +
+                "         </h3>\n" +
+                "        <!--End of  Company name -->\n" +
+                "        <hr color='black'>\n" +
+                "        <!-- welcome-text -->\n" +
+                "        <div style=\"text-align: center;font-size: 18px;margin: 15px 10px;\">\n" +
+                "            We are delighted to inform you that your loan application " + applicationNumber + " has been approved. <br> <b> Congratulations! </b>\n" +
+                "\n" +
+                "            <div style=\"margin-top: 30px;\">\n" +
+                "                <table style=\"border: 3px solid #481e40;margin: 0px auto;\" cellpadding=\"11\" border=\"4\">\n" +
+                "                    <thead>\n" +
+                "                        <tr>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Loan Amount</th>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Interest Rate</th>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Tenure</th>\n" +
+                "                        </tr>\n" +
+                "                    </thead>\n" +
+                "                        <tr style=\"background-color: white;\">\n" +
+                "                            <td style=\"text-align: center;\">Rs. " + loanAmount + "</td>\n" +
+                "                            <td style=\"text-align: center;\">" + interestRate + "% p.a.</td>\n" +
+                "                            <td style=\"text-align: center;\">" + tenure + " years</td>\n" +
+                "                        </tr>\n" +
+                "                </table>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "        <!--End of welcome-text -->\n" +
+                "        <br>\n" +
+                "        <br>\n" +
+                "        <!-- Verify account button -->\n" +
+                "        <div style=\"text-align: center;\">\n" +
+                "            <a href='" + url + "' style=\"padding: 15px 25px;background-color: #6c2d60;text-decoration: none;color: white;border-radius: 5px;font-family: 'Roboto', sans-serif;\" role=\"button\">Confirm</a>\n" +
+                "        </div>\n" +
+                "        <!--End of Verify account button -->\n" +
+                "\n" +
+                "        <!-- Copyright wrapper -->\n" +
+                "        <p style=\"padding: 15px;font-size: 14px;margin-top: 10px;margin-bottom: -15px;text-align: center;color: rgb(156, 156, 156);\">\n" +
+                "            &copy; Copy Right 2021. All Rights Reserved.\n" +
+                "        </p>\n" +
+                "        <!--End of Copyright wrapper -->\n" +
+                "\n" +
+                "    </div>\n" +
+                "    <!--End of Wrapper -->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return emailTemplate;
+    }
+
+    public static String htmlGoldLoanApprovalTemplate(String loanType, String applicationNumber, String goldWeight, String interestRate, double loanAmount) {
+        String url = "http://127.0.0.1:8070/confirm?loan_type=" + loanType + "&application_number=" + applicationNumber;
+        String emailTemplate = "<!DOCTYPE html>\n" +
+                "<html lang='en'>\n" +
+                "\n" +
+                "<head>\n" +
+                "    <meta charset='UTF-8'>\n" +
+                "    <meta http-equiv='X-UA-Compatible' content='IE=edge'>\n" +
+                "    <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n" +
+                "    <meta http-equiv=\"Content-Type\" content=\"text/html charset=UTF-8\" />\n" +
+                "    <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n" +
+                "    <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n" +
+                "    <link href=\"https://fonts.googleapis.com/css2?family=Anonymous+Pro&family=BioRhyme:wght@400;700&family=Cormorant+SC:wght@300;400;500;600;700&family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Eczar:wght@400;600&family=Oswald:wght@200;300;500;700&family=Playfair+Display&family=Quicksand:wght@300;400;500;700&family=Roboto:wght@100;300;400;500;700&display=swap\" rel=\"stylesheet\">\n" +
+                "    <title>Email Verification</title>\n" +
+                "</head>\n" +
+                "\n" +
+                "<bod style=\"font-family: 'Quicksand', sans-serif;height: 100vh;background-color: #e8cae2;display: flex;align-items: center;justify-content: center;\">\n" +
+                "    <!--Wrapper-->\n" +
+                "    <div style=\"width: 650px;height: auto;padding: 15px;background-color: white;border-radius: 7px;\">\n" +
+                "        <!-- Email message header -->\n" +
+                "        <h1 style=\"text-align: center;\">\n" +
+                "            Cadmus Finance Corporation\n" +
+                "        </h1>\n" +
+                "        <!--End of Email message header -->\n" +
+                "        <!-- Company name -->\n" +
+                "        <h3 style=\"text-align: center;\">\n" +
+                "            " + loanType + " Loan Application Approval \n" +
+                "         </h3>\n" +
+                "        <!--End of  Company name -->\n" +
+                "        <hr color='black'>\n" +
+                "        <!-- welcome-text -->\n" +
+                "        <div style=\"text-align: center;font-size: 18px;margin: 15px 10px;\">\n" +
+                "            We are delighted to inform you that your loan application " + applicationNumber + " has been approved. <br> <b> Congratulations! </b>\n" +
+                "\n" +
+                "            <div style=\"margin-top: 30px;\">\n" +
+                "                <table style=\"border: 3px solid #481e40;margin: 0px auto;\" cellpadding=\"11\" border=\"4\">\n" +
+                "                    <thead>\n" +
+                "                        <tr>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Gold Weight</th>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Loan Amount</th>\n" +
+                "                            <th style=\"background-color: #481e40;color: white;\">Interest Rate</th>\n" +
+                "                        </tr>\n" +
+                "                    </thead>\n" +
+                "                        <tr style=\"background-color: white;\">\n" +
+                "                            <td style=\"text-align: center;\">" + goldWeight + " gram</td>\n" +
+                "                            <td style=\"text-align: center;\">Rs. " + String.valueOf(loanAmount) + "</td>\n" +
+                "                            <td style=\"text-align: center;\">" + interestRate + " % p.a.</td>\n" +
+                "                        </tr>\n" +
+                "                </table>\n" +
+                "            </div>\n" +
+                "        </div>\n" +
+                "        <!--End of welcome-text -->\n" +
+                "        <br>\n" +
+                "        <br>\n" +
+                "        <!-- Verify account button -->\n" +
+                "        <div style=\"text-align: center;\">\n" +
+                "            <a href='" + url + "' style=\"padding: 15px 25px;background-color: #6c2d60;text-decoration: none;color: white;border-radius: 5px;font-family: 'Roboto', sans-serif;\" role=\"button\">Confirm</a>\n" +
+                "        </div>\n" +
+                "        <!--End of Verify account button -->\n" +
+                "\n" +
+                "        <!-- Copyright wrapper -->\n" +
+                "        <p style=\"padding: 15px;font-size: 14px;margin-top: 10px;margin-bottom: -15px;text-align: center;color: rgb(156, 156, 156);\">\n" +
+                "            &copy; Copy Right 2021. All Rights Reserved.\n" +
+                "        </p>\n" +
+                "        <!--End of Copyright wrapper -->\n" +
+                "\n" +
+                "    </div>\n" +
+                "    <!--End of Wrapper -->\n" +
+                "</body>\n" +
+                "\n" +
+                "</html>";
+        return emailTemplate;
     }
 }

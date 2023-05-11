@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://example.com/functions" prefix="f" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
@@ -35,10 +36,41 @@
                     <!--End of Card title-->
                     <hr>
                     <!--Card text-->
-                    <div class="card-text">
-                        <h4>Transactions of customers for loan, mortgage, credit card, etc.</h4>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore iure quod consectetur optio
-                        placeat ipsam in laudantium omnis rerum?
+                    <div class="card-text mx-5">
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Account ID</th>
+                                    <th>User ID</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Source</th>
+                                    <th>Status</th>
+                                    <th>Reason Code</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                                <!-- Loop Through Employee Records -->
+                                <c:forEach items="${requestScope.allTransactionRecords}" var="transactionHistory">
+                                <tr style="border-bottom: 2px solid #481e40;">
+                                  <td>${transactionHistory.transaction_id}</td>
+                                  <td>${transactionHistory.account_id}</td>
+                                  <td>${transactionHistory.user_id}</td>
+                                  <td>${transactionHistory.transaction_type}</td>
+                                  <td>${transactionHistory.amount}</td>
+                                  <td>${transactionHistory.source}</td>
+                                  <td>${transactionHistory.status}</td>
+                                  <td>${transactionHistory.reason_code}</td>
+                                  <td>${f:getFormattedTime(transactionHistory.created_at)}</td>
+                                  <td>${f:getFormattedDate(transactionHistory.created_at)}</td>
+                                </tr>
+                                 </c:forEach>
+                                <!-- End Of Loop Through Employee Records -->
+                        </table>
+
                     </div>
                     <!--End of Card text-->
                 </div>
@@ -62,9 +94,51 @@
                 <hr>
                 <!--Card text-->
                 <div class="card-text">
-                    <h4>Applications of customers for loan, mortgage, credit card, etc.</h4>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore iure quod consectetur optio
-                    placeat ipsam in laudantium omnis rerum?
+
+                    <ol class="list-group  mx-auto my-3" style="width: 60%;">
+                      <li class="list-group-item border-bottom border-dark d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <h2 class="fw-bold" style="font-family: 'Oswald', sans-serif; color: #4C2B3E"><i class="fa-solid fa-house fa-1x me-3 "></i>Home Loan Applications</h2>
+                          <ul type="disc" style="color: #4C2B3E; margin: 20px 10px">
+                            <c:if test="${requestScope.allUsersAppliedHomeLoan != null}">
+                                <c:forEach items="${allUsersAppliedHomeLoan}" var="application">
+                                  <h4><li style="font-family: 'BioRhyme', serif;">Application Number: ${application.application_number}</li></h4>
+                                </c:forEach>
+                            </c:if>
+                          </ul>
+                        </div>
+                        <span class="badge bg-primary rounded-pill mt-3 me-3" style="font-size: 18px; padding: 10px 30px">${requestScope.homeLoanCount}</span>
+                      </li>
+
+                      <li class="list-group-item border-bottom border-dark d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <h2 class="fw-bold" style="font-family: 'Oswald', sans-serif; color: #4C2B3E"><i class="fa-solid fa-sack-dollar fa-1x me-3 "></i>Personal Loan Applications</h2>
+                          <ul type="disc" style="color: #4C2B3E; margin: 20px 10px">
+                            <c:if test="${requestScope.allUsersAppliedPersonalLoan != null}">
+                                <c:forEach items="${allUsersAppliedPersonalLoan}" var="application">
+                                  <h4><li style="font-family: 'BioRhyme', serif;">Application Number: ${application.application_number}</li></h4>
+                                </c:forEach>
+                            </c:if>
+                          </ul>
+                        </div>
+                        <span class="badge bg-primary rounded-pill mt-3 me-3" style="font-size: 18px; padding: 10px 30px">${requestScope.personalLoanCount}</span>
+                      </li>
+
+                      <li class="list-group-item border-bottom border-dark d-flex justify-content-between align-items-start">
+                        <div class="ms-2 me-auto">
+                          <h2 class="fw-bold" style="font-family: 'Oswald', sans-serif; color: #4C2B3E"><i class="fa-solid fa-hand-holding-dollar fa-1x me-3"></i>Gold Loan Applications</h2>
+                          <ul type="disc" style="color: #4C2B3E; margin: 20px 10px">
+                            <c:if test="${requestScope.allUsersAppliedGoldLoan != null}">
+                                <c:forEach items="${allUsersAppliedGoldLoan}" var="application">
+                                  <h4><li style="font-family: 'BioRhyme', serif;">Application Number: ${application.application_number}</li></h4>
+                                </c:forEach>
+                            </c:if>
+                          </ul>
+                        </div>
+                        <span class="badge bg-primary rounded-pill mt-3 me-3" style="font-size: 18px; padding: 10px 30px">${requestScope.goldLoanCount}</span>
+                      </li>
+                    </ol>
+
                 </div>
                 <!--End of Card text-->
             </div>
@@ -144,7 +218,7 @@
                         </thead>
                             <!-- Loop Through User Records -->
                             <c:forEach items="${requestScope.userViews}" var="user">
-                            <tr style="border-bottom: 2px solid #413A92;">
+                            <tr style="border-bottom: 2px solid #481e40;">
                                 <td>${user.user_id}</td>
                                 <td>${user.name}</td>
                                 <td>${user.email}</td>

@@ -1,5 +1,8 @@
 package com.bank.controllers;
 
+import com.bank.repository.GoldLoanApplicationRepository;
+import com.bank.repository.HomeApplicationRepository;
+import com.bank.repository.PersonalLoanApplicationRepository;
 import com.bank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,15 @@ public class IndexController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private HomeApplicationRepository homeApplicationRepository;
+
+    @Autowired
+    private PersonalLoanApplicationRepository personalLoanApplicationRepository;
+
+    @Autowired
+    private GoldLoanApplicationRepository goldLoanApplicationRepository;
 
     @GetMapping("/")
     public ModelAndView getIndex() {
@@ -69,6 +81,25 @@ public class IndexController {
         System.out.println("In Verify controller");
         getVerifyPage.addObject("success", "Account Verified Successfully, Please proceed to log in!");
         return getVerifyPage;
+    }
+
+    @GetMapping("/confirm")
+    public ModelAndView confirmLoan(@RequestParam("loan_type") String loanType,
+                            @RequestParam("application_number") String applicationNumber) {
+        System.out.println("In Loan Confirmation Controller");
+
+        ModelAndView getLoginPage = new ModelAndView("login");
+
+        if(loanType.equals("Home"))
+            homeApplicationRepository.setConfirmToYesHomeLoanApplication(applicationNumber);
+
+        else if(loanType.equals("Personal"))
+            personalLoanApplicationRepository.setConfirmToYesPersonalLoanApplication(applicationNumber);
+
+        else if(loanType.equals("Gold"))
+            goldLoanApplicationRepository.setConfirmToYesGoldLoanApplication(applicationNumber);
+
+        return getLoginPage;
     }
 
 }

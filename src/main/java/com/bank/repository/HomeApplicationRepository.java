@@ -9,17 +9,46 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.stylesheets.LinkStyle;
 
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
 public interface HomeApplicationRepository extends CrudRepository<HomeLoanApplication, Integer> {
 
-    @Query(value= "SELECT user_id FROM home_loan_application", nativeQuery = true)
+    @Query(value = "SELECT user_id FROM home_loan_application", nativeQuery = true)
     List<Integer> getAllUsersAppliedHomeLoan();
 
-    @Query(value= "SELECT * FROM home_loan_application", nativeQuery = true)
+    @Query(value = "SELECT * FROM home_loan_application", nativeQuery = true)
     List<HomeLoanApplication> getAllHomeLoanApplications();
+
+    @Query(value = "SELECT email FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    String getEmailHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT address_proof FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getAddressProofHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT proof_of_identity FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getIdentityProofHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT salary_slip FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getSalarySlipHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT bank_account_statement FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    byte[] getAccountStatementHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT COUNT(*) FROM home_loan_application", nativeQuery = true)
+    int getHomeLoanApplicationCount();
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE home_loan_application SET approved='yes' WHERE application_number=:application_number", nativeQuery = true)
+    void setApprovedToYesHomeLoanApplication(@Param("application_number") String application_number);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE home_loan_application SET confirm='yes' WHERE application_number=:application_number", nativeQuery = true)
+    void setConfirmToYesHomeLoanApplication(@Param("application_number") String application_number);
 
     @Modifying
     @Transactional
