@@ -65,6 +65,7 @@ public class TransactController {
         //Update balance
         newBalance = accountBalance + depositAmountValue;
         accountRepository.changeAccountBalanceById(newBalance, account_id);
+        accountRepository.setUpdatedAt(account_id);
 
         //Log successful transaction
         transactRepository.logTransaction(account_id, "Deposit", depositAmountValue, "Online", "Success", "Amount Deposit Successful", currentDateTime);
@@ -131,6 +132,9 @@ public class TransactController {
         //Change balance of account transferring to
         accountRepository.changeAccountBalanceById(newBalanceOfAccountTransferringTo, transferToId);
 
+        //Update time
+        accountRepository.setUpdatedAt(transferFromId);
+
         //Log successful transaction
         transactRepository.logTransaction(transferFromId, "Transfer", transferAmount, "Online", "Success", "Amount Transfer Successful", currentDateTime);
 
@@ -165,6 +169,7 @@ public class TransactController {
 
         //Get current account balance
         accountBalance = accountRepository.getAccountBalance(user.getUser_id(), account_id);
+        accountRepository.setUpdatedAt(account_id);
 
         //Check if withdraw amount is more than current balance
         if(accountBalance < withdrawalAmountValue) {
@@ -224,6 +229,7 @@ public class TransactController {
 
         //Get current account balance
         accountBalance = accountRepository.getAccountBalance(user.getUser_id(), accountID);
+        accountRepository.setUpdatedAt(accountID);
 
         //Check if payment amount is more than current balance
         if(accountBalance < paymentAmount) {

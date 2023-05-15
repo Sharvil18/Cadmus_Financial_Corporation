@@ -16,6 +16,9 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
     @Query(value = "SELECT * FROM accounts WHERE user_id = :user_id", nativeQuery = true)
     List<Account> getUserAccountsById(@Param("user_id")int user_id);
 
+    @Query(value = "SELECT * FROM accounts", nativeQuery = true)
+    List<Account> getAllAccounts();
+
     @Query(value = "SELECT sum(balance) FROM accounts WHERE user_id = :user_id", nativeQuery = true)
     BigDecimal getTotalBalance(@Param("user_id") int user_id);
 
@@ -43,6 +46,11 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
     @Transactional
     @Query(value = "UPDATE accounts set balance = :new_balance WHERE account_number = :account_number", nativeQuery = true)
     void changeAccountBalanceByAccountNumber(@Param("new_balance") double new_balance, @Param("account_number") String account_number);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE accounts set updated_at = NOW() WHERE account_id = :account_id", nativeQuery = true)
+    void setUpdatedAt(@Param("account_id") int account_id);
 
     @Modifying
     @Query(value = "INSERT INTO accounts(user_id, account_number, account_name, account_type, created_at) VALUES" +

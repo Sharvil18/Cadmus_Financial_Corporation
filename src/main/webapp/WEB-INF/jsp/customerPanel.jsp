@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
+<%@ page import="java.time.LocalDateTime,java.time.ZoneId,java.util.Date" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,16 +52,16 @@
                             </li>
 
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active"
+                                <button class="nav-link ${activeTab == 'customer' ? 'active' : ''}"
                                     style="--bs-nav-link-color: #4C2B3E; --bs-nav-link-font-weight: 700; font-family: 'Roboto', sans-serif;"
                                     id="customer-tab" data-bs-toggle="tab" data-bs-target="#customer-tab-pane" type="button"
                                     role="tab" aria-controls="customer-tab-pane" aria-selected="true">Customers</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link"
+                                <button class="nav-link ${activeTab == 'payment' ? 'active' : ''}"
                                     style="--bs-nav-link-color: #4C2B3E; --bs-nav-link-font-weight: 700; font-family: 'Roboto', sans-serif;"
-                                    id="payment-info-tab" data-bs-toggle="tab" data-bs-target="#payment-info-tab-pane" type="button"
-                                    role="tab" aria-controls="payment-info-tab-pane" aria-selected="false">Payments</button>
+                                    id="payment-tab" data-bs-toggle="tab" data-bs-target="#payment-tab-pane" type="button"
+                                    role="tab" aria-controls="payment-tab-pane" aria-selected="false">Payments</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link"
@@ -71,126 +73,191 @@
 
 
                         <div class="tab-content" id="myTabContent">
-
-
-                                <div class="tab-pane fade show active" id="customer-tab-pane" role="tabpanel" aria-labelledby="all-record-tab"
+                                <div class="tab-pane fade ${activeTab == 'customer' ? 'show active' : ''}" id="customer-tab-pane" role="tabpanel" aria-labelledby="all-record-tab"
                                 tabindex="0">
 
-                                    <c:if test="${requestScope.allEmployees != null}">
+                                <div class="toast mx-auto my-3" id="toast-customer-search" role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast-header">
+                                    <h5 class="me-auto text-danger"><i class="fa-solid fa-triangle-exclamation me-3"></i>Error</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                    </div>
+                                    <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="toast-msg-customer-search">
+                                        Toast message
+                                    </div>
+                                </div>
+
+                                <div class="container my-4">
+                                <c:if test="${errorCustomer != null}">
+                                    <div class="alert alert-danger text-center border border-danger">
+                                        <b>${errorCustomer}</b>
+                                    </div>
+                                </c:if>
+                                </div>
+
+                                <div class="d-flex" style="position: absolute; right: 40px; top: 100px">
+                                    <i class="fa-solid fa-magnifying-glass fa-lg me-2" style="position:relative; top: 18px"></i>
+                                    <input class="form-control me-2 border border-dark" id="search-customer" name="search-customer" type="search" placeholder="Enter customer info" aria-label="Search">
+                                    <button class="btn border-dark" id="search-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" onclick="SearchCustomerForCustomerInfo()">SEARCH</button>
+                                </div>
+
+                                <div class="container" style="padding-left: 270px">
+                                    <form action="/app/customer_panel" method="POST" class="d-flex align-items-center">
+                                        <div class="d-flex">
+                                            <i class="fa-solid fa-sort fa-2x me-2" style="position:relative; top: 3px"></i>
+                                            <div class="form-group">
+                                                <select class="form-select border-dark me-5" name="sort-option" style="width: 300px" aria-label="Default select example">
+                                                    <option value="" selected>-- Select Sorting Column --</option>
+                                                    <option value="ID">ID</option>
+                                                    <option value="name">Name</option>
+                                                    <option value="created_at">Creation Time</option>
+                                                    <option value="verified_at">Verification Time</option>
+                                                    <option value="updated_at">Update Time</option>
+                                                    <option value="account_count">Number of Accounts</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="radio" class="btn-check" name="sorting-technique" value="ascending" id="ascending-btn1" autocomplete="off" checked>
+                                                <label class="btn btn-outline-primary ms-3 me-2" for="ascending-btn1">Ascending</label>
+                                                <input type="radio" class="btn-check" name="sorting-technique" value="descending" id="danger-outlined1" autocomplete="off">
+                                                <label class="btn btn-outline-success me-5" for="danger-outlined1">Descending</label>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" value="customer" name="sorting-panel"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn border-dark ms-3 px-4" id="sort-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" type="submit">SORT</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="container mx-auto px-5 my-5" >
+
+                                    <c:if test="${requestScope.allCustomers != null}">
+                                        <!-- Payment History Table -->
+                                        <table id='customer-table' class="table text-center table-striped my-5">
+                                            <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Name</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Email</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Creation Time</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Verification Time</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Update Time</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Number of Accounts</th>
+                                            </tr>
+                                            <!-- Loop Through Payment History Records -->
+                                            <c:forEach items="${requestScope.allCustomers}" var="customer">
+                                            <tr style="border-bottom: 2px solid #481e40">
+                                                    <td>${customer.user_id}</td>
+                                                    <td>${customer.name}</td>
+                                                    <td>${customer.email}</td>
+                                                    <td>${customer.created_at}</td>
+                                                    <td>${customer.verified_at}</td>
+                                                    <td>${customer.updated_at}</td>
+                                                    <td>${customer.account_count}</td>
+                                                </tr>
+                                             </c:forEach>
+                                            <!-- End Of Loop Through Payment History Records -->
+                                        </table>
+                                    </c:if>
+
+                                    <c:if test="${requestScope.customerSorted != null}">
                                     <!-- Payment History Table -->
-                                    <table id='all-record-table' class="table text-center table-striped my-5">
+                                    <table id='customer-table' class="table text-center table-striped">
                                         <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Name</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID
+                                                <c:if test="${customerSortingColumn_technique == 'ID_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${customerSortingColumn_technique == 'ID_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Name
+                                                <c:if test="${customerSortingColumn_technique == 'name_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${customerSortingColumn_technique == 'name_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
                                             <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Email</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Contact</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Address</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">City</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">State</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Postal Code</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Hire Date</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Age</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Gender</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Marital Status</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Education Level</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Primary Language</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Subsidiary Language</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Employee Type</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Employee Status</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Job Title</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Salary</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Department ID</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Branch ID</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Manager ID</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Creation Time
+                                                <c:if test="${customerSortingColumn_technique == 'created_at_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${customerSortingColumn_technique == 'created_at_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Verification Time
+                                                <c:if test="${customerSortingColumn_technique == 'verified_at_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${customerSortingColumn_technique == 'verified_at_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Update Time
+                                                <c:if test="${customerSortingColumn_technique == 'updated_at_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${customerSortingColumn_technique == 'updated_at_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Number of Accounts
+                                                <c:if test="${customerSortingColumn_technique == 'account_count_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${customerSortingColumn_technique == 'account_count_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
                                         </tr>
                                         <!-- Loop Through Payment History Records -->
-                                        <c:forEach items="${requestScope.allEmployees}" var="employee">
+                                        <c:forEach items="${requestScope.customerSorted}" var="customer">
                                         <tr style="border-bottom: 2px solid #481e40">
-                                                <td>${employee.employee_id}</td>
-                                                <td>${employee.first_name} ${employee.last_name}</td>
-                                                <td>${employee.email}</td>
-                                                <td>${employee.contact}</td>
-                                                <td>${employee.address}</td>
-                                                <td>${employee.city}</td>
-                                                <td>${employee.state}</td>
-                                                <td>${employee.postal_code}</td>
-                                                <td>${employee.hire_date}</td>
-                                                <td>${employee.age}</td>
-                                                <td>${employee.gender}</td>
-                                                <td>${employee.marital_status}</td>
-                                                <td>${employee.education_level}</td>
-                                                <td>${employee.primary_language}</td>
-                                                <td>${employee.subsidiary_language}</td>
-                                                <td>${employee.employee_type}</td>
-                                                <td>${employee.employee_status}</td>
-                                                <td>${employee.job_title}</td>
-                                                <td>${employee.salary}</td>
-                                                <td>${employee.department_id}</td>
-                                                <td>${employee.branch_id}</td>
-                                                <c:choose>
-                                                    <c:when test="${employee.manager_id == null}">
-                                                        <td> - </td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <td>${employee.manager_id}</td>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <td>${customer.user_id}</td>
+                                                <td>${customer.name}</td>
+                                                <td>${customer.email}</td>
+                                                <td>${customer.created_at}</td>
+                                                <td>${customer.verified_at}</td>
+                                                <td>${customer.updated_at}</td>
+                                                <td>${customer.account_count}</td>
                                             </tr>
                                          </c:forEach>
                                         <!-- End Of Loop Through Payment History Records -->
-
                                     </table>
                                     <!-- End Of Payment History Table -->
                                     </c:if>
+
                                 </div>
                                 <!-- End of Container -->
                         </div>
 
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" id="personal-info-tab-pane" role="tabpanel" aria-labelledby="personal-info-tab" tabindex="0">
+                            <div class="tab-pane fade ${activeTab == 'payment' ? 'show active' : ''}" id="payment-tab-pane" role="tabpanel" aria-labelledby="payment-tab" tabindex="0">
 
 
-                            <div class="toast mx-auto my-3" id="toast-personal-search" role="alert" aria-live="assertive" aria-atomic="true">
+                            <div class="toast mx-auto my-3" id="toast-payment-search" role="alert" aria-live="assertive" aria-atomic="true">
                                 <div class="toast-header">
                                 <h5 class="me-auto text-danger"><i class="fa-solid fa-triangle-exclamation me-3"></i>Error</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                 </div>
-                                <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="toast-msg-personal-search">
+                                <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="toast-msg-payment-search">
                                     Toast message
                                 </div>
                             </div>
 
                             <div class="container mt-4">
-                            <c:if test="${error != null}">
+                            <c:if test="${errorPayment != null}">
                                 <div class="alert alert-danger text-center border border-danger">
-                                    <b>${error}</b>
+                                    <b>${errorPayment}</b>
                                 </div>
                             </c:if>
                             </div>
 
                                 <div class="d-flex" style="position: absolute; right: 44px; top: 100px">
                                     <i class="fa-solid fa-magnifying-glass fa-lg me-2" style="position:relative; top: 18px"></i>
-                                    <input class="form-control me-2 border border-dark" id="search-personal" name="search-name" type="search" placeholder="Enter personal info" aria-label="Search">
-                                    <button class="btn border-dark" id="search-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" onclick="SearchEmployeeForPersonalInfo()">SEARCH</button>
+                                    <input class="form-control me-2 border border-dark" id="search-payment" name="search-payment" type="search" placeholder="Enter payment info" aria-label="Search">
+                                    <button class="btn border-dark" id="search-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" onclick="SearchCustomerForPaymentInfo()">SEARCH</button>
                                 </div>
 
                                 <div class="d-flex justify-content-between my-5 mx-5">
-                                    <form action="/app/group_personal" method="POST" class="d-flex align-items-center me-5" style="margin-right: 100px">
+                                    <form action="/app/customer_panel" method="POST" class="d-flex align-items-center me-5" style="margin-right: 100px">
                                         <div class="d-flex">
                                             <i class="fa-solid fa-arrows-split-up-and-left fa-2x me-2" style="position:relative; top: 3px"></i>
                                             <div class="form-group">
-                                                <select class="form-select border-dark me-5" name="group-option" style="width: 300px" aria-label="Default select example">
+                                                <select class="form-select border-dark me-5" name="sort-option" style="width: 300px" aria-label="Default select example">
                                                     <option value="" selected>-- Select Grouping By Column --</option>
-                                                    <option value="city">City</option>
-                                                    <option value="state">State</option>
-                                                    <option value="age">Age</option>
-                                                    <option value="gender">Gender</option>
-                                                    <option value="marital_status">Marital Status</option>
-                                                    <option value="education_level">Education Level</option>
-                                                    <option value="subsidiary_language">Subsidiary Language</option>
+                                                    <option value="account_id">Account ID</option>
+                                                    <option value="user_id">User ID</option>
+                                                    <option value="beneficiary_bank">Beneficiary Bank</option>
+                                                    <option value="status">Status</option>
+                                                    <option value="reason_code">Reason Code</option>
                                                 </select>
                                             </div>
-
+                                            <div class="form-group">
+                                                <input type="hidden" value="payment_grouping" name="sorting-panel"/>
+                                                <input type="hidden" value="" name="sorting-technique"/>
+                                            </div>
                                             <div class="form-group">
                                                 <button class="btn border-dark ms-3 px-4 me-5" id="group-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" type="submit">GROUP</button>
                                             </div>
@@ -199,16 +266,17 @@
 
                                     <div style="height: 100px; border-right: 2px solid black;margin-left: 90px"></div>
 
-                                    <form action="/app/sort_personal" method="POST" class="d-flex align-items-center">
+                                    <form action="/app/customer_panel" method="POST" class="d-flex align-items-center">
                                         <div class="d-flex">
                                             <i class="fa-solid fa-sort fa-2x me-2" style="position:relative; top: 3px"></i>
                                             <div class="form-group">
                                                 <select class="form-select border-dark me-5" name="sort-option" style="width: 300px" aria-label="Default select example">
                                                     <option value="" selected>-- Select Sorting Column --</option>
-                                                    <option value="ID">ID</option>
-                                                    <option value="name">Name</option>
-                                                    <option value="age">Age</option>
-                                                    <option value="city">City</option>
+                                                    <option value="payment_id">Payment ID</option>
+                                                    <option value="account_id">Account ID</option>
+                                                    <option value="user_id">User ID</option>
+                                                    <option value="amount">Amount</option>
+                                                    <option value="payment_time">Payment Time</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -218,58 +286,211 @@
                                                 <label class="btn btn-outline-success me-5" for="danger-outlined2">Descending</label>
                                             </div>
                                             <div class="form-group">
+                                                <input type="hidden" value="payment" name="sorting-panel"/>
+                                            </div>
+                                            <div class="form-group">
                                                 <button class="btn border-dark ms-3 px-4" id="sort-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" type="submit">SORT</button>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
 
-                                <!-- Container -->
                                 <div class="mx-auto px-5 my-5" >
-                                    <c:if test="${requestScope.allEmployees != null}">
+
+                                    <c:if test="${requestScope.allPayments != null}">
+                                        <!-- Payment History Table -->
+                                        <table id='payment-table' class="table text-center table-striped my-5">
+                                            <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white;">Payment ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">User ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary Account No.</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary Bank</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Amount</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Status</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Reference</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Reason Code</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Payment Time</th>
+                                            </tr>
+                                            <!-- Loop Through Payment History Records -->
+                                            <c:forEach items="${requestScope.allPayments}" var="payment">
+                                            <tr style="border-bottom: 2px solid #481e40">
+                                                    <td>${payment.payment_id}</td>
+                                                    <td>${payment.account_id}</td>
+                                                    <td>${payment.user_id}</td>
+                                                    <td>${payment.beneficiary}</td>
+                                                    <td>${payment.beneficiary_acc_no}</td>
+                                                    <td>${payment.beneficiary_bank}</td>
+                                                    <td>${payment.amount}</td>
+                                                    <td>${payment.status}</td>
+                                                    <td>${payment.reference_no}</td>
+                                                    <td>${payment.reason_code}</td>
+                                                    <td>${payment.created_at}</td>
+                                            </tr>
+                                            </c:forEach>
+                                            <!-- End Of Loop Through Payment History Records -->
+                                        </table>
+                                    </c:if>
+
+                                    <c:if test="${requestScope.paymentSorted != null}">
                                     <!-- Payment History Table -->
-                                    <table id='personal-info-table' class="table text-center table-striped">
+                                    <table id='payment-table' class="table text-center table-striped">
                                         <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID<i class="fa-solid fa-sort-up fa-lg ms-2"></i></th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Name</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Email</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Contact</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Address</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">City</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">State</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Postal Code</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Age</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Gender</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Marital Status</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Education Level</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Primary Language</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Subsidiary Language</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Payment
+                                            <span style="white-space: nowrap;">
+                                                ID<c:if test="${paymentSortingColumn_technique == 'payment_id_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${paymentSortingColumn_technique == 'payment_id_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </span>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account
+                                            <span style="white-space: nowrap;">
+                                                ID<c:if test="${paymentSortingColumn_technique == 'account_id_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${paymentSortingColumn_technique == 'account_id_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </span>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">User
+                                            <span style="white-space: nowrap;">
+                                                ID<c:if test="${paymentSortingColumn_technique == 'user_id_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${paymentSortingColumn_technique == 'user_id_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </span>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary Account No.</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary Bank</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white; white-space: nowrap">Amount
+                                                <c:if test="${paymentSortingColumn_technique == 'amount_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${paymentSortingColumn_technique == 'amount_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Status</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Reference</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Reason Code</th>
+                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Payment Time
+                                                <c:if test="${paymentSortingColumn_technique == 'payment_time_asc'}"><i class="fa-solid fa-sort-up fa-lg ms-2"></i></c:if>
+                                                <c:if test="${paymentSortingColumn_technique == 'payment_time_desc'}"><i class="fa-solid fa-sort-down fa-lg ms-2" style="position:relative; bottom: 7px"></i></c:if>
+                                            </th>
                                         </tr>
                                         <!-- Loop Through Payment History Records -->
-                                        <c:forEach items="${requestScope.allEmployees}" var="employee">
+                                        <c:forEach items="${requestScope.paymentSorted}" var="payment">
                                         <tr style="border-bottom: 2px solid #481e40">
-                                                <td>${employee.employee_id}</td>
-                                                <td>${employee.first_name} ${employee.last_name}</td>
-                                                <td>${employee.email}</td>
-                                                <td>${employee.contact}</td>
-                                                <td>${employee.address}</td>
-                                                <td>${employee.city}</td>
-                                                <td>${employee.state}</td>
-                                                <td>${employee.postal_code}</td>
-                                                <td>${employee.age}</td>
-                                                <td>${employee.gender}</td>
-                                                <td>${employee.marital_status}</td>
-                                                <td>${employee.education_level}</td>
-                                                <td>${employee.primary_language}</td>
-                                                <td>${employee.subsidiary_language}</td>
+                                                <td>${payment.payment_id}</td>
+                                                <td>${payment.account_id}</td>
+                                                <td>${payment.user_id}</td>
+                                                <td>${payment.beneficiary}</td>
+                                                <td>${payment.beneficiary_acc_no}</td>
+                                                <td>${payment.beneficiary_bank}</td>
+                                                <td>${payment.amount}</td>
+                                                <td>${payment.status}</td>
+                                                <td>${payment.reference_no}</td>
+                                                <td>${payment.reason_code}</td>
+                                                <td>${payment.created_at}</td>
                                             </tr>
                                          </c:forEach>
                                         <!-- End Of Loop Through Payment History Records -->
-
                                     </table>
                                     <!-- End Of Payment History Table -->
                                     </c:if>
 
+                                    <c:if test="${requestScope.groupedPaymentObj != null}">
+
+                                        <c:forEach items="${requestScope.groupedPaymentObj}" var="PaymentList">
+
+                                            <c:if test="${PaymentList != null}">
+                                                <c:forEach items="${PaymentList.value}" var="groupByCol">
+                                                    <c:if test="${groupByCol != null}">
+                                                    <table id='payment-table' class="table text-center table-striped" style="margin-bottom: 70px">
+                                                        <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white;">Payment ID</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account ID</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">User ID</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary Account No.</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary Bank</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Amount</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Status</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Reference</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Reason Code</th>
+                                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Payment Time</th>
+                                                        </tr>
+
+                                                        <c:forEach items="${groupByCol.value}" var="payment" varStatus="loop">
+                                                            <tr style="border-bottom: 2px solid #481e40">
+
+                                                                <td>${payment.payment_id}</td>
+
+                                                                <c:choose>
+                                                                    <c:when test="${PaymentList.key == 'account_id'}">
+                                                                        <c:if test="${loop.first}">
+                                                                            <td style="background-color:#7e3570;color:white; vertical-align: middle;text-size:18px" rowspan="${fn:length(groupByCol.value)}">${groupByCol.key}</td>
+                                                                        </c:if>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td>${payment.account_id}</td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                                <c:choose>
+                                                                    <c:when test="${PaymentList.key == 'user_id'}">
+                                                                        <c:if test="${loop.first}">
+                                                                            <td style="background-color:#7e3570;color:white; vertical-align: middle;text-size:18px" rowspan="${fn:length(groupByCol.value)}">${groupByCol.key}</td>
+                                                                        </c:if>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td>${payment.user_id}</td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                                <td>${payment.beneficiary}</td>
+                                                                <td>${payment.beneficiary_acc_no}</td>
+
+                                                                <c:choose>
+                                                                    <c:when test="${PaymentList.key == 'beneficiary_bank'}">
+                                                                        <c:if test="${loop.first}">
+                                                                            <td style="background-color:#7e3570;color:white; vertical-align: middle;text-size:18px" rowspan="${fn:length(groupByCol.value)}">${groupByCol.key}</td>
+                                                                        </c:if>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td>${payment.beneficiary_bank}</td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                                <td>${payment.amount}</td>
+
+                                                                <c:choose>
+                                                                    <c:when test="${PaymentList.key == 'status'}">
+                                                                        <c:if test="${loop.first}">
+                                                                            <td style="background-color:#7e3570;color:white; vertical-align: middle;text-size:18px" rowspan="${fn:length(groupByCol.value)}">${groupByCol.key}</td>
+                                                                        </c:if>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td>${payment.status}</td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                                <td>${payment.reference_no}</td>
+
+                                                                <c:choose>
+                                                                    <c:when test="${PaymentList.key == 'reason_code'}">
+                                                                        <c:if test="${loop.first}">
+                                                                            <td style="background-color:#7e3570;color:white; vertical-align: middle;text-size:18px" rowspan="${fn:length(groupByCol.value)}">${groupByCol.key}</td>
+                                                                        </c:if>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <td>${payment.reason_code}</td>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                                <td>${payment.created_at}</td>
+
+                                                            </tr>
+                                                        </c:forEach>
+                                                    </table>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                        </c:forEach>
+
+                                    </c:if>
 
                                 </div>
                                 <!-- End of Container -->
@@ -278,131 +499,58 @@
 
 
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade" id="work-info-tab-pane" role="tabpanel" aria-labelledby="work-info-tab" tabindex="0">
+                            <div class="tab-pane fade" id="accounts-tab-pane" role="tabpanel" aria-labelledby="accounts-tab" tabindex="0">
 
-                                <div class="toast mx-auto my-3" id="toast-work-search" role="alert" aria-live="assertive" aria-atomic="true">
+                                <div class="toast mx-auto my-3" id="toast-account-search" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">
                                     <h5 class="me-auto text-danger"><i class="fa-solid fa-triangle-exclamation me-3"></i>Error</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                                     </div>
-                                    <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="toast-msg-work-search">
+                                    <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="toast-msg-account-search">
                                         Toast message
                                     </div>
                                 </div>
 
-                                <div class="container mt-4">
-                                <c:if test="${error != null}">
-                                    <div class="alert alert-danger text-center border border-danger">
-                                        <b>${error}</b>
-                                    </div>
-                                </c:if>
-                                </div>
-
                                 <div class="d-flex" style="position: absolute; right: 40px; top: 100px">
                                     <i class="fa-solid fa-magnifying-glass fa-lg me-2" style="position:relative; top: 18px"></i>
-                                    <input class="form-control me-2 border border-dark" id="search-work" name="search-work" type="search" placeholder="Enter work info" aria-label="Search">
-                                    <button class="btn border-dark" id="search-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" onclick="SearchEmployeeForWorkInfo()">SEARCH</button>
+                                    <input class="form-control me-2 border border-dark" id="search-account" name="search-account" type="search" placeholder="Enter account info" aria-label="Search">
+                                    <button class="btn border-dark" id="search-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" onclick="SearchCustomerForAccountInfo()">SEARCH</button>
                                 </div>
 
-                                <div class="d-flex justify-content-between my-5 mx-5">
-                                    <form action="/app/group_work" method="POST" class="d-flex align-items-center me-5" style="margin-right: 100px">
-                                        <div class="d-flex">
-                                            <i class="fa-solid fa-arrows-split-up-and-left fa-2x me-2" style="position:relative; top: 3px"></i>
-                                            <div class="form-group">
-                                                <select class="form-select border-dark me-5" name="work-group-option" style="width: 300px" aria-label="Default select example">
-                                                    <option value="" selected>-- Select Grouping By Column --</option>
-                                                    <option value="education_level">Education Level</option>
-                                                    <option value="employee_type">Employee Type</option>
-                                                    <option value="employee_status">Employee Status</option>
-                                                    <option value="job_title">Job Title</option>
-                                                    <option value="department_id">Department ID</option>
-                                                    <option value="branch_id">Branch ID</option>
-                                                    <option value="manager_id">Manager ID</option>
-                                                </select>
-                                            </div>
+                                <div class="container mx-auto px-5 my-5" >
+                                        <c:if test="${requestScope.allAccounts != null}">
+                                        <!-- Payment History Table -->
+                                        <table id='account-table' class="table text-center table-striped my-5">
+                                            <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">User ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account Number</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account Name</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account Type</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Balance</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Creation Time</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Update Time</th>
+                                            </tr>
+                                            <!-- Loop Through Payment History Records -->
+                                            <c:forEach items="${requestScope.allAccounts}" var="account">
+                                            <tr style="border-bottom: 2px solid #481e40">
+                                                    <td>${account.account_id}</td>
+                                                    <td>${account.user_id}</td>
+                                                    <td>${account.account_number}</td>
+                                                    <td>${account.account_name}</td>
+                                                    <td>${account.account_type}</td>
+                                                    <td>${account.balance}</td>
+                                                    <td>${account.created_at}</td>
+                                                    <td>${account.updated_at}</td>
+                                                </tr>
+                                             </c:forEach>
+                                            <!-- End Of Loop Through Payment History Records -->
 
-                                            <div class="form-group">
-                                                <button class="btn border-dark ms-3 px-4 me-5" id="group-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" type="submit">GROUP</button>
-                                            </div>
-                                        </div>
-                                    </form>
-
-                                    <div style="height: 100px; border-right: 2px solid black;margin-left: 90px"></div>
-
-                                    <form action="/app/sort_work" method="POST" class="d-flex align-items-center">
-                                        <div class="d-flex">
-                                            <i class="fa-solid fa-sort fa-2x me-2" style="position:relative; top: 3px"></i>
-                                            <div class="form-group">
-                                                <select class="form-select border-dark me-5" name="work-sort-option" style="width: 300px" aria-label="Default select example">
-                                                    <option value="" selected>-- Select Sorting Column --</option>
-                                                    <option value="ID">ID</option>
-                                                    <option value="name">Name</option>
-                                                    <option value="hire_date">Hire Date</option>
-                                                    <option value="salary">Salary</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="radio" class="btn-check" name="work-sorting-technique" value="ascending" id="ascending-btn3" autocomplete="off" checked>
-                                                <label class="btn btn-outline-primary ms-3 me-2" for="ascending-btn3">Ascending</label>
-                                                <input type="radio" class="btn-check" name="work-sorting-technique" value="descending" id="danger-outlined3" autocomplete="off">
-                                                <label class="btn btn-outline-success me-5" for="danger-outlined3">Descending</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <button class="btn border-dark ms-3 px-4" id="sort-btn" style="background-color: #fe8a80;color: #4C2B3E; font-weight: 700; font-family: 'Roboto', sans-serif;" type="submit">SORT</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-
-
-                                <!-- Container -->
-                                <div class="mx-auto px-5 my-5" style="width: 80%">
-                                    <c:if test="${requestScope.allEmployees != null}">
-                                    <!-- Payment History Table -->
-                                    <table id='work-info-table' class="table text-center table-striped">
-                                        <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Name</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Hire Date<i class="fa-solid fa-sort-up fa-lg ms-2"></i></th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Education Level</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Employee Type</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Employee Status</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Job Title</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Salary</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Department ID</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Branch ID</th>
-                                            <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Manager ID</th>
-                                        </tr>
-                                        <!-- Loop Through Payment History Records -->
-                                        <c:forEach items="${requestScope.allEmployees}" var="employee">
-                                        <tr style="border-bottom: 2px solid #481e40">
-                                            <td>${employee.employee_id}</td>
-                                            <td>${employee.first_name} ${employee.last_name}</td>
-                                            <td>${employee.hire_date}</td>
-                                            <td>${employee.education_level}</td>
-                                            <td>${employee.employee_type}</td>
-                                            <td>${employee.employee_status}</td>
-                                            <td>${employee.job_title}</td>
-                                            <td>${employee.salary}</td>
-                                            <td>${employee.department_id}</td>
-                                            <td>${employee.branch_id}</td>
-                                            <c:choose>
-                                                <c:when test="${employee.manager_id == null}">
-                                                    <td> - </td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td>${employee.manager_id}</td>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </tr>
-                                         </c:forEach>
-                                        <!-- End Of Loop Through Payment History Records -->
-
-                                    </table>
-                                    <!-- End Of Payment History Table -->
+                                        </table>
                                     </c:if>
                                 </div>
                                 <!-- End of Container -->
+
                             </div>
                         </div>
 
@@ -476,74 +624,106 @@
 </body>
 
 <script>
-            function SearchEmployeeForPersonalInfo() {
-                    let input = document.getElementById('search-personal');
-                    let table = document.getElementById('personal-info-table');
-                    let rows = table.getElementsByTagName('tr');
-                    for (let i = 0; i < rows.length; i++) {
-                      rows[i].classList.remove('highlight');
-                    }
-                    console.log('inside search employee for personal');
-                    let name = input.value;
-                    console.log(name);
-                    for (let i = 0; i < rows.length; i++) {
-                        let cells = rows[i].getElementsByTagName('td');
-                        let matchFound = false;
-                        for (let j = 0; j < cells.length; j++) {
-                          let cell = cells[j];
-                          if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
-                            matchFound = true;
-                            break;
-                          }
-                        }
-                        if(matchFound) {
-                            rows[i].classList.add('highlight');
-                            let y = rows[i].offsetTop;
-                            let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
-                            window.scrollTo(0, scrollY);
-                        }
-                        else {
-                            console.log("test");
-                            const toast = new bootstrap.Toast(document.getElementById('toast-personal-search'));
-                            document.getElementById('toast-msg-personal-search').innerHTML = 'Searched Personal Information not found';
-                            toast.show();
-                        }
-                    }
+            function SearchCustomerForCustomerInfo() {
+              let input = document.getElementById('search-customer');
+              let table = document.getElementById('customer-table');
+              let rows = table.getElementsByTagName('tr');
+              for (let i = 0; i < rows.length; i++) {
+                rows[i].classList.remove('highlight');
+              }
+              let name = input.value;
+              let matchFound = false;
+              for (let i = 0; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName('td');
+                let rowMatchFound = false;
+                for (let j = 0; j < cells.length; j++) {
+                  let cell = cells[j];
+                  if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
+                    rowMatchFound = true;
+                    break;
+                  }
+                }
+                if (rowMatchFound) {
+                  rows[i].classList.add('highlight');
+                  let y = rows[i].offsetTop;
+                  let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
+                  window.scrollTo(0, scrollY);
+                  matchFound = true;
+                }
+              }
+              if (!matchFound) {
+                const toast = new bootstrap.Toast(document.getElementById('toast-customer-search'));
+                document.getElementById('toast-msg-customer-search').innerHTML = 'Searched Customer Information not found';
+                toast.show();
+              }
             }
 
-            function SearchEmployeeForWorkInfo() {
-                    let input = document.getElementById('search-work');
-                    let table = document.getElementById('work-info-table');
-                    let rows = table.getElementsByTagName('tr');
-                    for (let i = 0; i < rows.length; i++) {
-                      rows[i].classList.remove('highlight');
-                    }
-                    console.log('inside search employee afaf');
-                    let name = input.value;
-                    console.log(name);
-                    for (let i = 0; i < rows.length; i++) {
-                        let cells = rows[i].getElementsByTagName('td');
-                        let matchFound = false;
-                        for (let j = 0; j < cells.length; j++) {
-                          let cell = cells[j];
-                          if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
-                            matchFound = true;
-                            break;
-                          }
-                        }
-                        if(matchFound) {
-                            rows[i].classList.add('highlight');
-                            let y = rows[i].offsetTop;
-                            let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
-                            window.scrollTo(0, scrollY);
-                        }
-                        else {
-                            console.log("test");
-                            const toast = new bootstrap.Toast(document.getElementById('toast-work-search'));
-                            document.getElementById('toast-msg-work-search').innerHTML = 'Searched Work Information not found';
-                            toast.show();
-                        }
-                    }
+            function SearchCustomerForPaymentInfo() {
+              let input = document.getElementById('search-payment');
+              let table = document.getElementById('payment-table');
+              let rows = table.getElementsByTagName('tr');
+              for (let i = 0; i < rows.length; i++) {
+                rows[i].classList.remove('highlight');
+              }
+              let name = input.value;
+              let matchFound = false;
+              for (let i = 0; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName('td');
+                let rowMatchFound = false;
+                for (let j = 0; j < cells.length; j++) {
+                  let cell = cells[j];
+                  if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
+                    rowMatchFound = true;
+                    break;
+                  }
+                }
+                if (rowMatchFound) {
+                  rows[i].classList.add('highlight');
+                  let y = rows[i].offsetTop;
+                  let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
+                  window.scrollTo(0, scrollY);
+                  matchFound = true;
+                }
+              }
+              if (!matchFound) {
+                const toast = new bootstrap.Toast(document.getElementById('toast-payment-search'));
+                document.getElementById('toast-msg-payment-search').innerHTML = 'Searched Payment Information not found';
+                toast.show();
+              }
+            }
+
+            function SearchCustomerForAccountInfo() {
+              let input = document.getElementById('search-account');
+              let table = document.getElementById('account-table');
+              let rows = table.getElementsByTagName('tr');
+              for (let i = 0; i < rows.length; i++) {
+                rows[i].classList.remove('highlight');
+              }
+              let name = input.value;
+              let matchFound = false;
+              for (let i = 0; i < rows.length; i++) {
+                let cells = rows[i].getElementsByTagName('td');
+                let rowMatchFound = false;
+                for (let j = 0; j < cells.length; j++) {
+                  let cell = cells[j];
+                  if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
+                    rowMatchFound = true;
+                    break;
+                  }
+                }
+                if (rowMatchFound) {
+                  rows[i].classList.add('highlight');
+                  let y = rows[i].offsetTop;
+                  let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
+                  window.scrollTo(0, scrollY);
+                  matchFound = true;
+                }
+              }
+              if (!matchFound) {
+                const toast = new bootstrap.Toast(document.getElementById('toast-account-search'));
+                document.getElementById('toast-msg-account-search').innerHTML = 'Searched Account Information not found';
+                toast.show();
+              }
             }
 </script>
 

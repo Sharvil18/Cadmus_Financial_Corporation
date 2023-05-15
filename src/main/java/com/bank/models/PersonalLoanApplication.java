@@ -100,6 +100,8 @@ public class PersonalLoanApplication {
 
     private String approved;
 
+    private String confirm;
+
     public int getUser_id() {
         return user_id;
     }
@@ -395,4 +397,13 @@ public class PersonalLoanApplication {
     public void setApproved(String approved) {
         this.approved = approved;
     }
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
+
 }

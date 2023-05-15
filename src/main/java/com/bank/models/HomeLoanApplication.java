@@ -106,6 +106,8 @@ public class HomeLoanApplication {
     private String motto_purchase;
 
     private String approved;
+    private String confirm;
+
 
     public int getUser_id() {
         return user_id;
@@ -426,4 +428,13 @@ public class HomeLoanApplication {
     public void setApproved(String approved) {
         this.approved = approved;
     }
+
+    public String getConfirm() {
+        return confirm;
+    }
+
+    public void setConfirm(String confirm) {
+        this.confirm = confirm;
+    }
+
 }

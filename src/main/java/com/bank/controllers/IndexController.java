@@ -75,6 +75,9 @@ public class IndexController {
             return getVerifyPage;
         }
 
+        //Update verified_at
+        userRepository.verifiedAtNow();
+
         //Update and verify account
         userRepository.verifyAccount(token, code);
         getVerifyPage = new ModelAndView("login");

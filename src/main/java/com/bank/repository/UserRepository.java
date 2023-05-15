@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -30,14 +31,15 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Modifying
     @Query(value = "INSERT INTO users (first_name, last_name, email, password, token, code, created_at) VALUES" +
-    "(:first_name, :last_name, :email, :password, :token, :code, NOW())", nativeQuery = true)
+    "(:first_name, :last_name, :email, :password, :token, :code, :created_at)", nativeQuery = true)
     @Transactional
     void registerUser(@Param("first_name") String first_name,
                       @Param("last_name") String last_name,
                       @Param("email") String email,
                       @Param("password") String password,
                       @Param("token") String token,
-                      @Param("code") int code);
+                      @Param("code") int code,
+                      @Param("created_at")LocalDateTime created_at);
 
     @Modifying
     @Query(value = "UPDATE users set token=null, code=null, verified=1, verified_at=NOW(), updated_at=NOW() where " +
@@ -51,4 +53,14 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT * FROM users", nativeQuery = true)
     List<User> getAllUsers();
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE users SET updated_at=NOW()", nativeQuery = true)
+    void updatedAtNow();
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE users SET verified_at=NOW()", nativeQuery = true)
+    void verifiedAtNow();
 }

@@ -22,64 +22,6 @@
     <!-- Header -->
     <c:import url="components/include/admin_header.jsp"/>
 
-
-    <!-- Transaction container-->
-        <div class="container mt-4">
-            <!--Transactions card-->
-            <div class="card shadow">
-                <!--Card body-->
-                <div class="card-body">
-                    <!--Card title-->
-                    <h1 class="card-title">
-                        Transaction Section
-                    </h1>
-                    <!--End of Card title-->
-                    <hr>
-                    <!--Card text-->
-                    <div class="card-text mx-5">
-
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Transaction ID</th>
-                                    <th>Account ID</th>
-                                    <th>User ID</th>
-                                    <th>Type</th>
-                                    <th>Amount</th>
-                                    <th>Source</th>
-                                    <th>Status</th>
-                                    <th>Reason Code</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                </tr>
-                            </thead>
-                                <!-- Loop Through Employee Records -->
-                                <c:forEach items="${requestScope.allTransactionRecords}" var="transactionHistory">
-                                <tr style="border-bottom: 2px solid #481e40;">
-                                  <td>${transactionHistory.transaction_id}</td>
-                                  <td>${transactionHistory.account_id}</td>
-                                  <td>${transactionHistory.user_id}</td>
-                                  <td>${transactionHistory.transaction_type}</td>
-                                  <td>${transactionHistory.amount}</td>
-                                  <td>${transactionHistory.source}</td>
-                                  <td>${transactionHistory.status}</td>
-                                  <td>${transactionHistory.reason_code}</td>
-                                  <td>${f:getFormattedTime(transactionHistory.created_at)}</td>
-                                  <td>${f:getFormattedDate(transactionHistory.created_at)}</td>
-                                </tr>
-                                 </c:forEach>
-                                <!-- End Of Loop Through Employee Records -->
-                        </table>
-
-                    </div>
-                    <!--End of Card text-->
-                </div>
-                <!--End of Card body-->
-            </div>
-            <!--End of Transaction card-->
-        </div>
-        <!--End of Transaction container-->
-
     <!-- Application container-->
     <div class="container mt-4">
         <!--Applications card-->
@@ -236,6 +178,63 @@
     </div>
     <!--End of Databases section -->
 
+    <!-- Transaction container-->
+            <div class="container mt-4">
+                <!--Transactions card-->
+                <div class="card shadow">
+                    <!--Card body-->
+                    <div class="card-body">
+                        <!--Card title-->
+                        <h1 class="card-title">
+                            Transaction Section
+                        </h1>
+                        <!--End of Card title-->
+                        <hr>
+                        <!--Card text-->
+                        <div class="card-text mx-5">
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Transaction ID</th>
+                                        <th>Account ID</th>
+                                        <th>User ID</th>
+                                        <th>Type</th>
+                                        <th>Amount</th>
+                                        <th>Source</th>
+                                        <th>Status</th>
+                                        <th>Reason Code</th>
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                    </tr>
+                                </thead>
+                                    <!-- Loop Through Employee Records -->
+                                    <c:forEach items="${requestScope.allTransactionRecords}" var="transactionHistory">
+                                    <tr style="border-bottom: 2px solid #481e40;">
+                                      <td>${transactionHistory.transaction_id}</td>
+                                      <td>${transactionHistory.account_id}</td>
+                                      <td>${transactionHistory.user_id}</td>
+                                      <td>${transactionHistory.transaction_type}</td>
+                                      <td>${transactionHistory.amount}</td>
+                                      <td>${transactionHistory.source}</td>
+                                      <td>${transactionHistory.status}</td>
+                                      <td>${transactionHistory.reason_code}</td>
+                                      <td>${f:getFormattedTime(transactionHistory.created_at)}</td>
+                                      <td>${f:getFormattedDate(transactionHistory.created_at)}</td>
+                                    </tr>
+                                     </c:forEach>
+                                    <!-- End Of Loop Through Employee Records -->
+                            </table>
+
+                        </div>
+                        <!--End of Card text-->
+                    </div>
+                    <!--End of Card body-->
+                </div>
+                <!--End of Transaction card-->
+            </div>
+            <!--End of Transaction container-->
+
     <!-- Affluency container-->
     <div class="container mb-5 mt-4">
         <!--Affluency card-->
@@ -262,31 +261,6 @@
     </div>
     <!--End of Affluency container-->
 
-    <!-- Branch container-->
-    <div class="container mb-5 mt-4">
-        <!--Branch card-->
-        <div class="card shadow">
-            <!--Card body-->
-            <div class="card-body">
-                <!--Card title-->
-                <h1 class="card-title">
-                    Branch Section
-                </h1>
-                <!--End of Card title-->
-                <hr>
-                <!--Card text-->
-                <div class="card-text">
-                    <h4>Stats about this particular branch of the bank</h4>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore iure quod consectetur optio
-                    placeat ipsam in laudantium omnis rerum?
-                </div>
-                <!--End of Card text-->
-            </div>
-            <!--End of Card body-->
-        </div>
-        <!--End of Branch card-->
-    </div>
-    <!--End of Branch container-->
 
 </body>
 

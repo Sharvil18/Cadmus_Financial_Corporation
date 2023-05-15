@@ -2,6 +2,7 @@ package com.bank.repository;
 
 import com.bank.models.GoldLoanApplication;
 import com.bank.models.HomeLoanApplication;
+import com.bank.models.PersonalLoanApplication;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -39,6 +40,9 @@ public interface GoldLoanApplicationRepository extends CrudRepository<GoldLoanAp
     @Query(value = "SELECT COUNT(*) FROM gold_loan_application", nativeQuery = true)
     int getGoldLoanApplicationCount();
 
+    @Query(value = "SELECT * FROM gold_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    GoldLoanApplication getGoldLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE gold_loan_application SET confirm='yes' WHERE application_number=:application_number", nativeQuery = true)
@@ -48,6 +52,20 @@ public interface GoldLoanApplicationRepository extends CrudRepository<GoldLoanAp
     @Transactional
     @Query(value = "UPDATE gold_loan_application SET approved='yes' WHERE application_number=:application_number", nativeQuery = true)
     void setApprovedToYesGoldLoanApplication(@Param("application_number") String application_number);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE gold_loan_application SET final_loan_amount=:final_loan_amount, final_interest_rate=:final_interest_rate, final_tenure=:final_tenure, final_emi=:final_emi, total_amount_payable=:total_amount_payable, " +
+            "total_interest_payable=:total_interest_payable, charges_payable=:charges_payable, late_payment_penalty=:late_payment_penalty, pre_payment_penalty=:pre_payment_penalty", nativeQuery = true)
+    void calculateEMI(@Param("final_loan_amount") double final_loan_amount,
+                      @Param("final_interest_rate") double final_interest_rate,
+                      @Param("final_tenure") int final_tenure,
+                      @Param("final_emi") double final_emi,
+                      @Param("total_amount_payable") double total_amount_payable,
+                      @Param("total_interest_payable") double total_interest_payable,
+                      @Param("charges_payable") double charges_payable,
+                      @Param("late_payment_penalty") double late_payment_penalty,
+                      @Param("pre_payment_penalty") double pre_payment_penalty);
 
     @Modifying
     @Transactional

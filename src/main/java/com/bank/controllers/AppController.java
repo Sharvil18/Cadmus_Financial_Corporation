@@ -47,6 +47,9 @@ public class AppController {
     private AccountRepository accountRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private PaymentHistoryRepository paymentHistoryRepository;
 
     @Autowired
@@ -76,6 +79,12 @@ public class AppController {
     @Autowired
     private GoldLoanApplicationRepository goldLoanApplicationRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private LoanLogRepository loanLogRepository;
+
     User user;
 
     @GetMapping("/dashboard")
@@ -92,7 +101,7 @@ public class AppController {
         //Get balance
         BigDecimal totalAccountBalance = accountRepository.getTotalBalance(user.getUser_id());
 
-
+        userRepository.updatedAtNow();
 
         //Set objects
         getDashboardPage.addObject("userAccounts", getUserAccounts);
@@ -284,28 +293,6 @@ public class AppController {
         getEmployeePage.addObject("allBranches", allBranches);
 
         return getEmployeePage;
-
-    }
-
-    @GetMapping("/customer_panel")
-    public ModelAndView getCustomerPanel(HttpSession session, RedirectAttributes redirectAttributes) {
-        System.out.println("In customer panel controller");
-        //Set view
-        ModelAndView getCustomerPage = new ModelAndView("customerPanel");
-
-        //Get all employees
-        List<Employee> allEmployees =  employeeRepository.getAllEmployee();
-        getCustomerPage.addObject("allEmployees", allEmployees);
-
-        //Get Departments
-        List<Department> allDepartments = departmentRepository.getAllDepartment();
-        getCustomerPage.addObject("allDepartments", allDepartments);
-
-        //Get Branches
-        List<Branch> allBranches = branchRepository.getAllBranch();
-        getCustomerPage.addObject("allBranches", allBranches);
-
-        return getCustomerPage;
 
     }
 
@@ -862,6 +849,49 @@ public class AppController {
         //Send email notification
         MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Home Loan Application Approval", emailBody);
 
+        //Convert Variables
+        long principal = Long.parseLong(loanAmount);
+        float rate = Float.parseFloat(interestRate);
+        int period = Integer.parseInt(tenure);
+
+        //EMI calculation
+        rate = rate / (12 * 100);
+        period = period * 12;
+        double emi = (principal * rate * Math.pow((1 + rate), period)) / (Math.pow((1 + rate), period) - 1);
+        double totalAmountPayable = emi * period;
+        double totalInterestPayable = totalAmountPayable - principal;
+
+        //Charges calculation
+        double processingFee = principal * 0.5 / 100;
+        if(processingFee < 1500)
+            processingFee = 1500;
+        else if(processingFee > 20000)
+            processingFee = 20000;
+
+        double administrationFee =  principal * 0.3 / 100;
+        if(administrationFee < 1500)
+            administrationFee = 1500;
+        else if(administrationFee > 10000)
+            administrationFee = 20000;
+
+        double titleSearchFee = principal * 0.15 / 100;
+        if(titleSearchFee < 1500)
+            titleSearchFee = 1500;
+        else if(titleSearchFee > 8000)
+            titleSearchFee = 8000;
+
+        double appraisalFee = 2000;
+        double latePaymentPenalty = emi * 2 / 100;
+        double prePaymentPenalty = emi * 3 / 100;
+
+        double chargesPayable = processingFee + administrationFee + appraisalFee + titleSearchFee;
+
+        //Get home loan application
+        HomeLoanApplication homeLoanApplication = homeApplicationRepository.getHomeLoanApplicationByApplicationNumber(applicationNumber);
+
+        loanLogRepository.logLoan(applicationNumber, "Home Loan", homeLoanApplication.getFirst_name() + " " + homeLoanApplication.getLast_name(), homeLoanApplication.getUser_id(), email, principal, Float.parseFloat(interestRate),
+                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty);
+
         return "redirect:/app/application_panel";
     }
 
@@ -886,10 +916,46 @@ public class AppController {
         String email = personalLoanApplicationRepository.getEmailPersonalLoanApplicationByApplication(applicationNumber);
 
         //Get email HTML body
-        String emailBody = HTML.htmlPersonalLoanApprovalTemplate("Home", applicationNumber, loanAmount, interestRate, tenure);
+        String emailBody = HTML.htmlPersonalLoanApprovalTemplate("Personal", applicationNumber, loanAmount, interestRate, tenure);
 
         //Send email notification
         MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Personal Loan Application Approval", emailBody);
+
+        //Convert Variables
+        long principal = Long.parseLong(loanAmount);
+        float rate = Float.parseFloat(interestRate);
+        int period = Integer.parseInt(tenure);
+
+        //EMI calculation
+        rate = rate / (12 * 100);
+        double emi = (principal * rate * Math.pow((1 + rate), period)) / (Math.pow((1 + rate), period) - 1);
+        double totalAmountPayable = emi * period;
+        double totalInterestPayable = totalAmountPayable - principal;
+
+        //Charges calculation
+        double processingFee = principal * 0.5 / 100;
+        if(processingFee < 1500)
+            processingFee = 1500;
+        else if(processingFee > 20000)
+            processingFee = 20000;
+
+        double administrationFee =  principal * 0.3 / 100;
+        if(administrationFee < 1500)
+            administrationFee = 1500;
+        else if(administrationFee > 10000)
+            administrationFee = 20000;
+
+        double bounceCharge =  500;
+        double annualFees = 2000;
+        double latePaymentPenalty = emi * 2 / 100;
+        double prePaymentPenalty = 0;
+
+        double chargesPayable = processingFee + administrationFee + bounceCharge + annualFees;
+
+        PersonalLoanApplication personalLoanApplication = personalLoanApplicationRepository.getPersonalLoanApplicationByApplicationNumber(applicationNumber);
+
+        loanLogRepository.logLoan(applicationNumber, "Personal Loan", personalLoanApplication.getFirst_name() + " " + personalLoanApplication.getLast_name(), personalLoanApplication.getUser_id(), email, principal, Float.parseFloat(interestRate),
+                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty);
 
         return "redirect:/app/application_panel";
     }
@@ -927,9 +993,322 @@ public class AppController {
         //Send email notification
         MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Gold Loan Application Approval", emailBody);
 
+        //Convert Variables
+        long principal = (long) loanAmount ;
+        float rate = Float.parseFloat(interestRate);
+        int period = 12;
+
+        //EMI calculation
+        rate = rate / (12 * 100);
+        double emi = (principal * rate * Math.pow((1 + rate), period)) / (Math.pow((1 + rate), period) - 1);
+        double totalAmountPayable = emi * period;
+        double totalInterestPayable = totalAmountPayable - principal;
+
+        //Charges calculation
+        double processingFee = principal * 0.5 / 100;
+        if(processingFee < 1500)
+            processingFee = 1500;
+        else if(processingFee > 20000)
+            processingFee = 20000;
+
+        double administrationFee =  principal * 0.3 / 100;
+        if(administrationFee < 1500)
+            administrationFee = 1500;
+        else if(administrationFee > 10000)
+            administrationFee = 20000;
+
+        double goldInsuranceCharge = loanAmount * 0.5 / 100;
+        double securityFees = 5000;
+        double latePaymentPenalty = emi * 2 / 100;
+        double prePaymentPenalty = 0;
+
+        double chargesPayable = processingFee + administrationFee + goldInsuranceCharge + securityFees;
+
+        GoldLoanApplication goldLoanApplication = goldLoanApplicationRepository.getGoldLoanApplicationByApplicationNumber(applicationNumber);
+
+        loanLogRepository.logLoan(applicationNumber, "Gold Loan", goldLoanApplication.getFirst_name() + " " + goldLoanApplication.getLast_name(), goldLoanApplication.getUser_id(), email, principal, Float.parseFloat(interestRate),
+                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty);
+
         return "redirect:/app/application_panel";
     }
 
+    @GetMapping("/customer_panel")
+    public ModelAndView getCustomerPanel(HttpSession session, RedirectAttributes redirectAttributes) {
+        System.out.println("In customer panel controller");
+        //Set view
+        ModelAndView getCustomerPage = new ModelAndView("customerPanel");
 
+        //Get customers
+        List<Customer> allCustomers =  customerRepository.getAllCustomers();
+        getCustomerPage.addObject("allCustomers", allCustomers);
+
+        //Get payments
+        List<PaymentHistory> allPayments = paymentHistoryRepository.getAllPayments();
+        getCustomerPage.addObject("allPayments", allPayments);
+
+        //Get Accounts
+        List<Account> allAccounts = accountRepository.getAllAccounts();
+        getCustomerPage.addObject("allAccounts", allAccounts);
+
+        //Set active tab
+        getCustomerPage.addObject("activeTab", "customer");
+
+        return getCustomerPage;
+    }
+
+    @PostMapping("/customer_panel")
+    public ModelAndView getCustomerPanel(@RequestParam("sort-option") String sortOption,
+                                         @RequestParam("sorting-technique") String sortingTechnique,
+                                         @RequestParam("sorting-panel") String sortingPanel,
+                                         HttpSession session,
+                                        RedirectAttributes redirectAttributes) {
+        System.out.println("In customer panel POST controller");
+
+        //Set view
+        ModelAndView getCustomerPage = new ModelAndView("customerPanel");
+
+
+        if(sortingPanel.equals("customer")) {
+            //Get payments
+            List<PaymentHistory> allPayments = paymentHistoryRepository.getAllPayments();
+            getCustomerPage.addObject("allPayments", allPayments);
+
+            //Get Accounts
+            List<Account> allAccounts = accountRepository.getAllAccounts();
+            getCustomerPage.addObject("allAccounts", allAccounts);
+
+            //Get customers
+            List<Customer> allCustomers =  customerRepository.getAllCustomers();
+
+            //Set active tab
+            getCustomerPage.addObject("activeTab", sortingPanel);
+
+            //Check for empty field
+            if(sortOption.equals("")) {
+                getCustomerPage.addObject("errorCustomer", "Please select Sorting Column");
+                getCustomerPage.addObject("allCustomers", allCustomers);
+                return getCustomerPage;
+            }
+
+            List<Customer> customerSorted;
+
+            if(sortOption.equals("ID") && sortingTechnique.equals("ascending")) {
+                customerSorted = customerRepository.getCustomersOrderByID();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "ID_asc");
+            }
+
+            if(sortOption.equals("ID") && sortingTechnique.equals("descending")) {
+                customerSorted = customerRepository.getCustomersOrderByIDDesc();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "ID_desc");
+            }
+
+            if(sortOption.equals("name") && sortingTechnique.equals("ascending")) {
+                customerSorted = customerRepository.getCustomersOrderByName();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "name_asc");
+            }
+
+            if(sortOption.equals("name") && sortingTechnique.equals("descending")) {
+                customerSorted = customerRepository.getCustomersOrderByNameDesc();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "name_desc");
+            }
+
+            if(sortOption.equals("created_at") && sortingTechnique.equals("ascending")) {
+                customerSorted = customerRepository.getCustomersOrderByCreatedAt();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "created_at_asc");
+            }
+
+            if(sortOption.equals("created_at") && sortingTechnique.equals("descending")) {
+                customerSorted = customerRepository.getCustomersOrderByCreatedAtDesc();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "created_at_desc");
+            }
+
+            if(sortOption.equals("updated_at") && sortingTechnique.equals("ascending")) {
+                customerSorted = customerRepository.getCustomersOrderByUpdateDAt();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "updated_at_asc");
+            }
+
+            if(sortOption.equals("updated_at") && sortingTechnique.equals("descending")) {
+                customerSorted = customerRepository.getCustomersOrderByUpdateDAtDesc();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "updated_at_desc");
+            }
+
+            if(sortOption.equals("verified_at") && sortingTechnique.equals("ascending")) {
+                customerSorted = customerRepository.getCustomersOrderByVerifiedAt();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "verified_at_asc");
+            }
+
+            if(sortOption.equals("verified_at") && sortingTechnique.equals("descending")) {
+                customerSorted = customerRepository.getCustomersOrderByVerifiedAtDesc();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "verified_at_desc");
+            }
+
+            if(sortOption.equals("account_count") && sortingTechnique.equals("ascending")) {
+                customerSorted = customerRepository.getCustomersOrderByAccountCount();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "account_count_asc");
+            }
+
+            if(sortOption.equals("account_count") && sortingTechnique.equals("descending")) {
+                customerSorted = customerRepository.getCustomersOrderByAccountCountDesc();
+                getCustomerPage.addObject("customerSorted", customerSorted);
+                getCustomerPage.addObject("customerSortingColumn_technique", "account_count_desc");
+            }
+        }
+
+        if(sortingPanel.equals("payment")) {
+
+            //Get Customers
+            List<Customer> allCustomers = customerRepository.getAllCustomers();
+            getCustomerPage.addObject("allCustomers", allCustomers);
+
+            //Get Accounts
+            List<Account> allAccounts = accountRepository.getAllAccounts();
+            getCustomerPage.addObject("allAccounts", allAccounts);
+
+            //Get customers
+            List<PaymentHistory> allPayments =  paymentHistoryRepository.getAllPayments();
+
+            //Set active tab
+            getCustomerPage.addObject("activeTab", sortingPanel);
+
+            //Check for empty field
+            if(sortOption.equals("")) {
+                getCustomerPage.addObject("errorPayment", "Please select Sorting Column");
+                getCustomerPage.addObject("allPayments", allPayments);
+                return getCustomerPage;
+            }
+
+            List<PaymentHistory> paymentSorted;
+
+            if(sortOption.equals("payment_id") && sortingTechnique.equals("ascending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByPaymentId();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "payment_id_asc");
+            }
+
+            if(sortOption.equals("payment_id") && sortingTechnique.equals("descending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByPaymentIdDesc();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "payment_id_desc");
+            }
+
+            if(sortOption.equals("account_id") && sortingTechnique.equals("ascending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByAccountId();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "account_id_asc");
+            }
+
+            if(sortOption.equals("account_id") && sortingTechnique.equals("descending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByAccountIdDesc();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "account_id_desc");
+            }
+
+            if(sortOption.equals("user_id") && sortingTechnique.equals("ascending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByUserId();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "user_id_asc");
+            }
+
+            if(sortOption.equals("user_id") && sortingTechnique.equals("descending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByUserIdDesc();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "user_id_desc");
+            }
+
+            if(sortOption.equals("amount") && sortingTechnique.equals("ascending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByAmount();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "amount_asc");
+            }
+
+            if(sortOption.equals("amount") && sortingTechnique.equals("descending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByAmountDesc();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "amount_desc");
+            }
+
+
+            if(sortOption.equals("payment_time") && sortingTechnique.equals("ascending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByPaymentTime();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "payment_time_asc");
+            }
+
+            if(sortOption.equals("payment_time") && sortingTechnique.equals("descending")) {
+                paymentSorted = paymentHistoryRepository.getCustomersOrderByPaymentTimeDesc();
+                getCustomerPage.addObject("paymentSorted", paymentSorted);
+                getCustomerPage.addObject("paymentSortingColumn_technique", "payment_time_desc");
+            }
+        }
+
+        if(sortingPanel.equals("payment_grouping")) {
+
+            List<Customer> allCustomers = customerRepository.getAllCustomers();
+            getCustomerPage.addObject("allCustomers", allCustomers);
+
+            //Get Accounts
+            List<Account> allAccounts = accountRepository.getAllAccounts();
+            getCustomerPage.addObject("allAccounts", allAccounts);
+
+            //Get customers
+            List<PaymentHistory> allPayments =  paymentHistoryRepository.getAllPayments();
+
+            //Set active tab
+            getCustomerPage.addObject("activeTab", "payment");
+
+            //Check for empty field
+            if(sortOption.equals("")) {
+                getCustomerPage.addObject("errorPayment", "Please select Grouping By Column");
+                getCustomerPage.addObject("allPayments", allPayments);
+                return getCustomerPage;
+            }
+
+            List<PaymentHistory> paymentSorted;
+
+            String[] groupPaymentByCols = {"account_id", "user_id", "beneficiary_bank", "status", "reason_code"};
+
+
+            List<String> distinctValues = new ArrayList<>();
+            Map<String, List<PaymentHistory>> PaymentsGroupedByCol;
+            Map<String,Map<String, List<PaymentHistory>>> paymentObj = new HashMap<>();
+
+            for (String col : groupPaymentByCols) {
+                if (sortOption.equals(col)) {
+                    try {
+                        String colFormatted = "";
+                        for(String s : col.split("_"))
+                            colFormatted += s.substring(0, 1).toUpperCase() + s.substring(1);
+                        Method getDistinctValuesMethod = PaymentHistoryRepository.class.getDeclaredMethod("getDistinct" + colFormatted);
+                        distinctValues = (List<String>) getDistinctValuesMethod.invoke(paymentHistoryRepository);
+
+                        Method getSpecificValuesMethod = PaymentHistoryRepository.class.getDeclaredMethod("getSpecific" + colFormatted, String.class);
+                        PaymentsGroupedByCol = new HashMap<>();
+                        for (String value : distinctValues) {
+                            List<PaymentHistory> payments = (List<PaymentHistory>) getSpecificValuesMethod.invoke(paymentHistoryRepository, value);
+                            PaymentsGroupedByCol.put(value, payments);
+                        }
+                        paymentObj.put(col, PaymentsGroupedByCol);
+                    } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            getCustomerPage.addObject("groupedPaymentObj", paymentObj);
+        }
+
+        return getCustomerPage;
+    }
 
 }

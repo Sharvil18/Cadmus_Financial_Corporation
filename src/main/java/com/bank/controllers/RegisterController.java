@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -84,8 +86,11 @@ public class RegisterController {
         //Hash password
         String hashed_password = BCrypt.hashpw(password, BCrypt.gensalt());
 
+        //Get current date
+        LocalDateTime localDateTime = LocalDateTime.now();
+
         //Register user
-        userRepository.registerUser(first_name, last_name, email, hashed_password, token, code);
+        userRepository.registerUser(first_name, last_name, email, hashed_password, token, code, localDateTime);
 
         //Send email notification
         MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Account Verification for Cadmus Financial Corporation", emailBody);

@@ -497,32 +497,31 @@
                     for (let i = 0; i < rows.length; i++) {
                       rows[i].classList.remove('highlight');
                     }
-                    console.log('inside search employee for personal');
                     let name = input.value;
-                    console.log(name);
+                    let matchFound = false;
                     for (let i = 0; i < rows.length; i++) {
                         let cells = rows[i].getElementsByTagName('td');
-                        let matchFound = false;
+                        let rowMatchFound = false;
                         for (let j = 0; j < cells.length; j++) {
                           let cell = cells[j];
                           if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
-                            matchFound = true;
+                            rowMatchFound = true;
                             break;
                           }
                         }
-                        if(matchFound) {
+                        if(rowMatchFound) {
                             rows[i].classList.add('highlight');
                             let y = rows[i].offsetTop;
                             let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
                             window.scrollTo(0, scrollY);
+                            matchFound = true;
                         }
-                        else {
-                            console.log("test");
+                    }
+                    if(!matchFound) {
                             const toast = new bootstrap.Toast(document.getElementById('toast-personal-search'));
                             document.getElementById('toast-msg-personal-search').innerHTML = 'Searched Personal Information not found';
                             toast.show();
                         }
-                    }
             }
 
             function SearchEmployeeForWorkInfo() {
@@ -532,32 +531,31 @@
                     for (let i = 0; i < rows.length; i++) {
                       rows[i].classList.remove('highlight');
                     }
-                    console.log('inside search employee afaf');
                     let name = input.value;
-                    console.log(name);
+                    let matchFound = false;
                     for (let i = 0; i < rows.length; i++) {
                         let cells = rows[i].getElementsByTagName('td');
-                        let matchFound = false;
+                        let rowMatchFound = false;
                         for (let j = 0; j < cells.length; j++) {
                           let cell = cells[j];
                           if (cell.innerText.match(new RegExp('^' + name + '$', 'i'))) {
-                            matchFound = true;
+                            rowMatchFound = true;
                             break;
                           }
                         }
-                        if(matchFound) {
+                        if(rowMatchFound) {
                             rows[i].classList.add('highlight');
                             let y = rows[i].offsetTop;
                             let scrollY = y - (window.innerHeight / 2) + (rows[i].offsetHeight / 2);
                             window.scrollTo(0, scrollY);
+                            matchFound = true;
                         }
-                        else {
-                            console.log("test");
+                    }
+                        if (!matchFound) {
                             const toast = new bootstrap.Toast(document.getElementById('toast-work-search'));
                             document.getElementById('toast-msg-work-search').innerHTML = 'Searched Work Information not found';
                             toast.show();
                         }
-                    }
             }
 </script>
 

@@ -40,6 +40,9 @@ public interface HomeApplicationRepository extends CrudRepository<HomeLoanApplic
     @Query(value = "SELECT COUNT(*) FROM home_loan_application", nativeQuery = true)
     int getHomeLoanApplicationCount();
 
+    @Query(value = "SELECT * FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    HomeLoanApplication getHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE home_loan_application SET approved='yes' WHERE application_number=:application_number", nativeQuery = true)
@@ -50,6 +53,19 @@ public interface HomeApplicationRepository extends CrudRepository<HomeLoanApplic
     @Query(value = "UPDATE home_loan_application SET confirm='yes' WHERE application_number=:application_number", nativeQuery = true)
     void setConfirmToYesHomeLoanApplication(@Param("application_number") String application_number);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE home_loan_application SET final_loan_amount=:final_loan_amount, final_interest_rate=:final_interest_rate, final_tenure=:final_tenure, final_emi=:final_emi, total_amount_payable=:total_amount_payable, " +
+            "total_interest_payable=:total_interest_payable, charges_payable=:charges_payable, late_payment_penalty=:late_payment_penalty, pre_payment_penalty=:pre_payment_penalty", nativeQuery = true)
+    void calculateEMI(@Param("final_loan_amount") double final_loan_amount,
+                      @Param("final_interest_rate") double final_interest_rate,
+                      @Param("final_tenure") int final_tenure,
+                      @Param("final_emi") double final_emi,
+                      @Param("total_amount_payable") double total_amount_payable,
+                      @Param("total_interest_payable") double total_interest_payable,
+                      @Param("charges_payable") double charges_payable,
+                      @Param("late_payment_penalty") double late_payment_penalty,
+                      @Param("pre_payment_penalty") double pre_payment_penalty);
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO home_loan_application(user_id, application_number, first_name, last_name, email, contact, religion, age, birth_date, marital_status, proof_of_identity, address_house, address_complex, address_street_line1, address_street_line2, " +

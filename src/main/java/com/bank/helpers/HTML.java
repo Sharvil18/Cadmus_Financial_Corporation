@@ -176,7 +176,7 @@ public class HTML {
                 "                        <tr style=\"background-color: white;\">\n" +
                 "                            <td style=\"text-align: center;\">Rs. " + loanAmount + "</td>\n" +
                 "                            <td style=\"text-align: center;\">" + interestRate + "% p.a.</td>\n" +
-                "                            <td style=\"text-align: center;\">" + tenure + " years</td>\n" +
+                "                            <td style=\"text-align: center;\">" + tenure + " months</td>\n" +
                 "                        </tr>\n" +
                 "                </table>\n" +
                 "            </div>\n" +
