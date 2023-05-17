@@ -1,9 +1,6 @@
 package com.bank.controllers;
 
-import com.bank.helpers.HTML;
-import com.bank.helpers.PDFExporter;
-import com.bank.helpers.PaymentHistoryPDFExporter;
-import com.bank.helpers.TransactionHistoryPDFExporter;
+import com.bank.helpers.*;
 import com.bank.mailMessenger.MailMessenger;
 import com.bank.models.*;
 import com.bank.repository.*;
@@ -150,6 +147,8 @@ public class AppController {
 
         return getTransactHistoryPage;
     }
+
+
 
 
     @GetMapping("/payment_history_export_pdf")
@@ -664,9 +663,14 @@ public class AppController {
         List<GoldLoanApplication> allGoldLoanApplications = goldLoanApplicationRepository.getAllGoldLoanApplications();
         getEmployeePage.addObject("allGoldLoanApplications", allGoldLoanApplications);
 
+        //Get loan logs
+        List<LoanLog> allLoanLogs = loanLogRepository.getAllLoanLogs();
+        getEmployeePage.addObject("allLoanLogs", allLoanLogs);
         return getEmployeePage;
 
     }
+
+
 
     @GetMapping("/application_panel/home_loan/export_address_proof")
     public ResponseEntity<byte[]> exportAddressProofPDFHomeLoan(@RequestParam("application_number") String applicationNumber) throws SQLException, IOException {
@@ -829,7 +833,7 @@ public class AppController {
                                   @RequestParam("tenure") String tenure,
                                   @RequestParam("application_number") String applicationNumber,
                                   HttpSession session,
-                                  RedirectAttributes redirectAttributes) {
+                                  RedirectAttributes redirectAttributes) throws IOException {
         System.out.println("In approve home loan panel");
         //Check for empty strings
         if(loanAmount.isEmpty() || interestRate.isEmpty() || tenure.isEmpty()) {
@@ -842,12 +846,6 @@ public class AppController {
 
         //Get email
         String email = homeApplicationRepository.getEmailHomeLoanApplicationByApplicationNumber(applicationNumber);
-
-        //Get email HTML body
-        String emailBody = HTML.htmlHomeLoanApprovalTemplate("Home", applicationNumber, loanAmount, interestRate, tenure);
-
-        //Send email notification
-        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Home Loan Application Approval", emailBody);
 
         //Convert Variables
         long principal = Long.parseLong(loanAmount);
@@ -890,7 +888,19 @@ public class AppController {
         HomeLoanApplication homeLoanApplication = homeApplicationRepository.getHomeLoanApplicationByApplicationNumber(applicationNumber);
 
         loanLogRepository.logLoan(applicationNumber, "Home Loan", homeLoanApplication.getFirst_name() + " " + homeLoanApplication.getLast_name(), homeLoanApplication.getUser_id(), email, principal, Float.parseFloat(interestRate),
-                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty);
+                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty, homeLoanApplication.getAccount(), homeLoanApplication.getConfirm());
+
+
+
+        //Get email HTML body
+        String emailBody = HTML.htmlHomeLoanApprovalTemplate("Home", applicationNumber, loanAmount, interestRate, tenure);
+
+        //Get details pdf
+        HomeLoanLogPDFExporter homeLoanLogPDFExporter = new HomeLoanLogPDFExporter(homeLoanApplication, loanLogRepository.getLoanLogsByApplicationNumber(applicationNumber));
+        byte[] pdfBytes = homeLoanLogPDFExporter.export();
+
+        //Send email notification
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Home Loan Application Approval", emailBody, pdfBytes);
 
         return "redirect:/app/application_panel";
     }
@@ -901,7 +911,7 @@ public class AppController {
                                   @RequestParam("tenure") String tenure,
                                   @RequestParam("application_number") String applicationNumber,
                                   HttpSession session,
-                                  RedirectAttributes redirectAttributes) {
+                                  RedirectAttributes redirectAttributes) throws IOException {
         System.out.println("In approve personal loan panel");
         //Check for empty strings
         if(loanAmount.isEmpty() || interestRate.isEmpty() || tenure.isEmpty()) {
@@ -914,12 +924,6 @@ public class AppController {
 
         //Get email
         String email = personalLoanApplicationRepository.getEmailPersonalLoanApplicationByApplication(applicationNumber);
-
-        //Get email HTML body
-        String emailBody = HTML.htmlPersonalLoanApprovalTemplate("Personal", applicationNumber, loanAmount, interestRate, tenure);
-
-        //Send email notification
-        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Personal Loan Application Approval", emailBody);
 
         //Convert Variables
         long principal = Long.parseLong(loanAmount);
@@ -955,7 +959,16 @@ public class AppController {
         PersonalLoanApplication personalLoanApplication = personalLoanApplicationRepository.getPersonalLoanApplicationByApplicationNumber(applicationNumber);
 
         loanLogRepository.logLoan(applicationNumber, "Personal Loan", personalLoanApplication.getFirst_name() + " " + personalLoanApplication.getLast_name(), personalLoanApplication.getUser_id(), email, principal, Float.parseFloat(interestRate),
-                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty);
+                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty, personalLoanApplication.getAccount(), personalLoanApplication.getConfirm());
+
+        //Get email HTML body
+        String emailBody = HTML.htmlPersonalLoanApprovalTemplate("Personal", applicationNumber, loanAmount, interestRate, tenure);
+
+        PersonalLoanPDFExporter personalLoanPDFExporter = new PersonalLoanPDFExporter(personalLoanApplication, loanLogRepository.getLoanLogsByApplicationNumber(applicationNumber));
+        byte[] pdfExporter = personalLoanPDFExporter.export();
+
+        //Send email notification
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Personal Loan Application Approval", emailBody, pdfExporter);
 
         return "redirect:/app/application_panel";
     }
@@ -966,7 +979,7 @@ public class AppController {
                                       @RequestParam("gold_rate") String goldRate,
                                       @RequestParam("application_number") String applicationNumber,
                                       HttpSession session,
-                                      RedirectAttributes redirectAttributes) {
+                                      RedirectAttributes redirectAttributes) throws IOException {
         System.out.println("In approve gold loan panel");
         //Check for empty strings
         if(goldWeight.isEmpty() || goldRate.isEmpty() || interestRate.isEmpty()) {
@@ -986,12 +999,6 @@ public class AppController {
         float goldRateFloat = Float.parseFloat(goldRate);
 
         double loanAmount = goldWeightInt * goldRateFloat;
-
-        //Get email HTML body
-        String emailBody = HTML.htmlGoldLoanApprovalTemplate("Gold", applicationNumber, goldWeight, interestRate, loanAmount);
-
-        //Send email notification
-        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Gold Loan Application Approval", emailBody);
 
         //Convert Variables
         long principal = (long) loanAmount ;
@@ -1027,7 +1034,17 @@ public class AppController {
         GoldLoanApplication goldLoanApplication = goldLoanApplicationRepository.getGoldLoanApplicationByApplicationNumber(applicationNumber);
 
         loanLogRepository.logLoan(applicationNumber, "Gold Loan", goldLoanApplication.getFirst_name() + " " + goldLoanApplication.getLast_name(), goldLoanApplication.getUser_id(), email, principal, Float.parseFloat(interestRate),
-                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty);
+                period, emi, totalAmountPayable, totalInterestPayable, chargesPayable, latePaymentPenalty, prePaymentPenalty, goldLoanApplication.getAccount(), goldLoanApplication.getConfirm());
+
+        //Get email HTML body
+        String emailBody = HTML.htmlGoldLoanApprovalTemplate("Gold", applicationNumber, goldWeight, interestRate, loanAmount);
+
+        //Get details pdf
+        GoldLoanPDFExporter goldLoanPDFExporter = new GoldLoanPDFExporter(goldLoanApplication, loanLogRepository.getLoanLogsByApplicationNumber(applicationNumber));
+        byte[] pdfExporter = goldLoanPDFExporter.export();
+
+        //Send email notification
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Gold Loan Application Approval", emailBody, pdfExporter);
 
         return "redirect:/app/application_panel";
     }

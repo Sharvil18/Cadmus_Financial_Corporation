@@ -277,4 +277,40 @@ public class HTML {
                 "</html>";
         return emailTemplate;
     }
+
+    public static String insufficientBalance(String name, String loanType, String applicationNumber, double penaltyAmount, double totalAmountPayable) {
+        String emailTemplate = "<!DOCTYPE html>\n" +
+                "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Document</title>\n" +
+                "</head>\n" +
+                "<body style=\"font-family: 'Quicksand', sans-serif;\">\n" +
+                "    <div style=\"text-align: center; width: 60%;margin: auto;\">\n" +
+                "        <p style=\"text-align: left;\">Dear " + name + ",</p>\n" +
+                "    <p>We hope this email finds you in good health.</p>  \n" +
+                "    <p>We're writing to notify you of a recent loan payment attempt on your " + loanType + " with application number " + applicationNumber + " . \n" +
+                "        Unfortunately, your account did not have enough funds to cover the scheduled Equated Monthly Installment (EMI).  As a result, a penalty has been applied to your \n" +
+                "        outstanding loan amount.</p>\n" +
+                "    <p>We understand that unforeseen circumstances can occur, leading to temporary financial difficulties. However, it is crucial to ensure that sufficient \n" +
+                "        funds are available at the time of the next EMI to avoid further penalties and potential consequences.</p>\n" +
+                "    <h4 style=\"text-align: left;\">Penalty Details:</h4>\n" +
+                "    <ul type=\"disc\" style=\"text-align: left;\">\n" +
+                "        <li>Loan Application Number: " + applicationNumber + "</li>\n" +
+                "        <li>Penalty Amount: " + penaltyAmount + "</li>\n" +
+                "        <li>New Total Amount Payable: " + totalAmountPayable + "</li>\n" +
+                "    </ul>\n" +
+                "    <br>\n" +
+                "    <p>\n" +
+                "        To rectify the situation, we kindly request that you make the necessary arrangements to ensure your account maintains sufficient funds before the next EMI payment date.\n" +
+                "    </p>\n" +
+                "    <br>\n" +
+                "    <p style=\"text-align: left;\">Best Regards, <br> Cadmus Financial Corporation.</p>\n" +
+                "    </div>\n" +
+                "</body>\n" +
+                "</html>";
+        return emailTemplate;
+    }
 }

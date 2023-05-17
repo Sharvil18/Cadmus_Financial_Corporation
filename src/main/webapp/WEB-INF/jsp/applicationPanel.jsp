@@ -54,15 +54,14 @@
                                     id="gold-loan-tab" data-bs-toggle="tab" data-bs-target="#gold-loan-tab-pane" type="button"
                                     role="tab" aria-controls="gold-loan-tab-pane" aria-selected="false">Gold Loan</button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link"
+                                    style="--bs-nav-link-color: #4C2B3E; --bs-nav-link-font-weight: 700; font-family: 'Roboto', sans-serif;"
+                                    id="loan-log-tab" data-bs-toggle="tab" data-bs-target="#loan-log-tab-pane" type="button"
+                                    role="tab" aria-controls="loan-log-tab-pane" aria-selected="false">Loan logs</button>
+                            </li>
                         </ul>
-
-
-
-
-
-<fmt:setLocale value="en_IN" />
-
-
+                            <fmt:setLocale value="en_IN" />
                             <div class="tab-content" id="myTabContent">
 
                                 <div class="tab-pane fade show active" id="home-loan-tab-pane" role="tabpanel" aria-labelledby="home-loan-tab"
@@ -553,6 +552,63 @@
                                         <!--End of Accordian menu-->
                                     </div>
                                     <!--End of Accordian menu container-->
+                                </div>
+                            </div>
+
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade" id="loan-log-tab-pane" role="tabpanel" aria-labelledby="loan-log-tab" tabindex="0">
+                                    <!-- Container -->
+                                    <div class="mx-auto px-5 my-5" >
+                                        <c:if test="${requestScope.allLoanLogs != null}">
+                                        <table id='loan-log-table' class="table text-center table-striped">
+                                            <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Loan Application Number</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Loan Type</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Borrower Name</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Borrower User ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Borrower Account ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Borrower Email</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Loan Amount</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Interest Rate</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Tenure</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">EMI</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Amount Payable</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Interest Payable</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Charges Payable</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Late Payment Penalty</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Pre Payment Penalty</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Confirmation</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Creation Time</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Update Time</th>
+
+
+                                            </tr>
+                                            <c:forEach items="${requestScope.allLoanLogs}" var="loan">
+                                            <tr style="border-bottom: 2px solid #481e40">
+                                                    <td>${loan.loan_application_number}</td>
+                                                    <td>${loan.loan_type}</td>
+                                                    <td>${loan.borrower_name}</td>
+                                                    <td>${loan.borrower_user_id}</td>
+                                                    <td>${loan.borrower_account_id}</td>
+                                                    <td>${loan.borrower_email}</td>
+                                                    <td>${loan.final_loan_amount}</td>
+                                                    <td>${loan.final_interest_rate}</td>
+                                                    <td>${loan.final_tenure}</td>
+                                                    <td>${loan.final_emi}</td>
+                                                    <td>${loan.total_amount_payable}</td>
+                                                    <td>${loan.total_interest_payable}</td>
+                                                    <td>${loan.charges_payable}</td>
+                                                    <td>${loan.late_payment_penalty}</td>
+                                                    <td>${loan.pre_payment_penalty}</td>
+                                                    <td>${loan.is_confirmed}</td>
+                                                    <td>${fn:replace(loan.created_at, 'T', ' ')}</td>
+                                                    <td>${fn:replace(loan.updated_at, 'T', ' ')}</td>
+                                                </tr>
+                                             </c:forEach>
+                                        </table>
+                                        </c:if>
+                                    </div>
+                                    <!-- End of Container -->
                                 </div>
                             </div>
 

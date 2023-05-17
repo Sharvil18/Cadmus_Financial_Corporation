@@ -1,9 +1,6 @@
 package com.bank.controllers;
 
-import com.bank.repository.GoldLoanApplicationRepository;
-import com.bank.repository.HomeApplicationRepository;
-import com.bank.repository.PersonalLoanApplicationRepository;
-import com.bank.repository.UserRepository;
+import com.bank.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +21,9 @@ public class IndexController {
 
     @Autowired
     private GoldLoanApplicationRepository goldLoanApplicationRepository;
+
+    @Autowired
+    private LoanLogRepository loanLogRepository;
 
     @GetMapping("/")
     public ModelAndView getIndex() {
@@ -93,14 +93,20 @@ public class IndexController {
 
         ModelAndView getLoginPage = new ModelAndView("login");
 
-        if(loanType.equals("Home"))
+        if(loanType.equals("Home")) {
             homeApplicationRepository.setConfirmToYesHomeLoanApplication(applicationNumber);
+            loanLogRepository.setConfirmedToYesByApplicationNumber(applicationNumber);
+        }
 
-        else if(loanType.equals("Personal"))
+        else if(loanType.equals("Personal")) {
             personalLoanApplicationRepository.setConfirmToYesPersonalLoanApplication(applicationNumber);
+            loanLogRepository.setConfirmedToYesByApplicationNumber(applicationNumber);
+        }
 
-        else if(loanType.equals("Gold"))
+        else if(loanType.equals("Gold")) {
             goldLoanApplicationRepository.setConfirmToYesGoldLoanApplication(applicationNumber);
+            loanLogRepository.setConfirmedToYesByApplicationNumber(applicationNumber);
+        }
 
         return getLoginPage;
     }

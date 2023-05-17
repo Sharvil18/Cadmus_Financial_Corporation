@@ -3,6 +3,9 @@ package com.bank.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "loan_log")
@@ -22,6 +25,11 @@ public class LoanLog {
     private double charges_payable;
     private double late_payment_penalty;
     private double pre_payment_penalty;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
+    private int borrower_account_id;
+    private double total_penalty_payable;
+    private String is_confirmed;
 
     public String getLoan_application_number() {
         return loan_application_number;
@@ -133,5 +141,45 @@ public class LoanLog {
 
     public void setPre_payment_penalty(double pre_payment_penalty) {
         this.pre_payment_penalty = pre_payment_penalty;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDateTime getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
+    }
+
+    public int getBorrower_account_id() {
+        return borrower_account_id;
+    }
+
+    public void setBorrower_account_id(int borrower_account_id) {
+        this.borrower_account_id = borrower_account_id;
+    }
+
+    public double getTotal_penalty_payable() {
+        return total_penalty_payable;
+    }
+
+    public void setTotal_penalty_payable(double total_penalty_payable) {
+        this.total_penalty_payable = total_penalty_payable;
+    }
+
+    public String getIs_confirmed() {
+        return is_confirmed;
+    }
+
+    public void setIs_confirmed(String is_confirmed) {
+        this.is_confirmed = is_confirmed;
     }
 }

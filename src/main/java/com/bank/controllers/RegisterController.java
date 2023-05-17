@@ -93,7 +93,7 @@ public class RegisterController {
         userRepository.registerUser(first_name, last_name, email, hashed_password, token, code, localDateTime);
 
         //Send email notification
-        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Account Verification for Cadmus Financial Corporation", emailBody);
+        MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Account Verification for Cadmus Financial Corporation", emailBody, null);
 
         //Return to register page
         String successMessage = "Account Registered Successfully. Please check your email and verify your account!";

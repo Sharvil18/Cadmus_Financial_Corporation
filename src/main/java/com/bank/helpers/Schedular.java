@@ -14,8 +14,9 @@ public class Schedular {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(cron = "0 0 0 1 * *")
     public void test() {
         System.out.println("Schedular test. Time: " + new Date().toString());
+
     }
 }

@@ -137,7 +137,7 @@
                                         <!-- Payment History Table -->
                                         <table id='customer-table' class="table text-center table-striped my-5">
                                             <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
-                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">ID<i class="fa-solid fa-sort-up fa-lg ms-2"></i></th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Name</th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Email</th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Creation Time</th>
@@ -151,9 +151,9 @@
                                                     <td>${customer.user_id}</td>
                                                     <td>${customer.name}</td>
                                                     <td>${customer.email}</td>
-                                                    <td>${customer.created_at}</td>
-                                                    <td>${customer.verified_at}</td>
-                                                    <td>${customer.updated_at}</td>
+                                                    <td>${fn:replace(customer.created_at, 'T', ' ')}</td>
+                                                    <td>${fn:replace(customer.verified_at, 'T', ' ')}</td>
+                                                    <td>${fn:replace(customer.updated_at, 'T', ' ')}</td>
                                                     <td>${customer.account_count}</td>
                                                 </tr>
                                              </c:forEach>
@@ -197,8 +197,8 @@
                                                 <td>${customer.user_id}</td>
                                                 <td>${customer.name}</td>
                                                 <td>${customer.email}</td>
-                                                <td>${customer.created_at}</td>
-                                                <td>${customer.verified_at}</td>
+                                                <td>${fn:replace(customer.created_at, 'T', ' ')}</td>
+                                                <td>${fn:replace(customer.verified_at, 'T', ' ')}</td>
                                                 <td>${customer.updated_at}</td>
                                                 <td>${customer.account_count}</td>
                                             </tr>
@@ -301,7 +301,9 @@
                                         <!-- Payment History Table -->
                                         <table id='payment-table' class="table text-center table-striped my-5">
                                             <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
-                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white;">Payment ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Payment
+                                                <span style="white-space: nowrap;">ID<i class="fa-solid fa-sort-up fa-lg ms-2"></i></span>
+                                                </th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account ID</th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">User ID</th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Beneficiary</th>
@@ -326,7 +328,7 @@
                                                     <td>${payment.status}</td>
                                                     <td>${payment.reference_no}</td>
                                                     <td>${payment.reason_code}</td>
-                                                    <td>${payment.created_at}</td>
+                                                    <td>${fn:replace(payment.created_at, 'T', ' ')}</td>
                                             </tr>
                                             </c:forEach>
                                             <!-- End Of Loop Through Payment History Records -->
@@ -383,7 +385,7 @@
                                                 <td>${payment.status}</td>
                                                 <td>${payment.reference_no}</td>
                                                 <td>${payment.reason_code}</td>
-                                                <td>${payment.created_at}</td>
+                                                <td>${fn:replace(payment.created_at, 'T', ' ')}</td>
                                             </tr>
                                          </c:forEach>
                                         <!-- End Of Loop Through Payment History Records -->
@@ -480,7 +482,7 @@
                                                                     </c:otherwise>
                                                                 </c:choose>
 
-                                                                <td>${payment.created_at}</td>
+                                                                <td>${fn:replace(payment.created_at, 'T', ' ')}</td>
 
                                                             </tr>
                                                         </c:forEach>
@@ -522,7 +524,7 @@
                                         <!-- Payment History Table -->
                                         <table id='account-table' class="table text-center table-striped my-5">
                                             <tr style="position: sticky; top:80px; background-color: #481e40;color: white;font-family: 'Oswald', sans-serif; text-align: center;">
-                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account ID</th>
+                                                <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account ID<i class="fa-solid fa-sort-up fa-lg ms-2"></i></th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">User ID</th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account Number</th>
                                                 <th style="font-family: 'Oswald', sans-serif;text-align:center; color: white">Account Name</th>
@@ -540,8 +542,9 @@
                                                     <td>${account.account_name}</td>
                                                     <td>${account.account_type}</td>
                                                     <td>${account.balance}</td>
-                                                    <td>${account.created_at}</td>
-                                                    <td>${account.updated_at}</td>
+
+                                                    <td>${fn:replace(account.created_at, 'T', ' ')}</td>
+                                                    <td>${fn:replace(account.updated_at, 'T', ' ')}</td>
                                                 </tr>
                                              </c:forEach>
                                             <!-- End Of Loop Through Payment History Records -->
