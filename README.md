@@ -37,8 +37,9 @@ Screenshots:
 ![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/f307e75e-3fd0-47f5-a9d4-13bcb48c531c)  
 (Admin Dashboard)
 ![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/d846082b-299d-482a-93a0-9f335f7717c9)
-
-
-
+  
+  
+  
+<b>NOTE: To see backend code, change the branch to 'backend'. You are currently in frontend branch</b>
 
  
