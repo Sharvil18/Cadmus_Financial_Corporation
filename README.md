@@ -8,18 +8,18 @@ The following section provides a quick overview of the Banking Management
 System.  
 
 Flaws of the existing banking system:
-▪ Less security of customer and bank information.
-▪ Demands additional manpower and physical labour.
+▪ Less security of customer and bank information.  
+▪ Demands additional manpower and physical labour.  
 ▪ It will take much longer time and extra resources to do all the manual 
-entering and editing.
-▪ There is no disaster protection for paper documents.
-▪ There is no information backup.
-Optimization of the proposed banking management system:
-▪ Increased security by integrating a layer of authentication and authorization.
-▪ Requires minimal manpower.
-▪ Ease the data entry and editing concerns.
-▪ Minimal focus on resources necessary for the maintenance of data.
-▪ Comparatively reliable, adaptable and efficient.
+entering and editing.  
+▪ There is no disaster protection for paper documents.  
+▪ There is no information backup.  
+Optimization of the proposed banking management system:  
+▪ Increased security by integrating a layer of authentication and authorization.  
+▪ Requires minimal manpower.  
+▪ Ease the data entry and editing concerns.  
+▪ Minimal focus on resources necessary for the maintenance of data.  
+▪ Comparatively reliable, adaptable and efficient.  
 ▪ There will be an automatic backup mechanism in place for the client and 
 bank information, ensuring that the data is protected from many types of 
-disasters.
+disasters.  
