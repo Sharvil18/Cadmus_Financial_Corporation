@@ -21,3 +21,8 @@ Optimization of the proposed banking management system:
   ▪ Minimal focus on resources necessary for the maintenance of data.  
   ▪ Comparatively reliable, adaptable and efficient.  
   ▪ There will be an automatic backup mechanism in place for the client and bank information, ensuring that the data is protected from many types of disasters.  
+  
+    
+      
+Screenshots:
+![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/867d8c72-2110-405d-8e96-94c70aceb87e)
