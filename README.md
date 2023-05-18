@@ -24,7 +24,7 @@ Optimization of the proposed banking management system:
   
     
       
-Screenshots:
+Screenshots:  
 (Landing Page)
 ![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/867d8c72-2110-405d-8e96-94c70aceb87e)  
 (Admin Login)
