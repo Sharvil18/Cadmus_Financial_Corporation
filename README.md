@@ -7,7 +7,7 @@ and integrated system is critical for the seamless operation of banking operatio
 The following section provides a quick overview of the Banking Management 
 System.  
 
-Flaws of the existing banking system:
+Flaws of the existing banking system:  
   ▪ Less security of customer and bank information.  
   ▪ Demands additional manpower and physical labour.  
   ▪ It will take much longer time and extra resources to do all the manual 
