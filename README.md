@@ -1,4 +1,4 @@
-# Cadmus_Financial_Corporation
+# Cadmus Financial Corporation
 Banking Management System | TYBCA Project
 
 The Banking Management System is a complex software solution developed to help 
