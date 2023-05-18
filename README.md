@@ -31,6 +31,14 @@ Screenshots:
 ![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/3ef14616-cf4d-4735-a424-a9b3e0a6096c)  
 (Customer Login)
 ![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/635e6ef3-c2ad-468f-a1f4-ccb2a9094f43)  
+(Customer Dashboard)
+![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/8876cae5-8e58-43c1-94da-5aeedc39395f)  
+(Loan Panel)
+![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/f307e75e-3fd0-47f5-a9d4-13bcb48c531c)  
+(Admin Dashboard)
+![image](https://github.com/Sharvil18/Cadmus_Financial_Corporation/assets/101722467/d846082b-299d-482a-93a0-9f335f7717c9)
+
+
 
 
  
