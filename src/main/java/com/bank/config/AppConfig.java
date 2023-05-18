@@ -42,8 +42,8 @@ public class AppConfig extends WebMvcConfigurationSupport {
     // End Of View Resolver.
 
 
-//    @Override
-//    protected void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new AppInterceptor()).addPathPatterns("/app/*");
-//    }
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AppInterceptor()).addPathPatterns("/app/*");
+    }
 }

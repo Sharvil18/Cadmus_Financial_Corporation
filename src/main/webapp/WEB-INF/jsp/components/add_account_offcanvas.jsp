@@ -27,7 +27,6 @@
                             <label for="">Select Account Type</label>
                             <select name="account_type" class="form-control" id="">
                                 <option value="">-- Select Account Type --</option>
-                                <option value="Check">Check</option>
                                 <option value="Savings">Savings</option>
                                 <option value="Business">Business</option>
                             </select>

@@ -235,31 +235,7 @@
             </div>
             <!--End of Transaction container-->
 
-    <!-- Affluency container-->
-    <div class="container mb-5 mt-4">
-        <!--Affluency card-->
-        <div class="card shadow">
-            <!--Card body-->
-            <div class="card-body">
-                <!--Card title-->
-                <h1 class="card-title">
-                    Customer Affluency Section
-                </h1>
-                <!--End of Card title-->
-                <hr>
-                <!--Card text-->
-                <div class="card-text">
-                    <h4>Information for the betterment of the customers like fraud detection, loan eligible clients, etc.</h4>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore iure quod consectetur optio
-                    placeat ipsam in laudantium omnis rerum?
-                </div>
-                <!--End of Card text-->
-            </div>
-            <!--End of Card body-->
-        </div>
-        <!--End of Affluency card-->
-    </div>
-    <!--End of Affluency container-->
+    <br><br<br><br><br<br>
 
 
 </body>
