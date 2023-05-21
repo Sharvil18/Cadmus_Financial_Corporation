@@ -20,6 +20,9 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT password FROM users WHERE email = :email", nativeQuery = true)
     String getUserPassword(@Param("email") String email);
 
+    @Query(value = "SELECT contact FROM users WHERE email = :email", nativeQuery = true)
+    String getUserContact(@Param("email") String email);
+
     @Query(value = "SELECT * FROM users WHERE email = :email", nativeQuery = true)
     User getUserDetails(@Param("email") String email);
 
@@ -29,9 +32,12 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "SELECT email FROM users", nativeQuery = true)
     List<String> getAllEmails();
 
+    @Query(value = "SELECT contact FROM users", nativeQuery = true)
+    List<String> getAllContacts();
+
     @Modifying
-    @Query(value = "INSERT INTO users (first_name, last_name, email, password, token, code, created_at) VALUES" +
-    "(:first_name, :last_name, :email, :password, :token, :code, :created_at)", nativeQuery = true)
+    @Query(value = "INSERT INTO users (first_name, last_name, email, password, token, code, created_at, contact) VALUES" +
+    "(:first_name, :last_name, :email, :password, :token, :code, :created_at, :contact)", nativeQuery = true)
     @Transactional
     void registerUser(@Param("first_name") String first_name,
                       @Param("last_name") String last_name,
@@ -39,7 +45,8 @@ public interface UserRepository extends CrudRepository<User, Integer> {
                       @Param("password") String password,
                       @Param("token") String token,
                       @Param("code") int code,
-                      @Param("created_at")LocalDateTime created_at);
+                      @Param("created_at")LocalDateTime created_at,
+                      @Param("contact") String contact);
 
     @Modifying
     @Query(value = "UPDATE users set token=null, code=null, verified=1, verified_at=NOW(), updated_at=NOW() where " +

@@ -45,5 +45,6 @@ public class AppConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AppInterceptor()).addPathPatterns("/app/*");
+        registry.addInterceptor(new AppInterceptor()).addPathPatterns("/otp");
     }
 }

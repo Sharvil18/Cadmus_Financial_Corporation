@@ -37,7 +37,10 @@ public class User {
     private LocalDate verified_at;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
-
+    @NotEmpty(message="Contact cannot empty")
+    @NotNull
+    @Pattern(regexp = "^\\d{10}$", message = "Please enter a valid Contact Number")
+    private String contact;
 
     public int getUser_id() {
         return user_id;
@@ -125,5 +128,13 @@ public class User {
 
     public void setUpdated_at(LocalDateTime updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }

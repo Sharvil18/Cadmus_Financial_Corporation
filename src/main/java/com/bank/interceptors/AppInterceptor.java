@@ -38,6 +38,19 @@ public class AppInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
+
+        //Disallow for direct OTP page acess
+        if(request.getRequestURI().startsWith("/otp")) {
+            System.out.println("In interceptor of OTP");
+            HttpSession session = request.getSession();
+            String contact = (String) session.getAttribute("contact");
+            if(contact == null) {
+                response.sendRedirect("/login");
+                return false;
+            }
+
+        }
+
         return true;
     }
 

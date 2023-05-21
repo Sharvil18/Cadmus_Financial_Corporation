@@ -577,3 +577,21 @@ body.perk {
     color: #6b28d7;
 }
 
+body.otp-gateway {
+    background-image: url("../images/otp_gateway_pg_bg.png");
+    height: 100vh;
+    background-repeat: none;
+    background-size: cover;
+}
+
+.inputs input {
+    height: 60px;
+    width: 60px;
+    font-size: 25px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid #5249b6;
+}
+

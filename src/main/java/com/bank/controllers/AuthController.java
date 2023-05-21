@@ -1,11 +1,16 @@
 package com.bank.controllers;
 
+import com.bank.helpers.GenerateAccountNumber;
 import com.bank.helpers.Token;
 import com.bank.models.Admin;
 import com.bank.models.User;
 import com.bank.repository.AdminRepository;
 import com.bank.repository.UserRepository;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +36,17 @@ public class AuthController {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Value("${twilio.accountSid}")
+    String accountSid;
+
+    @Value("${twilio.phoneNumber}")
+    String fromPhoneNumber;
+
+
+    @Value("${twilio.authToken}")
+    String authToken;
+
+
     @GetMapping("/login")
     public ModelAndView getLogin() {
         System.out.println("In login controller");
@@ -46,13 +62,14 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestParam("email") String email,
+                        @RequestParam("contact") String contact,
                         @RequestParam("password") String password,
                         @RequestParam("_token") String token,
                         Model model,
                         HttpSession session) {
         //Validate input fields / form data
-        if(email.isEmpty() || email == null || password.isEmpty() || password == null) {
-            model.addAttribute("error", "Username or Password cannot be empty");
+        if(email.isEmpty() || email == null || password.isEmpty() || password == null || contact.isEmpty() || contact == null) {
+            model.addAttribute("error", "Username or Password or Contact cannot be empty");
             return "login";
         }
 
@@ -65,10 +82,26 @@ public class AuthController {
             return "login";
         }
 
+        //Check for valid Contact;
+        String regexContact = "^\\d{10}$";
+        Pattern patternContact = Pattern.compile(regexContact);
+        Matcher matcherContact = patternContact.matcher(contact);
+        if(!matcherContact.matches()) {
+            model.addAttribute("error", "Please enter a valid Phone Number");
+            return "login";
+        }
+
         //Check if email exists
         List<String> allEmails = userRepository.getAllEmails();
         if(!allEmails.contains(email)) {
             model.addAttribute("error", "Your Account does not exist. Please Sign Up!");
+            return "login";
+        }
+
+        //Check if contact matches
+        String contactInDB = userRepository.getUserContact(email);
+        if(!contact.equals(contactInDB)) {
+            model.addAttribute("error", "Contact does not match with your Account. Please retry again");
             return "login";
         }
 
@@ -108,8 +141,49 @@ public class AuthController {
         session.setAttribute("user", user);
         session.setAttribute("token", token);
         session.setAttribute("authenticated", true);
+        session.setAttribute("contact", contact);
 
-        return "redirect:/app/dashboard";
+        return "redirect:/otp";
+    }
+
+    @GetMapping("/otp")
+    public ModelAndView RenderOtp(HttpSession session, RedirectAttributes redirectAttributes) {
+        ModelAndView getOtpGateway = new ModelAndView("OtpGateway");
+        String contact = (String) session.getAttribute("contact");
+        session.removeAttribute("contact");
+        getOtpGateway.addObject("contact", contact);
+
+        //Generate message body
+        String otp = GenerateAccountNumber.generateOTP();
+        String messageBody = "Your One-Time Password (OTP) is: " + otp + " . Please enter this code to verify your login. Do not share it with anyone.";
+        //Send OTP to contact
+        Twilio.init(accountSid, authToken);
+        Message message = Message.creator(new PhoneNumber("+91" + contact), new PhoneNumber(fromPhoneNumber), messageBody).create();
+        System.out.println(message.getSid());
+
+        session.setAttribute("OTP", otp);
+
+        return getOtpGateway;
+    }
+
+    @PostMapping("/otpvalidate")
+    public String validateOTP(@RequestParam("otp1") String otp1,
+                              @RequestParam("otp2") String otp2,
+                              @RequestParam("otp3") String otp3,
+                              @RequestParam("otp4") String otp4,
+                              @RequestParam("otp5") String otp5,
+                              @RequestParam("otp6") String otp6,
+                              HttpSession session,
+                              Model model) {
+        String inputOtp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
+        String generatedOtp = (String) session.getAttribute("OTP");
+        if(!inputOtp.equals(generatedOtp)) {
+            model.addAttribute("error", "OTP is invalid. Please try again.");
+            return "login";
+        }
+        else {
+            return "redirect:/app/dashboard";
+        }
     }
 
     @GetMapping("/logout")

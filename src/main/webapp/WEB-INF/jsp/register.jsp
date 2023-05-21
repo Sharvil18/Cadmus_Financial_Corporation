@@ -87,6 +87,14 @@
             <!-- End of Display Message -->
 
             <!-- Display Message -->
+            <c:if test="${requestScope.ContactExists != null}">
+                <div class="alert alert-danger text-center border border-danger">
+                    <b>${requestScope.ContactExists}</b>
+                </div>
+            </c:if>
+            <!-- End of Display Message -->
+
+            <!-- Display Message -->
             <c:if test="${requestScope.success != null}">
                 <div class="alert alert-success text-center border border-success">
                     <b>${requestScope.success}</b>
@@ -119,6 +127,13 @@
                 <div class="form-group col">
                     <form:input type="text" path="email" class="form-control form-control-lg" placeholder="Enter Email" />
                     <form:errors path="email" class="text-white bg-danger px-2" style="font-family: 'BioRhyme', serif;display: inline-block; margin-top: 5px" />
+                </div>
+                <!--End of Form group-->
+
+                <!--Form group-->
+                <div class="form-group col mt-3">
+                    <form:input type="text" path="contact" class="form-control form-control-lg" placeholder="Enter Contact" />
+                    <form:errors path="contact" class="text-white bg-danger px-2" style="font-family: 'BioRhyme', serif;display: inline-block; margin-top: 5px" />
                 </div>
                 <!--End of Form group-->
 

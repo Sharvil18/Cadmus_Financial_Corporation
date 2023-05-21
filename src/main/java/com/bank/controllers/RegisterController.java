@@ -5,9 +5,13 @@ import com.bank.helpers.Token;
 import com.bank.mailMessenger.MailMessenger;
 import com.bank.models.User;
 import com.bank.repository.UserRepository;
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.ValidationRequest;
+import com.twilio.type.PhoneNumber;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,6 +32,16 @@ public class RegisterController {
     @Autowired
     private UserRepository userRepository;
 
+    @Value("${twilio.accountSid}")
+    String accountSid;
+
+    @Value("${twilio.phoneNumber}")
+    String fromPhoneNumber;
+
+
+    @Value("${twilio.authToken}")
+    String authToken;
+
     @GetMapping("/register")
     public ModelAndView getRegister() {
         ModelAndView getRegisterPage = new ModelAndView(("register"));
@@ -42,6 +56,7 @@ public class RegisterController {
                                  @RequestParam("first_name") String first_name,
                                  @RequestParam("last_name") String last_name,
                                  @RequestParam("email") String email,
+                                 @RequestParam("contact") String contact,
                                  @RequestParam("password") String password,
                                  @RequestParam("confirm_password") String confirm_password,
                                  @RequestParam("password-strength") String passwordStrength) throws MessagingException {
@@ -64,7 +79,11 @@ public class RegisterController {
             return registrationPage;
         }
 
-
+        List<String> allContacts = userRepository.getAllContacts();
+        if(allContacts.contains(contact)) {
+            registrationPage.addObject("ContactExists", "Contact Number is already registered. Please head to the log in section.");
+            return registrationPage;
+        }
 
         List<String> allEmails = userRepository.getAllEmails();
         if(allEmails.contains(email)) {
@@ -89,8 +108,12 @@ public class RegisterController {
         //Get current date
         LocalDateTime localDateTime = LocalDateTime.now();
 
+        //Add Caller ID to Twilio
+        Twilio.init(accountSid, authToken);
+        ValidationRequest validationRequest = ValidationRequest.creator(new PhoneNumber("+91" + contact)).setFriendlyName("test").create();
+
         //Register user
-        userRepository.registerUser(first_name, last_name, email, hashed_password, token, code, localDateTime);
+        userRepository.registerUser(first_name, last_name, email, hashed_password, token, code, localDateTime, contact);
 
         //Send email notification
         MailMessenger.htmlEmailMessenger("cadmus.finance.corp@gmail.com", email, "Account Verification for Cadmus Financial Corporation", emailBody, null);

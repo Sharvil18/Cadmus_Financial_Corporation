@@ -22,4 +22,11 @@ public class GenerateAccountNumber {
         applicationNumber = applicationNumber.substring(applicationNumber.length() - 15);
         return applicationNumber;
     }
+
+    public static String generateOTP() {
+        String UUIDNum = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-",""), 16));
+        String otp = UUIDNum.substring( UUIDNum.length() - 6);
+        return otp;
+    }
+
 }

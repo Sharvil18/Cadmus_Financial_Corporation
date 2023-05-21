@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/fontawesome/css/all.css">
     <link rel="stylesheet" href="css/default.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <title>Login</title>
 </head>
 <body class="d-flex align-items-center justify-content-center bg-image login">
@@ -71,11 +72,21 @@
 
             <!-- Display Message -->
             <c:if test="${requestScope.error != null}">
-                <div class="alert alert-danger text-center border border-danger">
+                <div id='error-msg' class="alert alert-danger text-center border border-danger">
                     <b>${requestScope.error}</b>
                 </div>
             </c:if>
             <!-- End of Display Message -->
+
+            <div class="toast mx-auto mb-5" id="HL_error-toast-personal-info" role="alert" aria-live="assertive" aria-atomic="true" style="display:none">
+                <div class="toast-header">
+                <h5 class="me-auto text-danger"><i class="fa-solid fa-triangle-exclamation me-3"></i>Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-white bg-danger text-center" style="font-size: 17px" id="HL_error-toast-msg-personal-info">
+                    Your OTP has expired. Please try again.
+                </div>
+            </div>
 
             <!--Login form-->
             <form action="/login" method="POST" class="login-form">
@@ -85,6 +96,14 @@
                     <input type="text" name="email" class="form-control form-control-lg" placeholder="Enter Email" />
                 </div>
                 <!--End of Form group-->
+
+                <div class="input-group col mb-4">
+                  <span class="input-group-text me-2" style="height: 47px; position: relative; top:10px" id="basic-addon1">
+                  <img src="https://cdn.britannica.com/97/1597-004-05816F4E/Flag-India.jpg" height="20px" class="me-1" /> +91
+                  </span>
+                  <input type="text" class="form-control form-control-lg" name="contact" placeholder="Enter Phone Number" aria-describedby="basic-addon1">
+                </div>
+
                 <!--Form group-->
                 <div class="form-group col">
                     <input type="password" name="password" class="form-control form-control-lg" placeholder="Enter Password" />
@@ -98,7 +117,7 @@
                 <!--End of Form group-->
 
                 <!--Form group-->
-                <button class="btn btn-lg login_button">Login</button>
+                <button class="btn btn-lg login_button">Generate OTP</button>
                 <!--End of Form group-->
 
             </form>
@@ -120,5 +139,21 @@
         <!--End of Card body-->
     </div>
     <!--End of Login form card-->
+
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var otpStatus = urlParams.get('otp');
+    if(otpStatus == 'expired') {
+        var otpToast = document.getElementById('HL_error-toast-personal-info');
+        otpToast.style.display = 'block';
+        const toast = new bootstrap.Toast(document.getElementById('HL_error-toast-personal-info'));
+        toast.show();
+
+        otpToast.addEventListener('hidden.bs.toast', function () {
+            otpToast.style.display = 'none';
+        });
+    }
+</script>
+
 </body>
 </html>
