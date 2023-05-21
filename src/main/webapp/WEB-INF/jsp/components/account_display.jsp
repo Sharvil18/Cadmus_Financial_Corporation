@@ -2,7 +2,7 @@
 <%@taglib uri="http://example.com/functions" prefix="f" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix = "fn" uri = "http://java.sun.com/jsp/jstl/functions" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
         <!--Container-->
@@ -22,11 +22,13 @@
             <h2 class="me-auto">Total Accounts Balance:</h2>
             <h2 class="ms-auto">
                 <c:if test="${requestScope.totalBalance != null}">
-                    <c:out value="${totalBalance}" />
+                    <fmt:formatNumber value="${totalBalance}" />
                 </c:if>
             </h2>
         </div>
         <!--End of Total accounts balance display container-->
+
+        <fmt:setLocale value="en_IN" />
 
         <!--Accordian menu container-->
         <div class="container my-4">
@@ -47,7 +49,7 @@
                                         <li class="list-group-item d-flex">Account Name <span class="ms-auto"><b>${account.account_name}</b></span></li>
                                         <li class="list-group-item d-flex">Account Number <span class="ms-auto"><b>${account.account_number}</b></span></li>
                                         <li class="list-group-item d-flex">Account Type <span class="ms-auto"><b>${account.account_type}</b></span></li>
-                                        <li class="list-group-item d-flex">Account Balance <span class="ms-auto"><b>${account.balance}</b></span></li>
+                                        <li class="list-group-item d-flex">Account Balance <span class="ms-auto"><b><fmt:formatNumber value="${account.balance}" /></b></span></li>
                                         <li class="list-group-item d-flex">Created at Date <span class="ms-auto"><b>${f:formatLocalDateTime(account.created_at, 'yyyy/MM/dd')}</b></span></li>
                                     </ul>
                                     <!-- Account Details List -->

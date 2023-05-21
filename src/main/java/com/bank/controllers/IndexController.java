@@ -1,5 +1,8 @@
 package com.bank.controllers;
 
+import com.bank.models.GoldLoanApplication;
+import com.bank.models.HomeLoanApplication;
+import com.bank.models.PersonalLoanApplication;
 import com.bank.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +27,9 @@ public class IndexController {
 
     @Autowired
     private LoanLogRepository loanLogRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @GetMapping("/")
     public ModelAndView getIndex() {
@@ -96,16 +102,34 @@ public class IndexController {
         if(loanType.equals("Home")) {
             homeApplicationRepository.setConfirmToYesHomeLoanApplication(applicationNumber);
             loanLogRepository.setConfirmedToYesByApplicationNumber(applicationNumber);
+            HomeLoanApplication homeLoanApplication = homeApplicationRepository.getHomeLoanApplicationByApplicationNumber(applicationNumber);
+            double principle = loanLogRepository.getFinalLoanAmountByApplicationNumber(applicationNumber);
+            double currentBalance = accountRepository.getAccountBalance(homeLoanApplication.getUser_id(), homeLoanApplication.getAccount());
+            double newBalance = principle + currentBalance;
+            int accountId = homeApplicationRepository.getAccountIdHomeLoanApplicationByApplicationNumber(applicationNumber);
+            accountRepository.changeAccountBalanceById(newBalance, accountId);
         }
 
         else if(loanType.equals("Personal")) {
             personalLoanApplicationRepository.setConfirmToYesPersonalLoanApplication(applicationNumber);
             loanLogRepository.setConfirmedToYesByApplicationNumber(applicationNumber);
+            PersonalLoanApplication personalLoanApplication = personalLoanApplicationRepository.getPersonalLoanApplicationByApplicationNumber(applicationNumber);
+            double principle = loanLogRepository.getFinalLoanAmountByApplicationNumber(applicationNumber);
+            double currentBalance = accountRepository.getAccountBalance(personalLoanApplication.getUser_id(), personalLoanApplication.getAccount());
+            double newBalance = principle + currentBalance;
+            int accountId = personalLoanApplication.getAccount();
+            accountRepository.changeAccountBalanceById(newBalance, accountId);
         }
 
         else if(loanType.equals("Gold")) {
             goldLoanApplicationRepository.setConfirmToYesGoldLoanApplication(applicationNumber);
             loanLogRepository.setConfirmedToYesByApplicationNumber(applicationNumber);
+            GoldLoanApplication goldLoanApplication = goldLoanApplicationRepository.getGoldLoanApplicationByApplicationNumber(applicationNumber);
+            double principle = loanLogRepository.getFinalLoanAmountByApplicationNumber(applicationNumber);
+            double currentBalance = accountRepository.getAccountBalance(goldLoanApplication.getUser_id(), goldLoanApplication.getAccount());
+            double newBalance = principle + currentBalance;
+            int accountId = goldLoanApplication.getAccount();
+            accountRepository.changeAccountBalanceById(newBalance, accountId);
         }
 
         return getLoginPage;

@@ -37,6 +37,12 @@ public interface HomeApplicationRepository extends CrudRepository<HomeLoanApplic
     @Query(value = "SELECT bank_account_statement FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
     byte[] getAccountStatementHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
 
+    @Query(value = "SELECT loan_amount_requested FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    double getLoanAmountRequestedHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
+    @Query(value = "SELECT account FROM home_loan_application WHERE application_number=:application_number", nativeQuery = true)
+    int getAccountIdHomeLoanApplicationByApplicationNumber(@Param("application_number") String application_number);
+
     @Query(value = "SELECT COUNT(*) FROM home_loan_application", nativeQuery = true)
     int getHomeLoanApplicationCount();
 

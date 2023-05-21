@@ -20,6 +20,9 @@ public interface LoanLogRepository extends CrudRepository<LoanLog, String> {
     @Query(value = "SELECT * FROM loan_log WHERE loan_application_number=:loan_application_number", nativeQuery = true)
     LoanLog getLoanLogsByApplicationNumber(@Param("loan_application_number") String loan_application_number);
 
+    @Query(value = "SELECT final_loan_amount FROM loan_log WHERE loan_application_number=:loan_application_number", nativeQuery = true)
+    double getFinalLoanAmountByApplicationNumber(@Param("loan_application_number") String loan_application_number);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE loan_log SET total_amount_payable=:total_amount_payable WHERE loan_application_number=:loan_application_number", nativeQuery = true)
